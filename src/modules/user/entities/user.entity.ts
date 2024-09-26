@@ -1,11 +1,4 @@
-import {
-    Column,
-    Entity,
-    Index,
-    JoinColumn,
-    ManyToOne,
-    PrimaryGeneratedColumn,
-  } from 'typeorm';
+import { Column, Entity, Index, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { UserRole } from './role.entity';
   
   @Entity({
@@ -19,7 +12,7 @@ import { UserRole } from './role.entity';
     @Column({ type: 'varchar', length: 50, nullable: true })
     name: string;
   
-    @Column({type: 'varchar', length: 50, nullable: true })
+    @Column({type: 'varchar', length: 50, nullable: true , unique: true})
     email: string;
   
     @Column({ type: 'varchar',
@@ -27,8 +20,11 @@ import { UserRole } from './role.entity';
     imgProfile: string;
   
     @Index()
-    @Column({ nullable: true, unique: true })
+    @Column({ unique: true })
     dni: number;
+
+    @Column({ nullable: true, unique: true })
+    cuit: number;
   
     @Column({ type: 'varchar', length: 128, nullable: true })
     password: string;
@@ -54,6 +50,7 @@ import { UserRole } from './role.entity';
     @ManyToOne(() => UserRole, (userRole) => userRole.users)
     @JoinColumn({name: "userRoleId"})
     role: UserRole;
+    @Index()
     @Column("uuid")
     userRoleId: string;
   }
