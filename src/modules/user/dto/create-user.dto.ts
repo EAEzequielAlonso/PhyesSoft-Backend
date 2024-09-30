@@ -4,6 +4,7 @@ import {
   IsEmail,
   IsNotEmpty,
   IsNumber,
+  IsOptional,
   IsString,
   IsStrongPassword,
   Length,
@@ -38,12 +39,12 @@ export class CreateUserDto {
   @Length(1, 50)
   email: string;
 
-  @ApiProperty({
+  @ApiPropertyOptional({
     description:
       'La contraseña debe tener almenos 6 caracteres, una mayuscula, una minuscula y un caracter especial',
     example: 'pruEba123&%',
   })
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
   @Length(8, 15)
   @IsStrongPassword({
@@ -54,12 +55,12 @@ export class CreateUserDto {
   })
   password: string;
 
-  @ApiProperty({
+  @ApiPropertyOptional({
     description:
       'La confirmacion del password es Obligatoria. Debe coincidir con password.',
     example: 'pruEba123&%',
   })
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
   @Validate(passwordCompare, ['password'])
   passwordConfirm: string;

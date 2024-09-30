@@ -1,6 +1,7 @@
 import { Column, Entity, Index, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { UserRole } from './role.entity';
 import { Commerce } from 'src/modules/commerce/entities/commerce.entity';
+import { Sex } from './sex.entity';
   
   @Entity({
     name: 'users',
@@ -17,7 +18,7 @@ import { Commerce } from 'src/modules/commerce/entities/commerce.entity';
     email: string;
   
     @Column({ type: 'varchar',
-      default: 'https://www.shutterstock.com/image-vector/vector-flat-illustration-grayscale-avatar-600nw-2264922221.jpg',})
+      default: 'https://st.depositphotos.com/1537427/3571/v/450/depositphotos_35717211-stock-illustration-vector-user-icon.jpg',})
     imgProfile: string;
   
     @Index()
@@ -54,6 +55,12 @@ import { Commerce } from 'src/modules/commerce/entities/commerce.entity';
     @Index()
     @Column("uuid")
     roleId: string;
+
+    @ManyToOne(() => Sex, (sex) => sex.users)
+    @JoinColumn({name: "sexId"})
+    sex: Sex;
+    @Column("uuid")
+    sexId: string;
 
     @OneToMany(() => Commerce, (commerce) => commerce.user)
     commerces: Commerce[];

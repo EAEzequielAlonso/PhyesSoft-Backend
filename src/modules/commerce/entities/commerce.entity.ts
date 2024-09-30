@@ -21,11 +21,11 @@ import { Column, Entity, Index, JoinColumn, ManyToOne, OneToMany, PrimaryGenerat
     slogan: string;
   
     @Column({ type: 'varchar',
-        default: 'https://www.shutterstock.com/image-vector/vector-flat-illustration-grayscale-avatar-600nw-2264922221.jpg',})
+        default: 'https://w7.pngwing.com/pngs/440/426/png-transparent-computer-icons-logo-commerce-logo-commerce-computer-icons.png',})
     imgLogo: string;
   
     @Column({ type: 'varchar',
-      default: 'https://www.shutterstock.com/image-vector/vector-flat-illustration-grayscale-avatar-600nw-2264922221.jpg',})
+      default: 'https://img.freepik.com/vector-premium/fondo-banner-azul-naranja-plantilla-fondo-patron-banner-diseno-grafico-abstracto-vector_181182-18805.jpg',})
     imgBanner: string;
   
     @Column({ type: 'varchar', length: 50, unique: true })

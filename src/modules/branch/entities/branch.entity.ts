@@ -20,7 +20,7 @@ import { Column, Entity, Index, JoinColumn, ManyToOne, PrimaryGeneratedColumn } 
     @Column({ type: 'varchar', length: 50, unique: true })
     emailBranch: string;
 
-    @Column({ type: 'varchar', length: 100, default: "https://img.freepik.com/premium-vector/shop-store-icon-vector-logo-template_917138-2087.jpg" })
+    @Column({ type: 'varchar', length: 100, default: "https://img.freepik.com/vector-gratis/apoye-concepto-ilustracion-negocio-local_23-2148587056.jpg" })
     image: string;
   
     @Column({ type: 'date', nullable: true })
