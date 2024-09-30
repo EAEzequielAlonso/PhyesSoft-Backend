@@ -1,5 +1,6 @@
-import { Column, Entity, Index, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, Index, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { UserRole } from './role.entity';
+import { Commerce } from 'src/modules/commerce/entities/commerce.entity';
   
   @Entity({
     name: 'users',
@@ -52,6 +53,9 @@ import { UserRole } from './role.entity';
     role: UserRole;
     @Index()
     @Column("uuid")
-    userRoleId: string;
+    roleId: string;
+
+    @OneToMany(() => Commerce, (commerce) => commerce.user)
+    commerces: Commerce[];
   }
   

@@ -1,26 +1,43 @@
-import { Injectable } from '@nestjs/common';
-import { CreateCommerceDto } from './dto/create-commerce.dto';
-import { UpdateCommerceDto } from './dto/update-commerce.dto';
+import { Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
+import { CommerceRepository } from './commerce.repository';
+import { Commerce } from './entities/commerce.entity';
 
 @Injectable()
 export class CommerceService {
-  create(createCommerceDto: CreateCommerceDto) {
-    return 'This action adds a new commerce';
-  }
+    
+  constructor (private readonly commerceRepository: CommerceRepository) {}
 
-  findAll() {
-    return `This action returns all commerce`;
-  }
+    async getCommerces (): Promise<Commerce[]> {
+      return await this.commerceRepository.getCommerces()
+    }
 
-  findOne(id: number) {
-    return `This action returns a #${id} commerce`;
-  }
+    async getCommerceById (id: string): Promise<Commerce> {
+      const user = await this.commerceRepository.getCommerceById(id)
+      if (!user) throw new NotFoundException("Comercio no encontrado")
+      return user;
+    }
 
-  update(id: number, updateCommerceDto: UpdateCommerceDto) {
-    return `This action updates a #${id} commerce`;
-  }
+    async createCommerce(commerce: Partial<Commerce>): Promise<Commerce> {
+      const commerceFind = await this.commerceRepository.createCommerce(commerce);
+      if (!commerceFind) throw new InternalServerErrorException("Error al intentar crear el Comercio")
+      return commerceFind;
+    }
 
-  remove(id: number) {
-    return `This action removes a #${id} commerce`;
-  }
+    async updateCommerce(id: string, commerce: Partial<Commerce>): Promise<string> {
+      const commerceUpdate = await this.commerceRepository.updateCommerce(id, commerce);
+      if (commerceUpdate.affected === 0) throw new NotFoundException ("Comercio a actualizar no encontrado")
+      return id;
+    }
+
+    async deleteCommerce(id: string): Promise<string> {
+      const commerceDelete = await this.commerceRepository.deleteCommerce(id);
+      if (commerceDelete.affected === 0) throw new NotFoundException ("Comercio a eliminar no encontrado")
+      return id;
+    }
+
+    async unsubscribeCommerce(id: string): Promise<string> {
+      const commerceUpdate = await this.commerceRepository.unsubscribeCommerce(id);
+      if (commerceUpdate.affected === 0) throw new NotFoundException ("Comercio a dar de baja no encontrado")
+      return id;
+    }
 }
