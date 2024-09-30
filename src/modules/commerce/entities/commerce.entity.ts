@@ -1,5 +1,6 @@
+import { Branch } from "src/modules/branch/entities/branch.entity";
 import { User } from "src/modules/user/entities/user.entity";
-import { Column, Entity, Index, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, Index, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity({
     name: 'commerces',
@@ -45,4 +46,7 @@ import { Column, Entity, Index, JoinColumn, ManyToOne, PrimaryGeneratedColumn } 
     @Index()
     @Column("uuid")
     userId: string;
+
+    @OneToMany (() => Branch, (branch) => branch.commerce)
+    branches: Branch[];
   }

@@ -1,5 +1,5 @@
 import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
-import { IsDateString, IsEmail, IsNotEmpty, IsOptional, IsString } from "class-validator";
+import { IsDateString, IsEmail, IsNotEmpty, IsOptional, IsString, IsUUID } from "class-validator";
 
 export class CreateCommerceDto {
     
@@ -32,5 +32,10 @@ export class CreateCommerceDto {
     @IsNotEmpty()
     @ApiProperty()
     startDate: Date;
+
+    @IsUUID()
+    @IsNotEmpty()
+    @ApiProperty()
+    userId: string;
 
 }

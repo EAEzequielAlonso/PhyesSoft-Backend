@@ -11,10 +11,14 @@ export class CommerceService {
       return await this.commerceRepository.getCommerces()
     }
 
+    async getCommerceByUserId (userId: string): Promise<Commerce[]> {
+      return await this.commerceRepository.getCommerceByUserId(userId)
+    }
+
     async getCommerceById (id: string): Promise<Commerce> {
-      const user = await this.commerceRepository.getCommerceById(id)
-      if (!user) throw new NotFoundException("Comercio no encontrado")
-      return user;
+      const commerce = await this.commerceRepository.getCommerceById(id)
+      if (!commerce) throw new NotFoundException("Comercio no encontrado")
+      return commerce;
     }
 
     async createCommerce(commerce: Partial<Commerce>): Promise<Commerce> {

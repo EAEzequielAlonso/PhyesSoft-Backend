@@ -15,14 +15,19 @@ export class CommerceController {
     return await this.commerceService.getCommerces()
   }
 
+  @Get("user/:userId")
+  async getCommerceByUserId (@Param("id", ParseUUIDPipe) userId: string): Promise<Commerce[]> {
+    return await this.commerceService.getCommerceByUserId(userId)
+  }
+
   @Get(":id")
   async getCommerceById (@Param("id", ParseUUIDPipe) id: string): Promise<Commerce> {
     return await this.commerceService.getCommerceById(id)
   }
 
   @Post()
-  async createCommerce(@Body() user: CreateCommerceDto): Promise<Commerce> {
-    return await this.commerceService.createCommerce(user);
+  async createCommerce(@Body() commerce: CreateCommerceDto): Promise<Commerce> {
+    return await this.commerceService.createCommerce(commerce);
   }
 
   @Put("unsubscribe/:id")
@@ -31,8 +36,8 @@ export class CommerceController {
   }
 
   @Put(":id")
-  async updateCommerce(@Param("id", ParseUUIDPipe) id: string, @Body() user: UpdateCommerceDto): Promise<string> {
-    return await this.commerceService.updateCommerce(id, user);
+  async updateCommerce(@Param("id", ParseUUIDPipe) id: string, @Body() commerce: UpdateCommerceDto): Promise<string> {
+    return await this.commerceService.updateCommerce(id, commerce);
   }
 
   @Delete(":id")
