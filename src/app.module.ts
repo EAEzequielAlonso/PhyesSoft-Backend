@@ -7,7 +7,6 @@ import { AuthModule } from './modules/auth/auth.module';
 import { BrandModule } from './modules/brand/brand.module';
 import { CategoryModule } from './modules/category/category.module';
 import { CommerceModule } from './modules/commerce/commerce.module';
-import { EmployeeModule } from './modules/employee/employee.module';
 import { ModelModule } from './modules/model/model.module';
 import { ProductModule } from './modules/product/product.module';
 import { ProviderModule } from './modules/provider/provider.module';
@@ -31,7 +30,7 @@ import { UserModule } from './modules/user/user.module';
       signOptions: { expiresIn: '5h' },
       secret: process.env.JWT_SECRET,
     }),
-  AuthModule, BrandModule, CategoryModule, CommerceModule, EmployeeModule, ModelModule, 
+  AuthModule, BrandModule, CategoryModule, CommerceModule, ModelModule, 
 ProductModule, ProviderModule, SubcategoryModule, UserModule],
   controllers: [],
   providers: [],
