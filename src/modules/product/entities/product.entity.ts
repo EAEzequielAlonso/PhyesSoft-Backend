@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { SaleProducts } from "src/modules/sale/entities/saleProducts.entity";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity({name: "products"})
 export class Product {
@@ -28,5 +29,8 @@ export class Product {
 
     @Column({type: "uuid", nullable:true})
     modelId:string;
+
+    @OneToMany (() => SaleProducts, (saleProducts) => saleProducts.product)
+    saleProducts: SaleProducts[]
 }
 

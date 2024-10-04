@@ -55,4 +55,6 @@ export class SaleRepository {
     async getSaleById (id:string): Promise<Sale> {
         return await this.saleRepository.findOne({where: {id}});
     }
+
+    
 }

@@ -1,6 +1,7 @@
 import { Branch } from "src/modules/branch/entities/branch.entity";
 import { User } from "src/modules/user/entities/user.entity";
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { SaleProducts } from "./saleProducts.entity";
 
 @Entity({
     name: "sales"
@@ -36,4 +37,7 @@ export class Sale {
     client : User
     @Column("uuid")
     clientId: string
+
+    @OneToMany (() => SaleProducts, (saleProducts) => saleProducts.sale)
+    saleProducts: SaleProducts
 }
