@@ -2,6 +2,7 @@ import { Column, Entity, Index, JoinColumn, ManyToOne, OneToMany, PrimaryGenerat
 import { UserRole } from './role.entity';
 import { Commerce } from 'src/modules/commerce/entities/commerce.entity';
 import { Sex } from './sex.entity';
+import { Sale } from 'src/modules/sale/entities/sale.entity';
   
   @Entity({
     name: 'users',
@@ -64,5 +65,8 @@ import { Sex } from './sex.entity';
 
     @OneToMany(() => Commerce, (commerce) => commerce.user)
     commerces: Commerce[];
+
+    @OneToMany(() => Sale, (sale) => sale.client)
+    sales: Sale[];
   }
   

@@ -1,6 +1,7 @@
 import { Commerce } from "src/modules/commerce/entities/commerce.entity";
+import { Sale } from "src/modules/sale/entities/sale.entity";
 import { User } from "src/modules/user/entities/user.entity";
-import { Column, Entity, Index, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, Index, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity({
     name: 'branches',
@@ -41,4 +42,7 @@ import { Column, Entity, Index, JoinColumn, ManyToOne, PrimaryGeneratedColumn } 
     @Index()
     @Column("uuid")
     commerceId: string;
+
+    @OneToMany(() => Sale, (sale) => sale.branch)
+    sales : Sale[]
   }
