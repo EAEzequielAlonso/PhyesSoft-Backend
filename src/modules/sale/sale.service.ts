@@ -1,26 +1,72 @@
-import { Injectable } from '@nestjs/common';
-import { CreateSaleDto } from './dto/create-sale.dto';
-import { UpdateSaleDto } from './dto/update-sale.dto';
+import { Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
+import { Sale } from './entities/sale.entity';
+import { SaleRepository } from './sale.repository';
+import { SaleProductsService } from '../saleProducts/saleProducts.service';
+import { SaleProducts } from '../saleProducts/entities/saleProducts.entity';
 
 @Injectable()
 export class SaleService {
-  create(createSaleDto: CreateSaleDto) {
-    return 'This action adds a new sale';
+ 
+  constructor (private readonly saleRepository: SaleRepository,
+    private readonly saleProductsService: SaleProductsService
+  ) {}
+
+  async getSales (startDate?: Date, endDate?: Date): Promise<Sale[]> {
+      if (startDate) {
+          if (endDate) {
+              return await this.saleRepository.getSales(startDate, endDate);
+          } else {
+              return await this.saleRepository.getSales(startDate);
+          }
+      }
+      return await this.saleRepository.getSales();
   }
 
-  findAll() {
-    return `This action returns all sale`;
+  async getSalesByClient (clientId:string, startDate?: Date, endDate?: Date): Promise<Sale[]> {
+      if (startDate) {
+          if (endDate) {
+              return await this.saleRepository.getSalesByClient(clientId, startDate, endDate);
+          } else {
+              return await this.saleRepository.getSalesByClient(clientId, startDate);
+          }
+      }
+      return await this.saleRepository.getSalesByClient(clientId);
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} sale`;
+  async getSalesByBranch (branchId:string, startDate?: Date, endDate?: Date): Promise<Sale[]> {
+      if (startDate) {
+          if (endDate) {
+              return await this.saleRepository.getSalesByBranch(branchId, startDate, endDate);
+          } else {
+              return await this.saleRepository.getSalesByBranch(branchId, startDate);
+          }
+      }
+      return await this.saleRepository.getSalesByBranch(branchId);
   }
 
-  update(id: number, updateSaleDto: UpdateSaleDto) {
-    return `This action updates a #${id} sale`;
+  async getSalesByCommerce (commerceId:string, startDate?: Date, endDate?: Date): Promise<Sale[]> {
+      if (startDate) {
+          if (endDate) {
+              return await this.saleRepository.getSalesByCommerce(commerceId, startDate, endDate);
+          } else {
+              return await this.saleRepository.getSalesByCommerce(commerceId, startDate);
+          }
+      }
+      return await this.saleRepository.getSalesByCommerce(commerceId);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} sale`;
+  async getSaleById (id:string): Promise<Sale> {
+    const sale = await this.saleRepository.getSaleById(id);
+    if (!sale) throw new NotFoundException("No se encontro la venta buscada")
+    return sale;
+  }
+
+  async createSale (sale: Partial<Sale>, products: Partial<SaleProducts>[]): Promise<Sale> {
+    const saleCreated = await this.saleRepository.createSale(sale)
+    if (!saleCreated) throw new InternalServerErrorException ("No se pudo crear la venta")
+    products.forEach (async (product) => {
+      await this.saleProductsService.createSaleProducts({saleId: saleCreated.id, ...product})
+    })
+    return saleCreated;
   }
 }

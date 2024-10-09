@@ -6,7 +6,7 @@ import { Between, Equal, Repository } from "typeorm";
 @Injectable()
 export class SaleRepository {
 
-    constructor (@InjectRepository(Sale) private saleRepository: Repository<Sale>,) {}
+    constructor (@InjectRepository(Sale) private saleRepository: Repository<Sale>) {}
 
     async getSales (startDate?: Date, endDate?: Date): Promise<Sale[]> {
         if (startDate) {
@@ -56,9 +56,8 @@ export class SaleRepository {
         return await this.saleRepository.findOne({where: {id}});
     }
 
-    async createSale (): Promise<Sale> {
-        return
+    async createSale (sale: Partial<Sale>): Promise<Sale> {
+        return await this.saleRepository.save(sale)
     }
-
     
 }
