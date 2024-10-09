@@ -12,6 +12,7 @@ import { ProductModule } from './modules/product/product.module';
 import { ProviderModule } from './modules/provider/provider.module';
 import { SubcategoryModule } from './modules/subcategory/subcategory.module';
 import { UserModule } from './modules/user/user.module';
+import { BranchModule } from './modules/branch/branch.module';
 
 @Module({
   imports: [
@@ -30,8 +31,7 @@ import { UserModule } from './modules/user/user.module';
       signOptions: { expiresIn: '5h' },
       secret: process.env.JWT_SECRET,
     }),
-  AuthModule, BrandModule, CategoryModule, CommerceModule, ModelModule, 
-ProductModule, ProviderModule, SubcategoryModule, UserModule],
+  AuthModule, CommerceModule, ProductModule, UserModule, BranchModule, ],
   controllers: [],
   providers: [],
 })

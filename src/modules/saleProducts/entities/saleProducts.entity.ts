@@ -1,10 +1,8 @@
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from "typeorm";
-import { Sale } from "./sale.entity";
 import { Product } from "src/modules/product/entities/product.entity";
+import { Sale } from "src/modules/sale/entities/sale.entity";
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from "typeorm";
 
-@Entity({
-    name:"saleProducts"
-})
+@Entity({name:"saleProducts"})
 export class SaleProducts {
 
     @ManyToOne(() => Sale, (sale) => sale.saleProducts)
@@ -19,16 +17,15 @@ export class SaleProducts {
     @PrimaryColumn("uuid")
     productId: string
 
-    @Column("int")
-    quantity:number;
+    @Column("float")
+    price: number
 
     @Column("float")
-    price:number;
+    discount: number
+
+    @Column()
+    quantity: number
 
     @Column("float")
-    discount:number;
-
-    @Column("float")
-    total:number;
-
+    total: number
 }

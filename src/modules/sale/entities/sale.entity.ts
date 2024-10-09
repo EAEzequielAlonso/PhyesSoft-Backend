@@ -1,7 +1,7 @@
-import { Branch } from "src/modules/branch/entities/branch.entity";
-import { User } from "src/modules/user/entities/user.entity";
+import { Branch } from "../../branch/entities/branch.entity";
+import { SaleProducts } from "../../saleProducts/entities/saleProducts.entity";
+import { User } from "../../user/entities/user.entity";
 import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
-import { SaleProducts } from "./saleProducts.entity";
 
 @Entity({
     name: "sales"
