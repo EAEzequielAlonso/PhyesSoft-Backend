@@ -13,6 +13,8 @@ import { ProviderModule } from './modules/provider/provider.module';
 import { SubcategoryModule } from './modules/subcategory/subcategory.module';
 import { UserModule } from './modules/user/user.module';
 import { BranchModule } from './modules/branch/branch.module';
+import { SaleProductsModule } from './modules/saleProducts/saleProducts.module';
+import { SaleModule } from './modules/sale/sale.module';
 
 @Module({
   imports: [
@@ -31,7 +33,7 @@ import { BranchModule } from './modules/branch/branch.module';
       signOptions: { expiresIn: '5h' },
       secret: process.env.JWT_SECRET,
     }),
-  AuthModule, CommerceModule, ProductModule, UserModule, BranchModule, ],
+  AuthModule, CommerceModule, ProductModule, UserModule, BranchModule, SaleProductsModule, SaleModule],
   controllers: [],
   providers: [],
 })
