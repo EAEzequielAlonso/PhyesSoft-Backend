@@ -2,6 +2,7 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { ValidationPipe } from '@nestjs/common';
+import * as cors from "cors"
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -14,6 +15,7 @@ async function bootstrap() {
   );
   app.useGlobalPipes(new ValidationPipe({ transform: true }));
 
+  app.use(cors())
   //genero el Document Builder donde preconfiguro los datos basicos
   const swaggerConfig = new DocumentBuilder()
     .setTitle('StyleFlow - Backend para SaaS de Indumentaria')
@@ -32,5 +34,6 @@ async function bootstrap() {
     },
   });
   await app.listen(3000);
+  console.log("Server Listening on Port 3000")
 }
 bootstrap();
