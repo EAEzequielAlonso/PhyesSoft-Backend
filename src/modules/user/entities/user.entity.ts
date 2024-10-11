@@ -54,13 +54,13 @@ import { Sale } from 'src/modules/sale/entities/sale.entity';
     @JoinColumn({name: "userRoleId"})
     role: UserRole;
     @Index()
-    @Column("uuid")
+    @Column({type: "uuid", nullable:true})
     roleId: string;
 
     @ManyToOne(() => Sex, (sex) => sex.users)
     @JoinColumn({name: "sexId"})
     sex: Sex;
-    @Column("uuid")
+    @Column({type: "uuid", nullable:true})
     sexId: string;
 
     @OneToMany(() => Commerce, (commerce) => commerce.user)
