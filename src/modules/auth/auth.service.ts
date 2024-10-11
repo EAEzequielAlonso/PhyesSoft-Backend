@@ -26,13 +26,13 @@ export class AuthService {
     const { passwordConfirm, ...createUser } = user;
 
     // busco el role asignado, si no existe devuelvo error
-    const userRole: UserRole = await this.userRepository.getRolesUsersByRole(Role.Admin);
+    //const userRole: UserRole = await this.userRepository.getRolesUsersByRole(Role.Admin);
 
     // creo el usuario en la DB pisando el dato del password con la clave hasheada 
     // y agregando la relacion role
     const userSave = await this.userRepository.createUser({
       ...createUser,
-      roleId: userRole.id,
+      //roleId: userRole.id,
       password: passwordHash,
     });
 
