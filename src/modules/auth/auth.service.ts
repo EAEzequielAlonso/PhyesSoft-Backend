@@ -70,7 +70,7 @@ export class AuthService {
       id: userDB.id,
       email: userDB.email,
       dni: userDB.dni,
-      roles: userDB.role.role,
+      //roles: userDB.role.role,
     };
 
     // creo el token, quito el password de userDB y lo guardo en sendUser y retorno el user con el token

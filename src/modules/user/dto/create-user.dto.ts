@@ -32,7 +32,7 @@ export class CreateUserDto {
 
   @ApiPropertyOptional({
     description: 'Debe ser un email válido',
-    example: 'example@gmail.com',
+    example: 'example@example.com',
   })
   @IsEmail()
   @IsNotEmpty()
@@ -42,7 +42,7 @@ export class CreateUserDto {
   @ApiPropertyOptional({
     description:
       'La contraseña debe tener almenos 6 caracteres, una mayuscula, una minuscula y un caracter especial',
-    example: 'pruEba123&%',
+    example: 'Prueba@0',
   })
   @IsOptional()
   @IsString()
@@ -58,7 +58,7 @@ export class CreateUserDto {
   @ApiPropertyOptional({
     description:
       'La confirmacion del password es Obligatoria. Debe coincidir con password.',
-    example: 'pruEba123&%',
+    example: 'Prueba@0',
   })
   @IsOptional()
   @IsString()
