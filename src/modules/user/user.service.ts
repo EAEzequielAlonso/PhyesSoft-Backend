@@ -3,6 +3,8 @@ import { UserRepository } from './user.repository';
 import { User } from './entities/user.entity';
 import { Role } from './roles/roles.enum';
 import { UserRole } from './entities/role.entity';
+import proloadUser from "../../preloadFiles/users.json"
+
 
 @Injectable()
 export class UserService {
@@ -53,5 +55,22 @@ export class UserService {
       const userUpdate = await this.userRepository.unsubscribeUser(id);
       if (userUpdate.affected === 0) throw new NotFoundException ("Usuario a dar de baja no encontrado")
       return id;
+    }
+
+    async preloadUsers (): Promise<void> {
+      let count:number  = 0
+      proloadUser.map (async (user) => {
+            const userFind = await this.userRepository.getUserByEmail(user.email)
+            if (!userFind) {
+                const roleFind = await this.userRepository.getUserRoleByName(user.role);
+                const sexFind= await this.userRepository.getSexByName (user.sex);
+                if (sexFind && roleFind) {
+                    const {sex, role, ...userCreate} = user
+                    await this.userRepository.createUser({...userCreate, roleId: roleFind.id, sexId: sexFind.id ,birthDate: new Date(user.birthDate), startDate: new Date(user.startDate)});
+                    count++;
+                }
+            }
+        })
+        console.log(`Se agregaron ${count} usuarios`)
     }
 }

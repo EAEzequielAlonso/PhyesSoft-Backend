@@ -15,6 +15,8 @@ import { UserModule } from './modules/user/user.module';
 import { BranchModule } from './modules/branch/branch.module';
 import { SaleProductsModule } from './modules/saleProducts/saleProducts.module';
 import { SaleModule } from './modules/sale/sale.module';
+import { SexService } from './modules/user/sex.service';
+import { RoleService } from './modules/user/role.service';
 
 @Module({
   imports: [
@@ -35,6 +37,6 @@ import { SaleModule } from './modules/sale/sale.module';
     }),
   AuthModule, CommerceModule, ProductModule, UserModule, BranchModule, SaleProductsModule, SaleModule],
   controllers: [],
-  providers: [],
+  providers: [SexService, RoleService],
 })
 export class AppModule {}

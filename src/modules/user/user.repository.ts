@@ -4,13 +4,15 @@ import { User } from './entities/user.entity';
 import { DeleteResult, Repository, UpdateResult } from 'typeorm';
 import { Role } from './roles/roles.enum';
 import { UserRole } from './entities/role.entity';
+import { Sex } from './entities/sex.entity';
 
 @Injectable()
 export class UserRepository {
 
     constructor (
           @InjectRepository(User) private userRepository: Repository<User>,
-          @InjectRepository(UserRole) private userRoleRepository: Repository<UserRole>,) {}
+          @InjectRepository(UserRole) private userRoleRepository: Repository<UserRole>,
+          @InjectRepository(Sex) private sexRepository: Repository<Sex>,) {}
 
     async getUsers (): Promise<User[]> {
         return await this.userRepository.find()
@@ -22,6 +24,10 @@ export class UserRepository {
 
     async getUserByEmail(email: string): Promise<User> {
       return await this.userRepository.findOne({where: {email}, relations: {role:true}})
+    }
+
+    async getUserByDni(dni: number): Promise<User> {
+      return await this.userRepository.findOne({where: {dni}, relations: {role:true}})
     }
 
     async getRolesUsersByRole(role: Role): Promise<UserRole> {
@@ -44,4 +50,11 @@ export class UserRepository {
       return await this.userRepository.update(id, {endDate:new Date()});
     }
 
+    async getSexByName (sex:string): Promise<Sex> {
+      return this.sexRepository.findOne ({where: {sex}})
+    } 
+
+    async getUserRoleByName (userRole:string): Promise<UserRole> {
+      return this.userRoleRepository.findOne ({where: {role: userRole}})
+    } 
 }

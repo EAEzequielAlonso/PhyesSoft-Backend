@@ -13,7 +13,7 @@ export class AuthController {
   @Post('signin')
   @ApiOperation({summary: 'Realiza el Login de usuarios'})
   @ApiBody({ description: 'Las credenciales', type: LoginUserDto })
-  async signin(@Body() userLogin: LoginUserDto): Promise<Omit<User, 'password'> & { token: string }> {
+  async signin(@Body() userLogin: LoginUserDto): Promise<string> {
     return await this.authService.signin(userLogin);
   }
 

@@ -47,10 +47,10 @@ export class AuthService {
     return sendUser;
   }
 
-  async signin(userLogin: LoginUserDto): Promise<Omit<User, 'password'> & { token: string }> {
+  async signin(userLogin: LoginUserDto): Promise<string> {
     // comprueba que el usuario exista, sino devuelve un error
-    const userDB = await this.userRepository.getUserByEmail(
-      userLogin.email,
+    const userDB = await this.userRepository.getUserByDni(
+      userLogin.dni,
     );
     if (!userDB) {
       throw new BadRequestException('Usuario o Clave incorrectos');
@@ -67,15 +67,14 @@ export class AuthService {
 
     //creo el Payload a guardar en el token, con id, email, y los roles asignados al usuario
     const userPayload = {
-      id: userDB.id,
-      email: userDB.email,
-      dni: userDB.dni,
+      ...userDB, 
       //roles: userDB.role.role,
     };
 
     // creo el token, quito el password de userDB y lo guardo en sendUser y retorno el user con el token
     const token = this.jwtService.sign(userPayload);
-    const { password, ...sendUser } = userDB;
-    return { ...sendUser, token: token };
+    
+//    const { password, ...sendUser } = userDB;
+    return token;
   }
 }
