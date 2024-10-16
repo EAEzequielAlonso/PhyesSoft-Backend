@@ -42,11 +42,14 @@ import { Column, Entity, Index, JoinColumn, ManyToOne, OneToMany, PrimaryGenerat
 
     @ManyToOne(() => User, (user) => user.commerces)
     @JoinColumn({name: "userId"})
-    user: User;
+    userProp: User;
     @Index()
     @Column("uuid")
-    userId: string;
+    userPropId: string;
 
     @OneToMany (() => Branch, (branch) => branch.commerce)
     branches: Branch[];
+
+    @OneToMany (() => User, (user) => user.commerce)
+    userClients: User[];
   }

@@ -23,11 +23,11 @@ export class UserRepository {
     }
 
     async getUserByEmail(email: string): Promise<User> {
-      return await this.userRepository.findOne({where: {email}, relations: {role:true}})
+      return await this.userRepository.findOne({where: {email}, relations: {role:true, sex:true}})
     }
 
     async getUserByDni(dni: number): Promise<User> {
-      return await this.userRepository.findOne({where: {dni}, relations: {role:true}})
+      return await this.userRepository.findOne({where: {dni}, relations: {role:true, sex:true}})
     }
 
     async getRolesUsersByRole(role: Role): Promise<UserRole> {
@@ -53,6 +53,14 @@ export class UserRepository {
     async getSexByName (sex:string): Promise<Sex> {
       return this.sexRepository.findOne ({where: {sex}})
     } 
+
+    async getSexes (): Promise<Sex[]> {
+      return this.sexRepository.find ()
+    }
+
+    async getClients (): Promise<User[]> {
+      return await this.userRepository.find({where: {role: {role: Role.Client}}});
+    }
 
     async getUserRoleByName (userRole:string): Promise<UserRole> {
       return this.userRoleRepository.findOne ({where: {role: userRole}})

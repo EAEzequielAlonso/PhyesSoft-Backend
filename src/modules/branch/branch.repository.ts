@@ -21,7 +21,7 @@ export class BranchRepository {
     }
 
     async getBranchByUserId (userId: string): Promise<Branch[]> {
-        return await this.branchRepository.find({where: {commerce: {userId}}})
+        return await this.branchRepository.find({where: {commerce: {userPropId: userId}}})
     }
 
     async createBranch(user: Partial<Branch>): Promise<Branch> {

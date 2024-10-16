@@ -27,13 +27,13 @@ import { Sale } from 'src/modules/sale/entities/sale.entity';
     dni: number;
 
     @Column({ nullable: true, unique: true })
-    cuit: number;
+    cuit: string;
   
     @Column({ type: 'varchar', length: 128, nullable: true })
     password: string;
   
     @Column({ type: 'date', nullable: true })
-    birthDate: Date;
+    birthdate: Date;
   
     @Column({ type: 'date' })
     startDate: Date;
@@ -63,10 +63,16 @@ import { Sale } from 'src/modules/sale/entities/sale.entity';
     @Column({type: "uuid", nullable:true})
     sexId: string;
 
-    @OneToMany(() => Commerce, (commerce) => commerce.user)
+    @OneToMany(() => Commerce, (commerce) => commerce.userProp)
     commerces: Commerce[];
 
     @OneToMany(() => Sale, (sale) => sale.client)
     sales: Sale[];
+
+    @ManyToOne(() => Commerce, (commerce) => commerce.userClients)
+    @JoinColumn({name: "commerceId"})
+    commerce: Commerce;
+    @Column({type: "uuid", nullable:true})
+    commerceId: string
   }
   

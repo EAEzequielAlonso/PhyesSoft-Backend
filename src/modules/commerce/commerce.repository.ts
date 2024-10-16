@@ -13,7 +13,7 @@ export class CommerceRepository {
     }
 
     async getCommerceByUserId (userId: string): Promise<Commerce[]> {
-      return await this.commerceRepository.find({where: {userId}})
+      return await this.commerceRepository.find({where: {userPropId: userId}})
     }
 
     async getCommerceById (id: string): Promise<Commerce> {

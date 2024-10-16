@@ -3,7 +3,6 @@ import { UserRepository } from './user.repository';
 import { User } from './entities/user.entity';
 import { Role } from './roles/roles.enum';
 import { UserRole } from './entities/role.entity';
-import proloadUser from "../../preloadFiles/users.json"
 
 
 @Injectable()
@@ -13,6 +12,10 @@ export class UserService {
 
     async getUsers (): Promise<User[]> {
       return await this.userRepository.getUsers()
+    }
+  
+    async getClients (id:string): Promise<User[]> {
+      return await this.userRepository.getClients();
     }
 
     async getUserById (id: string): Promise<User> {
@@ -32,6 +35,7 @@ export class UserService {
       if (!userRole) throw new NotFoundException("Rol de Usuario no encontrado")
       return userRole;
     }
+  
 
     async createUser(user: Partial<User>): Promise<User> {
       const userFind = await this.userRepository.createUser(user);
@@ -57,20 +61,4 @@ export class UserService {
       return id;
     }
 
-    async preloadUsers (): Promise<void> {
-      let count:number  = 0
-      proloadUser.map (async (user) => {
-            const userFind = await this.userRepository.getUserByEmail(user.email)
-            if (!userFind) {
-                const roleFind = await this.userRepository.getUserRoleByName(user.role);
-                const sexFind= await this.userRepository.getSexByName (user.sex);
-                if (sexFind && roleFind) {
-                    const {sex, role, ...userCreate} = user
-                    await this.userRepository.createUser({...userCreate, roleId: roleFind.id, sexId: sexFind.id ,birthDate: new Date(user.birthDate), startDate: new Date(user.startDate)});
-                    count++;
-                }
-            }
-        })
-        console.log(`Se agregaron ${count} usuarios`)
-    }
 }

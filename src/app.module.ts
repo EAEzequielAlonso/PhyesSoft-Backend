@@ -15,8 +15,7 @@ import { UserModule } from './modules/user/user.module';
 import { BranchModule } from './modules/branch/branch.module';
 import { SaleProductsModule } from './modules/saleProducts/saleProducts.module';
 import { SaleModule } from './modules/sale/sale.module';
-import { SexService } from './modules/user/sex.service';
-import { RoleService } from './modules/user/role.service';
+import { PreloadsModule } from './modules/preloads/preloads.module';
 
 @Module({
   imports: [
@@ -35,8 +34,8 @@ import { RoleService } from './modules/user/role.service';
       signOptions: { expiresIn: '5h' },
       secret: process.env.JWT_SECRET,
     }),
-  AuthModule, CommerceModule, ProductModule, UserModule, BranchModule, SaleProductsModule, SaleModule],
+  PreloadsModule, AuthModule, CommerceModule, ProductModule, UserModule, BranchModule, SaleProductsModule, SaleModule],
   controllers: [],
-  providers: [SexService, RoleService],
+  providers: [],
 })
 export class AppModule {}
