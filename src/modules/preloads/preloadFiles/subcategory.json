@@ -1,0 +1,38 @@
+[
+    {
+        "subcategory": "Ojotas",
+        "category": "Calzados"
+    },
+    {
+        "subcategory": "Botines",
+        "category": "Calzados"
+    },
+    {
+        "subcategory": "Zapatos",
+        "category": "Calzados"
+    },
+    {
+        "subcategory": "Remeras",
+        "category": "Ropa"
+    },
+    {
+        "subcategory": "Bermudas",
+        "category": "Ropa"
+    },
+    {
+        "subcategory": "Medias",
+        "category": "Ropa"
+    },
+    {
+        "subcategory": "Pelotas",
+        "category": "Accesorios"
+    },
+    {
+        "subcategory": "Antiparras",
+        "category": "Accesorios"
+    },
+    {
+        "subcategory": "Guantes",
+        "category": "Accesorios"
+    }
+]

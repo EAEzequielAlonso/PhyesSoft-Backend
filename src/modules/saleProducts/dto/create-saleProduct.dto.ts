@@ -13,6 +13,16 @@ export class CreateSaleProductDto {
     @ApiProperty()
     productId: string
 
+    @IsUUID()
+    @IsNotEmpty()
+    @ApiProperty()
+    sizeId: string
+
+    @IsUUID()
+    @IsNotEmpty()
+    @ApiProperty()
+    colorId: string
+
     @IsNumber()
     @IsNotEmpty()
     @ApiProperty()

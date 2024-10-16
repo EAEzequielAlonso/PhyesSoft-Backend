@@ -16,6 +16,8 @@ import { BranchModule } from './modules/branch/branch.module';
 import { SaleProductsModule } from './modules/saleProducts/saleProducts.module';
 import { SaleModule } from './modules/sale/sale.module';
 import { PreloadsModule } from './modules/preloads/preloads.module';
+import { ColorModule } from './modules/color/color.module';
+import { SizeModule } from './modules/size/size.module';
 
 @Module({
   imports: [
@@ -34,7 +36,9 @@ import { PreloadsModule } from './modules/preloads/preloads.module';
       signOptions: { expiresIn: '5h' },
       secret: process.env.JWT_SECRET,
     }),
-  PreloadsModule, AuthModule, CommerceModule, ProductModule, UserModule, BranchModule, SaleProductsModule, SaleModule],
+  PreloadsModule, AuthModule, CommerceModule, ProductModule, UserModule, BranchModule, SaleProductsModule, 
+  SaleModule, BrandModule, CategoryModule, ColorModule, ModelModule, ProviderModule, SizeModule, 
+  SubcategoryModule],
   controllers: [],
   providers: [],
 })

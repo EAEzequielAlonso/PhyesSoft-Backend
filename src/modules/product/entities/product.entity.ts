@@ -11,6 +11,9 @@ export class Product {
     @Column("varchar")
     description:string;
 
+    @Column({type: "varchar", default: "https://i.pinimg.com/736x/51/f2/f5/51f2f5a41d5bc67c2a59bc6f12bc49d5.jpg"})
+    image:string;
+
     @Column("float")
     cost:number;
 
