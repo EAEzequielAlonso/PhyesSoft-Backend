@@ -43,7 +43,7 @@ export class AuthService {
     return sendUser;
   }
 
-  async signin(userLogin: LoginUserDto): Promise<string> {
+  async signin(userLogin: LoginUserDto): Promise<Object> {
     // comprueba que el usuario exista, sino devuelve un error
     const userDB = await this.userRepository.getUserByDni(
       userLogin.dni,
@@ -66,6 +66,6 @@ export class AuthService {
       ...userDB, 
     };
     const token = this.jwtService.sign(userPayload);
-    return token;
+    return {token: token};
   }
 }
