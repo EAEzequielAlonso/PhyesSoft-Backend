@@ -2,6 +2,7 @@ import { Model } from "src/modules/model/entities/model.entity";
 import { SaleProducts } from "../../saleProducts/entities/saleProducts.entity";
 import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { Subcategory } from "src/modules/subcategory/entities/subcategory.entity";
+import { Commerce } from "src/modules/commerce/entities/commerce.entity";
 
 @Entity({name: "products"})
 export class Product {
@@ -40,6 +41,12 @@ export class Product {
     model: Model;
     @Column({type: "uuid", nullable:true})
     modelId:string;
+
+    @ManyToOne (() => Commerce, (commerce) => commerce.products)
+    @JoinColumn({name:"commerceId"})
+    commerce: Commerce;
+    @Column({type: "uuid", nullable:true})
+    commerceId: string;
 
     @OneToMany (() => SaleProducts, (saleProducts) => saleProducts.product)
     saleProducts: SaleProducts[]

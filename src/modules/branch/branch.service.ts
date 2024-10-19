@@ -25,8 +25,8 @@ export class BranchService {
       return await this.branchRepository.getBranchByUserId(userId)
     }
 
-    async createBranch(commerce: Partial<Branch>): Promise<Branch> {
-      const branchFind = await this.branchRepository.createBranch(commerce);
+    async createBranch(branch: Partial<Branch>): Promise<Branch> {
+      const branchFind = await this.branchRepository.createBranch(branch);
       if (!branchFind) throw new InternalServerErrorException("Error al intentar crear el Sucursal")
       return branchFind;
     }

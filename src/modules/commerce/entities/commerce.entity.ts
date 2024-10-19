@@ -1,4 +1,11 @@
 import { Branch } from "src/modules/branch/entities/branch.entity";
+import { Brand } from "src/modules/brand/entities/brand.entity";
+import { Category } from "src/modules/category/entities/category.entity";
+import { Color } from "src/modules/color/entities/color.entity";
+import { Model } from "src/modules/model/entities/model.entity";
+import { Product } from "src/modules/product/entities/product.entity";
+import { Size } from "src/modules/size/entities/size.entity";
+import { Subcategory } from "src/modules/subcategory/entities/subcategory.entity";
 import { User } from "src/modules/user/entities/user.entity";
 import { Column, Entity, Index, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
@@ -52,4 +59,25 @@ import { Column, Entity, Index, JoinColumn, ManyToOne, OneToMany, PrimaryGenerat
 
     @OneToMany (() => User, (user) => user.commerce)
     userClients: User[];
+
+    @OneToMany (() => Product, (product) => product.commerce)
+    products: Product[];
+
+    @OneToMany (() => Category, (category) => category.commerce)
+    categories: Category[];
+
+    @OneToMany (() => Subcategory, (subcategory) => subcategory.commerce)
+    subcategories: Subcategory[];
+
+    @OneToMany (() => Brand, (brand) => brand.commerce)
+    brands: Brand[];
+
+    @OneToMany (() => Model, (model) => model.commerce)
+    models: Model[];
+
+    @OneToMany (() => Size, (size) => size.commerce)
+    sizes: Size[];
+
+    @OneToMany (() => Color, (color) => color.commerce)
+    colors: Color[];
   }

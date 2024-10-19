@@ -1,4 +1,5 @@
 import { Brand } from "src/modules/brand/entities/brand.entity";
+import { Commerce } from "src/modules/commerce/entities/commerce.entity";
 import { Product } from "src/modules/product/entities/product.entity";
 import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
@@ -19,5 +20,11 @@ export class Model {
     brand: Brand;
     @Column({type: "uuid", nullable:true})
     brandId:string;
+
+    @ManyToOne (() => Commerce, (commerce) => commerce.models)
+    @JoinColumn({name:"commerceId"})
+    commerce: Commerce;
+    @Column({type: "uuid", nullable:true})
+    commerceId:string;
 
 }
