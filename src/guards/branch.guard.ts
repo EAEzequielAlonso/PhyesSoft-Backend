@@ -14,10 +14,10 @@ import { BranchRepository } from 'src/modules/branch/branch.repository';
       context: ExecutionContext,
     ): Promise<boolean> {
       const request = context.switchToHttp().getRequest();
-      const existBranch: Boolean = await this.branchRepository.banchUserExist(request.Param.id, request.user?.id);
+      const existBranch: Boolean = await this.branchRepository.exist(request.Param.id, request.user?.id);
       
       if (!existBranch)
-        throw new ForbiddenException('La Sucursal no existe o no esta autorizado para acceder a esta sucursal');
+        throw new ForbiddenException('La Sucursal no existe o usted no esta autorizado para acceder a la misma');
       return true;
     }
   }

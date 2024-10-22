@@ -7,6 +7,7 @@ import { UpdateBranchDto } from './dto/update-branch.dto';
 import { Request } from 'express';
 import { AuthGuard } from '../auth/guards/Auth.guard';
 import { BranchGuard } from 'src/guards/branch.guard';
+import { CommerceGuard } from 'src/guards/commerce.guard';
 
 @ApiTags("Branches")
 @Controller('branch')
@@ -28,13 +29,13 @@ export class BranchController {
   @Get("user")
   @ApiBearerAuth()
   @UseGuards(AuthGuard)
-  async getBranchByUserId (@Req() request: Request): Promise<Branch[]> {
+  async getBranchByUser (@Req() request: Request): Promise<Branch[]> {
     return await this.branchService.getBranchByUserId(request.user?.id)
   }
 
   @Get(":id")
   @ApiBearerAuth()
-  @UseGuards(AuthGuard, BranchGuard)
+  @UseGuards(AuthGuard)
   async getBranchById (@Param("id", ParseUUIDPipe) id: string): Promise<Branch> {
     return await this.branchService.getBranchById(id)
   }

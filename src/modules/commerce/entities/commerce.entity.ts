@@ -63,21 +63,21 @@ import { Column, Entity, Index, JoinColumn, ManyToOne, OneToMany, PrimaryGenerat
     @OneToMany (() => Product, (product) => product.commerce)
     products: Product[];
 
-    @OneToMany (() => Category, (category) => category.commerce)
-    categories: Category[];
+    // @OneToMany (() => Category, (category) => category.commerce)
+    // categories: Category[];
 
-    @OneToMany (() => Subcategory, (subcategory) => subcategory.commerce)
-    subcategories: Subcategory[];
+    // @OneToMany (() => Subcategory, (subcategory) => subcategory.commerce)
+    // subcategories: Subcategory[];
 
-    @OneToMany (() => Brand, (brand) => brand.commerce)
-    brands: Brand[];
+    // @OneToMany (() => Brand, (brand) => brand.commerce)
+    // brands: Brand[];
 
-    @OneToMany (() => Model, (model) => model.commerce)
-    models: Model[];
+    // @OneToMany (() => Model, (model) => model.commerce)
+    // models: Model[];
 
-    @OneToMany (() => Size, (size) => size.commerce)
-    sizes: Size[];
+    // @OneToMany (() => Size, (size) => size.commerce)
+    // sizes: Size[];
 
-    @OneToMany (() => Color, (color) => color.commerce)
-    colors: Color[];
+    // @OneToMany (() => Color, (color) => color.commerce)
+    // colors: Color[];
   }

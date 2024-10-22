@@ -15,9 +15,9 @@ export class Color {
     @OneToMany (() => SaleProducts, (saleProduct) => saleProduct.color)
     saleProducts: SaleProducts[];
 
-    @ManyToOne (() => Commerce, (commerce) => commerce.colors)
-    @JoinColumn({name:"commerceId"})
-    commerce: Commerce;
-    @Column({type: "uuid", nullable:true})
-    commerceId:string;
+    // @ManyToOne (() => Commerce, (commerce) => commerce.colors)
+    // @JoinColumn({name:"commerceId"})
+    // commerce: Commerce;
+    // @Column({type: "uuid", nullable:true})
+    // commerceId:string;
 }

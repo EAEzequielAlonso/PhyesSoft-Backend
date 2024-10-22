@@ -14,10 +14,10 @@ export class Category {
     @OneToMany (() => Subcategory, (subcategory) => subcategory.category)
     subcategories: Subcategory[];
 
-    @ManyToOne (() => Commerce, (commerce) => commerce.categories)
-    @JoinColumn({name:"commerceId"})
-    commerce: Commerce;
-    @Column({type: "uuid", nullable:true})
-    commerceId:string;
+    // @ManyToOne (() => Commerce, (commerce) => commerce.categories)
+    // @JoinColumn({name:"commerceId"})
+    // commerce: Commerce;
+    // @Column({type: "uuid", nullable:true})
+    // commerceId:string;
 
 }

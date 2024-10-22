@@ -16,6 +16,10 @@ export class CommerceRepository {
       return await this.commerceRepository.find({where: {userPropId: userId}})
     }
 
+    async exist (commerceId: string, userId: string): Promise<Boolean> {
+      return await this.commerceRepository.exists({where: {id:commerceId, userPropId: userId}})
+    }
+
     async getCommerceById (id: string): Promise<Commerce> {
       return await this.commerceRepository.findOne({where: {id}})
     }

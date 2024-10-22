@@ -21,10 +21,10 @@ export class Subcategory {
     @Column({type: "uuid", nullable:true})
     categoryId:string;
 
-    @ManyToOne (() => Commerce, (commerce) => commerce.subcategories)
-    @JoinColumn({name:"commerceId"})
-    commerce: Commerce;
-    @Column({type: "uuid", nullable:true})
-    commerceId:string;
+    // @ManyToOne (() => Commerce, (commerce) => commerce.subcategories)
+    // @JoinColumn({name:"commerceId"})
+    // commerce: Commerce;
+    // @Column({type: "uuid", nullable:true})
+    // commerceId:string;
 
 }

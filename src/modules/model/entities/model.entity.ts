@@ -21,10 +21,10 @@ export class Model {
     @Column({type: "uuid", nullable:true})
     brandId:string;
 
-    @ManyToOne (() => Commerce, (commerce) => commerce.models)
-    @JoinColumn({name:"commerceId"})
-    commerce: Commerce;
-    @Column({type: "uuid", nullable:true})
-    commerceId:string;
+    // @ManyToOne (() => Commerce, (commerce) => commerce.models)
+    // @JoinColumn({name:"commerceId"})
+    // commerce: Commerce;
+    // @Column({type: "uuid", nullable:true})
+    // commerceId:string;
 
 }

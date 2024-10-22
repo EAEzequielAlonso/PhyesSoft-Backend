@@ -12,9 +12,7 @@ export class BranchService {
     }
 
     async getBranchById (id: string): Promise<Branch> {
-      const branch = await this.branchRepository.getBranchById(id)
-      if (!branch) throw new NotFoundException("Sucursal no encontrado")
-      return branch;
+      return await this.branchRepository.getBranchById(id)
     }
 
     async getBranchByCommerceId (commerceId: string): Promise<Branch[]> {

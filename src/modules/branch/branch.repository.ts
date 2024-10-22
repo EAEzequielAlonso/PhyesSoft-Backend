@@ -16,7 +16,7 @@ export class BranchRepository {
       return await this.branchRepository.findOne({where: {id}})
     }
 
-    async banchUserExist (branchId: string, userId: string): Promise<Boolean> {
+    async exist (branchId: string, userId: string): Promise<Boolean> {
       return await this.branchRepository.exists({where: {id:branchId, commerce: {userPropId: userId}}})
     }
 

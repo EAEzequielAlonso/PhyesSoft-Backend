@@ -16,9 +16,9 @@ export class Brand {
     @OneToMany (() => Model, (model) => model.brand)
     models: Model[];
 
-    @ManyToOne (() => Commerce, (commerce) => commerce.brands)
-    @JoinColumn({name:"commerceId"})
-    commerce: Commerce;
-    @Column({type: "uuid", nullable:true})
-    commerceId:string;
+    // @ManyToOne (() => Commerce, (commerce) => commerce.brands)
+    // @JoinColumn({name:"commerceId"})
+    // commerce: Commerce;
+    // @Column({type: "uuid", nullable:true})
+    // commerceId:string;
 }
