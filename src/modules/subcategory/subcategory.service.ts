@@ -1,26 +1,41 @@
-import { Injectable } from '@nestjs/common';
-import { CreateSubcategoryDto } from './dto/create-subcategory.dto';
-import { UpdateSubcategoryDto } from './dto/update-subcategory.dto';
+import { Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
+import { SubcategoryRepository } from './subcategory.repository';
+import { Subcategory } from './entities/subcategory.entity';
 
 @Injectable()
 export class SubcategoryService {
-  create(createSubcategoryDto: CreateSubcategoryDto) {
-    return 'This action adds a new subcategory';
+  constructor ( private readonly subcategoryRepository: SubcategoryRepository) {}
+
+  async getSubcategories (): Promise<Subcategory[]> {
+      return this.subcategoryRepository.getSubcategories();
   }
 
-  findAll() {
-    return `This action returns all subcategory`;
+  async getSubcategoriesByBrand (brandId:string): Promise<Subcategory[]> {
+    return this.subcategoryRepository.getSubcategoriesByBrand(brandId);
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} subcategory`;
+  async getSubcategoryById (id:string): Promise<Subcategory> {
+    const subcategory : Subcategory = await this.subcategoryRepository.getSubcategoryById(id);  
+    if (!subcategory) throw new NotFoundException("Subcategoria no encontrada")
+    return subcategory;
   }
 
-  update(id: number, updateSubcategoryDto: UpdateSubcategoryDto) {
-    return `This action updates a #${id} subcategory`;
+  async createSubcategory (subcategory: Partial<Subcategory>): Promise<Subcategory> {
+    const subcategoryCreate : Subcategory = await this.subcategoryRepository.createSubcategory(subcategory); 
+    if (!subcategoryCreate) throw new InternalServerErrorException("No se pudo crear la subcategoria")
+    return subcategoryCreate;   
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} subcategory`;
+  async updateSubcategory (id:string, subcategory: Partial<Subcategory>): Promise<Subcategory> {
+    const subcategoryUpdate = await this.subcategoryRepository.updateSubcategory(id, subcategory); 
+    if (subcategoryUpdate.affected === 0) throw new NotFoundException("No se encontro la subcategoria a actualizar")
+    return await this.subcategoryRepository.getSubcategoryById(id)
   }
+
+  async deleteSubcategory (id:string): Promise<Subcategory> {
+    const subcategory = await this.subcategoryRepository.getSubcategoryById(id)
+    if (!subcategory) throw new NotFoundException("No se encontro la subcategoria a eliminar")
+    await this.subcategoryRepository.deleteSubcategory(id); 
+    return subcategory
+  } 
 }

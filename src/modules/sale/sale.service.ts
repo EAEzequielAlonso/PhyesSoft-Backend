@@ -44,16 +44,16 @@ export class SaleService {
       return await this.saleRepository.getSalesByBranch(branchId);
   }
 
-  async getSalesByCommerce (commerceId:string, startDate?: Date, endDate?: Date): Promise<Sale[]> {
-      if (startDate) {
-          if (endDate) {
-              return await this.saleRepository.getSalesByCommerce(commerceId, startDate, endDate);
-          } else {
-              return await this.saleRepository.getSalesByCommerce(commerceId, startDate);
-          }
-      }
-      return await this.saleRepository.getSalesByCommerce(commerceId);
-  }
+//   async getSalesByCommerce (commerceId:string, startDate?: Date, endDate?: Date): Promise<Sale[]> {
+//       if (startDate) {
+//           if (endDate) {
+//               return await this.saleRepository.getSalesByCommerce(commerceId, startDate, endDate);
+//           } else {
+//               return await this.saleRepository.getSalesByCommerce(commerceId, startDate);
+//           }
+//       }
+//       return await this.saleRepository.getSalesByCommerce(commerceId);
+//   }
 
   async getSaleById (id:string): Promise<Sale> {
     const sale = await this.saleRepository.getSaleById(id);

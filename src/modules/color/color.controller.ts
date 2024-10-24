@@ -1,34 +1,36 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete, Put, ParseUUIDPipe } from '@nestjs/common';
 import { ColorService } from './color.service';
 import { CreateColorDto } from './dto/create-color.dto';
 import { UpdateColorDto } from './dto/update-color.dto';
+import { Color } from './entities/color.entity';
 
 @Controller('color')
 export class ColorController {
   constructor(private readonly colorService: ColorService) {}
 
-  @Post()
-  create(@Body() createColorDto: CreateColorDto) {
-    return this.colorService.create(createColorDto);
-  }
-
   @Get()
-  findAll() {
-    return this.colorService.findAll();
+  async getColors (): Promise<Color[]> {
+    return this.colorService.getColors();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.colorService.findOne(+id);
+  @Get("id")
+  async getColorById (@Param("id", ParseUUIDPipe) id:string): Promise<Color> {
+      return this.colorService.getColorById(id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateColorDto: UpdateColorDto) {
-    return this.colorService.update(+id, updateColorDto);
+  @Post()
+  async createColor (@Body() color: CreateColorDto): Promise<Color> {
+      return await this.colorService.createColor(color);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.colorService.remove(+id);
+  @Put("id")
+  async updateColor (@Param("id", ParseUUIDPipe) id:string, color: UpdateColorDto): Promise<Color> {
+    return await this.colorService.updateColor(id, color);
   }
+
+  @Delete("id")
+  async deleteColor (@Param("id", ParseUUIDPipe) id:string): Promise<Color> {
+    return await this.colorService.deleteColor (id);
+  } 
+
 }

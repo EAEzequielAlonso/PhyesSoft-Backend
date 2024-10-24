@@ -1,34 +1,35 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete, ParseUUIDPipe, Put } from '@nestjs/common';
 import { SizeService } from './size.service';
 import { CreateSizeDto } from './dto/create-size.dto';
 import { UpdateSizeDto } from './dto/update-size.dto';
+import { Size } from './entities/size.entity';
 
 @Controller('size')
 export class SizeController {
   constructor(private readonly sizeService: SizeService) {}
 
-  @Post()
-  create(@Body() createSizeDto: CreateSizeDto) {
-    return this.sizeService.create(createSizeDto);
-  }
-
   @Get()
-  findAll() {
-    return this.sizeService.findAll();
+  async getSizes (): Promise<Size[]> {
+    return this.sizeService.getSizes();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.sizeService.findOne(+id);
+  @Get("id")
+  async getSizeById (@Param("id", ParseUUIDPipe) id:string): Promise<Size> {
+      return this.sizeService.getSizeById(id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateSizeDto: UpdateSizeDto) {
-    return this.sizeService.update(+id, updateSizeDto);
+  @Post()
+  async createSize (@Body() size: CreateSizeDto): Promise<Size> {
+      return await this.sizeService.createSize(size);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.sizeService.remove(+id);
+  @Put("id")
+  async updateSize (@Param("id", ParseUUIDPipe) id:string, size: UpdateSizeDto): Promise<Size> {
+    return await this.sizeService.updateSize(id, size);
   }
+
+  @Delete("id")
+  async deleteSize (@Param("id", ParseUUIDPipe) id:string): Promise<Size> {
+    return await this.sizeService.deleteSize (id);
+  }  
 }

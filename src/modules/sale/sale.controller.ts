@@ -50,19 +50,19 @@ export class SaleController {
       return await this.saleService.getSalesByBranch(branchId);
   }
 
-  @Get("commerce/:commerceId")
-  async getSalesByCommerce (@Param("commerceId", ParseUUIDPipe) commerceId:string,
-                            @Query("startDate") startDate?: Date,
-                            @Query("endDate") endDate?: Date): Promise<Sale[]> {
-      if (startDate) {
-          if (endDate) {
-              return await this.saleService.getSalesByCommerce(commerceId, startDate, endDate);
-          } else {
-              return await this.saleService.getSalesByCommerce(commerceId, startDate);
-          }
-      }
-      return await this.saleService.getSalesByCommerce(commerceId);
-  }
+//   @Get("commerce/:commerceId")
+//   async getSalesByCommerce (@Param("commerceId", ParseUUIDPipe) commerceId:string,
+//                             @Query("startDate") startDate?: Date,
+//                             @Query("endDate") endDate?: Date): Promise<Sale[]> {
+//       if (startDate) {
+//           if (endDate) {
+//               return await this.saleService.getSalesByCommerce(commerceId, startDate, endDate);
+//           } else {
+//               return await this.saleService.getSalesByCommerce(commerceId, startDate);
+//           }
+//       }
+//       return await this.saleService.getSalesByCommerce(commerceId);
+//   }
 
   @Get(":id")
   async getSaleById (@Param("id", ParseUUIDPipe) id:string): Promise<Sale> {

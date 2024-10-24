@@ -1,36 +1,37 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete, ParseUUIDPipe, Put } from '@nestjs/common';
 import { BrandService } from './brand.service';
 import { CreateBrandDto } from './dto/create-brand.dto';
 import { UpdateBrandDto } from './dto/update-brand.dto';
 import { ApiTags } from '@nestjs/swagger';
+import { Brand } from './entities/brand.entity';
 
 @ApiTags("Brand")
 @Controller('brand')
 export class BrandController {
   constructor(private readonly brandService: BrandService) {}
 
-  @Post()
-  create(@Body() createBrandDto: CreateBrandDto) {
-    return this.brandService.create(createBrandDto);
-  }
-
   @Get()
-  findAll() {
-    return this.brandService.findAll();
+  async getBrands (): Promise<Brand[]> {
+    return this.brandService.getBrands();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.brandService.findOne(+id);
+  @Get("id")
+  async getBrandById (@Param("id", ParseUUIDPipe) id:string): Promise<Brand> {
+      return this.brandService.getBrandById(id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateBrandDto: UpdateBrandDto) {
-    return this.brandService.update(+id, updateBrandDto);
+  @Post()
+  async createBrand (@Body() brand: CreateBrandDto): Promise<Brand> {
+      return await this.brandService.createBrand(brand);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.brandService.remove(+id);
+  @Put("id")
+  async updateBrand (@Param("id", ParseUUIDPipe) id:string, brand: UpdateBrandDto): Promise<Brand> {
+    return await this.brandService.updateBrand(id, brand);
   }
+
+  @Delete("id")
+  async deleteBrand (@Param("id", ParseUUIDPipe) id:string): Promise<Brand> {
+    return await this.brandService.deleteBrand(id);
+  }  
 }

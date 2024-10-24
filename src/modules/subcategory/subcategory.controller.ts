@@ -1,34 +1,39 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete, ParseUUIDPipe, Put } from '@nestjs/common';
 import { SubcategoryService } from './subcategory.service';
 import { CreateSubcategoryDto } from './dto/create-subcategory.dto';
 import { UpdateSubcategoryDto } from './dto/update-subcategory.dto';
+import { Subcategory } from './entities/subcategory.entity';
 
 @Controller('subcategory')
 export class SubcategoryController {
   constructor(private readonly subcategoryService: SubcategoryService) {}
+  @Get()
+  async getSubcategories (): Promise<Subcategory[]> {
+    return this.subcategoryService.getSubcategories();
+  }
+
+  @Get("brand/:brandId")
+  async getSubcategoriesByBrand (@Param("brandId", ParseUUIDPipe) brandId:string): Promise<Subcategory[]> {
+    return this.subcategoryService.getSubcategoriesByBrand(brandId);
+  }
+
+  @Get("id")
+  async getSubcategoryById (@Param("id", ParseUUIDPipe) id:string): Promise<Subcategory> {
+      return this.subcategoryService.getSubcategoryById(id);
+  }
 
   @Post()
-  create(@Body() createSubcategoryDto: CreateSubcategoryDto) {
-    return this.subcategoryService.create(createSubcategoryDto);
+  async createSubcategory (@Body() model: CreateSubcategoryDto): Promise<Subcategory> {
+      return await this.subcategoryService.createSubcategory(model);
   }
 
-  @Get()
-  findAll() {
-    return this.subcategoryService.findAll();
+  @Put("id")
+  async updateSubcategory (@Param("id", ParseUUIDPipe) id:string, model: UpdateSubcategoryDto): Promise<Subcategory> {
+    return await this.subcategoryService.updateSubcategory(id, model);
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.subcategoryService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateSubcategoryDto: UpdateSubcategoryDto) {
-    return this.subcategoryService.update(+id, updateSubcategoryDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.subcategoryService.remove(+id);
-  }
+  @Delete("id")
+  async deleteSubcategory (@Param("id", ParseUUIDPipe) id:string): Promise<Subcategory> {
+    return await this.subcategoryService.deleteSubcategory (id);
+  }  
 }

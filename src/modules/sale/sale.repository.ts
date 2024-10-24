@@ -41,16 +41,16 @@ export class SaleRepository {
         return await this.saleRepository.find({ where: {branchId}});
     }
 
-    async getSalesByCommerce (commerceId:string, startDate?: Date, endDate?: Date): Promise<Sale[]> {
-        if (startDate) {
-            if (endDate) {
-                return await this.saleRepository.find({ where: {branch: {commerceId}, date: Between (startDate, endDate) }});
-            } else {
-                return await this.saleRepository.find({ where: {branch: {commerceId}, date: Equal (startDate) }});
-            }
-        }
-        return await this.saleRepository.find({ where: {branch: {commerceId}}});
-    }
+    // async getSalesByCommerce (commerceId:string, startDate?: Date, endDate?: Date): Promise<Sale[]> {
+    //     if (startDate) {
+    //         if (endDate) {
+    //             return await this.saleRepository.find({ where: {branch: {commerceId}, date: Between (startDate, endDate) }});
+    //         } else {
+    //             return await this.saleRepository.find({ where: {branch: {commerceId}, date: Equal (startDate) }});
+    //         }
+    //     }
+    //     return await this.saleRepository.find({ where: {branch: {commerceId}}});
+    // }
 
     async getSaleById (id:string): Promise<Sale> {
         return await this.saleRepository.findOne({where: {id}});

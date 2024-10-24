@@ -7,13 +7,13 @@ export class CommerceService {
     
   constructor (private readonly commerceRepository: CommerceRepository) {}
 
-    async getCommerces (): Promise<Commerce[]> {
-      return await this.commerceRepository.getCommerces()
+    async getCommerce (): Promise<Commerce> {
+      return await this.commerceRepository.getCommerce()
     }
 
-    async getCommerceByUserId (userId: string): Promise<Commerce[]> {
-      return await this.commerceRepository.getCommerceByUserId(userId)
-    }
+    // async getCommerceByUserId (userId: string): Promise<Commerce[]> {
+    //   return await this.commerceRepository.getCommerceByUserId(userId)
+    // }
 
     async getCommerceById (id: string): Promise<Commerce> {
       const commerce = await this.commerceRepository.getCommerceById(id)

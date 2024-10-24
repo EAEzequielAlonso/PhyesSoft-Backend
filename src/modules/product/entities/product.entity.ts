@@ -42,11 +42,11 @@ export class Product {
     @Column({type: "uuid", nullable:true})
     modelId:string;
 
-    @ManyToOne (() => Commerce, (commerce) => commerce.products)
-    @JoinColumn({name:"commerceId"})
-    commerce: Commerce;
-    @Column({type: "uuid", nullable:true})
-    commerceId: string;
+    // @ManyToOne (() => Commerce, (commerce) => commerce.products)
+    // @JoinColumn({name:"commerceId"})
+    // commerce: Commerce;
+    // @Column({type: "uuid", nullable:true})
+    // commerceId: string;
 
     @OneToMany (() => SaleProducts, (saleProducts) => saleProducts.product)
     saleProducts: SaleProducts[]

@@ -8,17 +8,17 @@ export class CommerceRepository {
     constructor (
           @InjectRepository(Commerce) private commerceRepository: Repository<Commerce>) {}
 
-    async getCommerces (): Promise<Commerce[]> {
-        return await this.commerceRepository.find()
+    async getCommerce (): Promise<Commerce> {
+        return await this.commerceRepository.find()[0];
     }
 
-    async getCommerceByUserId (userId: string): Promise<Commerce[]> {
-      return await this.commerceRepository.find({where: {userPropId: userId}})
-    }
+    // async getCommerceByUserId (userId: string): Promise<Commerce[]> {
+    //   return await this.commerceRepository.find({where: {userPropId: userId}})
+    // }
 
-    async exist (commerceId: string, userId: string): Promise<Boolean> {
-      return await this.commerceRepository.exists({where: {id:commerceId, userPropId: userId}})
-    }
+    // async exist (commerceId: string, userId: string): Promise<Boolean> {
+    //   return await this.commerceRepository.exists({where: {id:commerceId, userPropId: userId}})
+    // }
 
     async getCommerceById (id: string): Promise<Commerce> {
       return await this.commerceRepository.findOne({where: {id}})

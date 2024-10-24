@@ -17,16 +17,16 @@ export class BranchRepository {
     }
 
     async exist (branchId: string, userId: string): Promise<Boolean> {
-      return await this.branchRepository.exists({where: {id:branchId, commerce: {userPropId: userId}}})
+      return await this.branchRepository.exists({where: {id:branchId}}) 
     }
 
-    async getBranchByCommerceId (commerceId: string): Promise<Branch[]> {
-        return await this.branchRepository.find({where: {commerceId}})
-    }
+    // async getBranchByCommerceId (commerceId: string): Promise<Branch[]> {
+    //     return await this.branchRepository.find({where: {commerceId}})
+    // }
 
-    async getBranchByUserId (userId: string): Promise<Branch[]> {
-        return await this.branchRepository.find({where: {commerce: {userPropId: userId}}})
-    }
+    // async getBranchByUserId (userId: string): Promise<Branch[]> {
+    //     return await this.branchRepository.find({where: {commerce: {userPropId: userId}}})
+    // }
 
     async createBranch(user: Partial<Branch>): Promise<Branch> {
       return await this.branchRepository.save(user);

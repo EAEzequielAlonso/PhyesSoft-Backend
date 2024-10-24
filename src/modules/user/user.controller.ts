@@ -22,8 +22,8 @@ export class UserController {
   @Get("clients")
   @ApiBearerAuth()
   @UseGuards(AuthGuard)
-  async getClients (@Req() req: Request): Promise<User[]> {
-    return await this.userService.getClients(req.user?.id);
+  async getClients (): Promise<User[]> {
+    return await this.userService.getClients();
   }
 
   @Get("email/:email")

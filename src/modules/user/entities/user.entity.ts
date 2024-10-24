@@ -63,16 +63,16 @@ import { Sale } from 'src/modules/sale/entities/sale.entity';
     @Column({type: "uuid", nullable:true})
     sexId: string;
 
-    @OneToMany(() => Commerce, (commerce) => commerce.userProp)
-    commerces: Commerce[];
+    // @OneToMany(() => Commerce, (commerce) => commerce.userProp)
+    // commerces: Commerce[];
 
     @OneToMany(() => Sale, (sale) => sale.client)
     sales: Sale[];
 
-    @ManyToOne(() => Commerce, (commerce) => commerce.userClients)
-    @JoinColumn({name: "commerceId"})
-    commerce: Commerce;
-    @Column({type: "uuid", nullable:true})
-    commerceId: string
+    // @ManyToOne(() => Commerce, (commerce) => commerce.userClients)
+    // @JoinColumn({name: "commerceId"})
+    // commerce: Commerce;
+    // @Column({type: "uuid", nullable:true})
+    // commerceId: string
   }
   

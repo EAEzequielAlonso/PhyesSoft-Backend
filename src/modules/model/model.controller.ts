@@ -1,34 +1,40 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, ParseUUIDPipe, Put } from '@nestjs/common';
 import { ModelService } from './model.service';
 import { CreateModelDto } from './dto/create-model.dto';
 import { UpdateModelDto } from './dto/update-model.dto';
+import { Model } from './entities/model.entity';
 
-@Controller('model')
+@Controller('model') 
 export class ModelController {
   constructor(private readonly modelService: ModelService) {}
 
-  @Post()
-  create(@Body() createModelDto: CreateModelDto) {
-    return this.modelService.create(createModelDto);
-  }
-
   @Get()
-  findAll() {
-    return this.modelService.findAll();
+  async getModels (): Promise<Model[]> {
+    return this.modelService.getModels();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.modelService.findOne(+id);
+  @Get("brand/:brandId")
+  async getModelsByBrand (@Param("brandId", ParseUUIDPipe) brandId:string): Promise<Model[]> {
+    return this.modelService.getModelsByBrand(brandId);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateModelDto: UpdateModelDto) {
-    return this.modelService.update(+id, updateModelDto);
+  @Get("id")
+  async getModelById (@Param("id", ParseUUIDPipe) id:string): Promise<Model> {
+      return this.modelService.getModelById(id);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.modelService.remove(+id);
+  @Post()
+  async createModel (@Body() model: CreateModelDto): Promise<Model> {
+      return await this.modelService.createModel(model);
   }
+
+  @Put("id")
+  async updateModel (@Param("id", ParseUUIDPipe) id:string, model: UpdateModelDto): Promise<Model> {
+    return await this.modelService.updateModel(id, model);
+  }
+
+  @Delete("id")
+  async deleteModel (@Param("id", ParseUUIDPipe) id:string): Promise<Model> {
+    return await this.modelService.deleteModel (id);
+  }  
 }

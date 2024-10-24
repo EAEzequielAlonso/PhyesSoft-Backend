@@ -6,8 +6,6 @@ import { CreateBranchDto } from './dto/create-branch.dto';
 import { UpdateBranchDto } from './dto/update-branch.dto';
 import { Request } from 'express';
 import { AuthGuard } from '../auth/guards/Auth.guard';
-import { BranchGuard } from 'src/guards/branch.guard';
-import { CommerceGuard } from 'src/guards/commerce.guard';
 
 @ApiTags("Branches")
 @Controller('branch')
@@ -19,19 +17,19 @@ export class BranchController {
     return await this.branchService.getBranches()
   }
 
-  @Get("commerce/:commerceId")
-  @ApiBearerAuth()
-  @UseGuards(AuthGuard)
-  async getBranchByCommerceId (@Param("commerceId", ParseUUIDPipe) commerceId: string): Promise<Branch[]> {
-    return await this.branchService.getBranchByCommerceId(commerceId)
-  }
+  // @Get("commerce/:commerceId")
+  // @ApiBearerAuth()
+  // @UseGuards(AuthGuard)
+  // async getBranchByCommerceId (@Param("commerceId", ParseUUIDPipe) commerceId: string): Promise<Branch[]> {
+  //   return await this.branchService.getBranchByCommerceId(commerceId)
+  // }
 
-  @Get("user")
-  @ApiBearerAuth()
-  @UseGuards(AuthGuard)
-  async getBranchByUser (@Req() request: Request): Promise<Branch[]> {
-    return await this.branchService.getBranchByUserId(request.user?.id)
-  }
+  // @Get("user")
+  // @ApiBearerAuth()
+  // @UseGuards(AuthGuard)
+  // async getBranchByUser (@Req() request: Request): Promise<Branch[]> {
+  //   return await this.branchService.getBranchByUserId(request.user?.id)
+  // }
 
   @Get(":id")
   @ApiBearerAuth()

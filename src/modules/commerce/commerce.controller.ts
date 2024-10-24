@@ -11,38 +11,38 @@ export class CommerceController {
   constructor(private readonly commerceService: CommerceService) {}
 
   @Get()
-  async getCommerces (): Promise<Commerce[]> {
-    return await this.commerceService.getCommerces()
+  async getCommerce (): Promise<Commerce> {
+    return await this.commerceService.getCommerce()
   }
 
-  @Get("user/:userId")
-  async getCommerceByUserId (@Param("id", ParseUUIDPipe) userId: string): Promise<Commerce[]> {
-    return await this.commerceService.getCommerceByUserId(userId)
-  }
+  // @Get("user/:userId")
+  // async getCommerceByUserId (@Param("id", ParseUUIDPipe) userId: string): Promise<Commerce[]> {
+  //   return await this.commerceService.getCommerceByUserId(userId)
+  // }
 
-  @Get(":id")
-  async getCommerceById (@Param("id", ParseUUIDPipe) id: string): Promise<Commerce> {
-    return await this.commerceService.getCommerceById(id)
-  }
+  // @Get(":id")
+  // async getCommerceById (@Param("id", ParseUUIDPipe) id: string): Promise<Commerce> {
+  //   return await this.commerceService.getCommerceById(id)
+  // }
 
-  @Post()
-  async createCommerce(@Body() commerce: CreateCommerceDto): Promise<Commerce> {
-    return await this.commerceService.createCommerce(commerce);
-  }
+  // @Post()
+  // async createCommerce(@Body() commerce: CreateCommerceDto): Promise<Commerce> {
+  //   return await this.commerceService.createCommerce(commerce);
+  // }
 
-  @Put("unsubscribe/:id")
-  async unsubscribeCommerce(@Param("id", ParseUUIDPipe) id: string): Promise<string> {
-    return await this.commerceService.unsubscribeCommerce(id);
-  }
+  // @Put("unsubscribe/:id")
+  // async unsubscribeCommerce(@Param("id", ParseUUIDPipe) id: string): Promise<string> {
+  //   return await this.commerceService.unsubscribeCommerce(id);
+  // }
 
   @Put(":id")
   async updateCommerce(@Param("id", ParseUUIDPipe) id: string, @Body() commerce: UpdateCommerceDto): Promise<string> {
     return await this.commerceService.updateCommerce(id, commerce);
   }
 
-  @Delete(":id")
-  async deleteCommerce(@Param("id", ParseUUIDPipe) id: string): Promise<string> {
-    return await this.commerceService.deleteCommerce(id);
-  }
+  // @Delete(":id")
+  // async deleteCommerce(@Param("id", ParseUUIDPipe) id: string): Promise<string> {
+  //   return await this.commerceService.deleteCommerce(id);
+  // }
 
 }

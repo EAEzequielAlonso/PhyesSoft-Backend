@@ -32,6 +32,12 @@ export class Sale {
     @Column("uuid")
     branchId: string
 
+    // @ManyToOne(() => CajaVenta, (cajaVenta) => cajaVenta.sales)
+    // @JoinColumn({name: "cajaVentaId"})
+    // cajaVenta : CajaVenta;
+    // @Column("uuid")
+    // cajaVentaId: string
+
     @ManyToOne(() => User, (user) => user.sales)
     @JoinColumn({name: "clientId"})
     client : User

@@ -1,6 +1,5 @@
-import { Commerce } from "src/modules/commerce/entities/commerce.entity";
+// import { Commerce } from "src/modules/commerce/entities/commerce.entity";
 import { Sale } from "src/modules/sale/entities/sale.entity";
-import { User } from "src/modules/user/entities/user.entity";
 import { Column, Entity, Index, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity({
@@ -36,12 +35,12 @@ import { Column, Entity, Index, JoinColumn, ManyToOne, OneToMany, PrimaryGenerat
     @Column({ type: 'boolean' })
     central: boolean;
 
-    @ManyToOne(() => Commerce, (commerce) => commerce.branches)
-    @JoinColumn({name: "commerceId"})
-    commerce: Commerce;
-    @Index()
-    @Column("uuid")
-    commerceId: string;
+    // @ManyToOne(() => Commerce, (commerce) => commerce.branches)
+    // @JoinColumn({name: "commerceId"})
+    // commerce: Commerce;
+    // @Index()
+    // @Column("uuid")
+    // commerceId: string;
 
     @OneToMany(() => Sale, (sale) => sale.branch)
     sales : Sale[]

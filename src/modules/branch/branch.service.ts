@@ -15,13 +15,13 @@ export class BranchService {
       return await this.branchRepository.getBranchById(id)
     }
 
-    async getBranchByCommerceId (commerceId: string): Promise<Branch[]> {
-      return await this.branchRepository.getBranchByCommerceId(commerceId)
-    }
+    // async getBranchByCommerceId (commerceId: string): Promise<Branch[]> {
+    //   return await this.branchRepository.getBranchByCommerceId(commerceId)
+    // }
 
-    async getBranchByUserId (userId: string): Promise<Branch[]> {
-      return await this.branchRepository.getBranchByUserId(userId)
-    }
+    // async getBranchByUserId (userId: string): Promise<Branch[]> {
+    //   return await this.branchRepository.getBranchByUserId(userId)
+    // }
 
     async createBranch(branch: Partial<Branch>): Promise<Branch> {
       const branchFind = await this.branchRepository.createBranch(branch);
