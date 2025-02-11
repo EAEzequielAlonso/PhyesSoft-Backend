@@ -6,78 +6,80 @@
 // import { Product } from "src/modules/product/entities/product.entity";
 // import { Size } from "src/modules/size/entities/size.entity";
 // import { Subcategory } from "src/modules/subcategory/entities/subcategory.entity";
-// import { User } from "src/modules/user/entities/user.entity";
-import { Column, Entity, Index, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Branch } from 'src/modules/branch/entities/branch.entity';
+import {
+  Column,
+  Entity,
+  Index,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
+import { UserRoleCommerce } from "src/modules/user/entities/userRoleCommerce.entity";
 
 @Entity({
-    name: 'commerces',
+  name: 'commerces',
+})
+export class Commerce {
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
+
+  @Index()
+  @Column({ type: 'varchar', length: 50 })
+  nameFantacy: string;
+
+  @Index()
+  @Column({ type: 'varchar', length: 50 })
+  nameCompany: string;
+
+  @Column({ type: 'varchar', length: 100, nullable: true })
+  slogan: string;
+
+  @Column({
+    type: 'varchar',
+    default:
+      'https://w7.pngwing.com/pngs/440/426/png-transparent-computer-icons-logo-commerce-logo-commerce-computer-icons.png',
   })
-  export class Commerce {
-    @PrimaryGeneratedColumn('uuid')
-    id: string;
-    
-    @Index()
-    @Column({ type: 'varchar', length: 50 })
-    nameFantacy: string;
+  imgLogo: string;
 
-    @Index()
-    @Column({ type: 'varchar', length: 50 })
-    nameCompany: string;
+  @Column({ type: 'varchar', length: 50, unique: true })
+  emailCompany: string;
 
-    @Column({ type: 'varchar', length: 100, nullable: true })
-    slogan: string;
-  
-    @Column({ type: 'varchar',
-        default: 'https://w7.pngwing.com/pngs/440/426/png-transparent-computer-icons-logo-commerce-logo-commerce-computer-icons.png',})
-    imgLogo: string;
-  
-    @Column({ type: 'varchar',
-      default: 'https://img.freepik.com/vector-premium/fondo-banner-azul-naranja-plantilla-fondo-patron-banner-diseno-grafico-abstracto-vector_181182-18805.jpg',})
-    imgBanner: string;
-  
-    @Column({ type: 'varchar', length: 50, unique: true })
-    emailCompany: string;
-  
-    @Column({ type: 'date', nullable: true })
-    InitDate: Date;
-  
-    @Column({ type: 'date' })
-    startDate: Date;
-  
-    @Column({ type: 'date', nullable: true })
-    endDate: Date;
+  @Column({ type: 'date', nullable: true })
+  InitDate: Date;
 
-    // @ManyToOne(() => User, (user) => user.commerces)
-    // @JoinColumn({name: "userId"})
-    // userProp: User;
-    // @Index()
-    // @Column("uuid")
-    // userPropId: string;
+  @Column({ type: 'date' })
+  createAt: Date;
 
-    // @OneToMany (() => Branch, (branch) => branch.commerce)
-    // branches: Branch[];
+  @Column({ type: 'date', nullable: true })
+  endDate: Date;
 
-    // @OneToMany (() => User, (user) => user.commerce)
-    // userClients: User[];
+  @OneToMany (() => UserRoleCommerce, (userRoleCommerce) => userRoleCommerce.commerce)
+  userRoleCommerces: UserRoleCommerce[];
 
-    // @OneToMany (() => Product, (product) => product.commerce)
-    // products: Product[];
+  @OneToMany (() => Branch, (branch) => branch.commerce)
+  branches: Branch[];
 
-    // @OneToMany (() => Category, (category) => category.commerce)
-    // categories: Category[];
+  // @OneToMany (() => User, (user) => user.commerce)
+  // userClients: User[];
 
-    // @OneToMany (() => Subcategory, (subcategory) => subcategory.commerce)
-    // subcategories: Subcategory[];
+  // @OneToMany (() => Product, (product) => product.commerce)
+  // products: Product[];
 
-    // @OneToMany (() => Brand, (brand) => brand.commerce)
-    // brands: Brand[];
+  // @OneToMany (() => Category, (category) => category.commerce)
+  // categories: Category[];
 
-    // @OneToMany (() => Model, (model) => model.commerce)
-    // models: Model[];
+  // @OneToMany (() => Subcategory, (subcategory) => subcategory.commerce)
+  // subcategories: Subcategory[];
 
-    // @OneToMany (() => Size, (size) => size.commerce)
-    // sizes: Size[];
+  // @OneToMany (() => Brand, (brand) => brand.commerce)
+  // brands: Brand[];
 
-    // @OneToMany (() => Color, (color) => color.commerce)
-    // colors: Color[];
-  }
+  // @OneToMany (() => Model, (model) => model.commerce)
+  // models: Model[];
+
+  // @OneToMany (() => Size, (size) => size.commerce)
+  // sizes: Size[];
+
+  // @OneToMany (() => Color, (color) => color.commerce)
+  // colors: Color[];
+}

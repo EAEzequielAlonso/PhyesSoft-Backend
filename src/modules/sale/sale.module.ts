@@ -11,6 +11,11 @@ import { SaleProducts } from '../saleProducts/entities/saleProducts.entity';
 @Module({
   imports: [TypeOrmModule.forFeature([Sale, SaleProducts])],
   controllers: [SaleController],
-  providers: [SaleService, SaleRepository, SaleProductsService, SaleProductsRepository],
+  providers: [
+    SaleService,
+    SaleRepository,
+    SaleProductsService,
+    SaleProductsRepository,
+  ],
 })
-export class SaleModule {} 
+export class SaleModule {}

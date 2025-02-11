@@ -13,7 +13,20 @@ import { Size } from '../size/entities/size.entity';
 import { Product } from '../product/entities/product.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([User, UserRole, Sex, Category, Subcategory, Brand, Model, Color, Size, Product])],
+  imports: [
+    TypeOrmModule.forFeature([
+      User,
+      UserRole,
+      Sex,
+      Category,
+      Subcategory,
+      Brand,
+      Model,
+      Color,
+      Size,
+      Product,
+    ]),
+  ],
   controllers: [],
   providers: [PreloadsService],
 })

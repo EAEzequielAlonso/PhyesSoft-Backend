@@ -29,7 +29,10 @@ export class AuthGuard implements CanActivate {
       request.user = payload;
       return true;
     } catch (err) {
-      throw new HttpException({ status: 401, error: `Token Invalido ${err}` }, 401);
+      throw new HttpException(
+        { status: 401, error: `Token Invalido ${err}` },
+        401,
+      );
     }
   }
 }

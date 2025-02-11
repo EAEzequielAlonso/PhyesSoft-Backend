@@ -2,20 +2,20 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { ValidationPipe } from '@nestjs/common';
-import cors from "cors"
+import cors from 'cors';
+import { NestExpressApplication } from '@nestjs/platform-express';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-
   app.useGlobalPipes(
     new ValidationPipe({
       // whitelist hace que solo se admitan las propiedades del DTO y ninguna adicional.
-      whitelist: true,      
+      whitelist: true,
     }),
   );
   app.useGlobalPipes(new ValidationPipe({ transform: true }));
 
-  app.use(cors())
+  app.use(cors());
   //genero el Document Builder donde preconfiguro los datos basicos
   const swaggerConfig = new DocumentBuilder()
     .setTitle('StyleFlow - Backend para SaaS de Indumentaria')
@@ -35,6 +35,6 @@ async function bootstrap() {
   });
 
   await app.listen(3000);
-  console.log("Server Listening on Port 3000")
+  console.log('Server Listening on Port 3000');
 }
 bootstrap();

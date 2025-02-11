@@ -1,49 +1,43 @@
-import { Branch } from "../../branch/entities/branch.entity";
-import { SaleProducts } from "../../saleProducts/entities/saleProducts.entity";
-import { User } from "../../user/entities/user.entity";
-import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Branch } from '../../branch/entities/branch.entity';
+import { SaleProducts } from '../../saleProducts/entities/saleProducts.entity';
+import { User } from '../../user/entities/user.entity';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity({
-    name: "sales"
+  name: 'sales',
 })
 export class Sale {
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
-    @PrimaryGeneratedColumn("uuid")
-    id: string
+  @Column({ nullable: true, unique: true })
+  numSale: number;
 
-    @Column({nullable:true, unique:true})
-    numSale:number
+  @Column('date')
+  date: Date;
 
-    @Column("date")
-    date: Date;
+  @Column('float')
+  subtotal: number;
 
-    @Column("float")
-    subtotal: number
+  @Column('float')
+  discount: number;
 
-    @Column("float")
-    discount: number
+  @Column('float')
+  total: number;
 
-    @Column("float")
-    total: number
+  // @ManyToOne(() => CajaVenta, (cajaVenta) => cajaVenta.sales)
+  // @JoinColumn({name: "cajaVentaId"})
+  // cajaVenta : CajaVenta;
+  // @Column("uuid")
+  // cajaVentaId: string
 
-    @ManyToOne(() => Branch, (branch) => branch.sales)
-    @JoinColumn({name: "branchId"})
-    branch : Branch;
-    @Column("uuid")
-    branchId: string
-
-    // @ManyToOne(() => CajaVenta, (cajaVenta) => cajaVenta.sales)
-    // @JoinColumn({name: "cajaVentaId"})
-    // cajaVenta : CajaVenta;
-    // @Column("uuid")
-    // cajaVentaId: string
-
-    @ManyToOne(() => User, (user) => user.sales)
-    @JoinColumn({name: "clientId"})
-    client : User
-    @Column("uuid")
-    clientId: string
-
-    @OneToMany (() => SaleProducts, (saleProducts) => saleProducts.sale)
-    saleProducts: SaleProducts
+  @OneToMany(() => SaleProducts, (saleProducts) => saleProducts.sale)
+  saleProducts: SaleProducts;
 }

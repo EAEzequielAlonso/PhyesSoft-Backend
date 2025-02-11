@@ -1,18 +1,27 @@
-import { Controller, Get, Post, Body, Param, Delete, ParseUUIDPipe, Put } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Param,
+  Delete,
+  ParseUUIDPipe,
+  Put,
+} from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { CommerceService } from './commerce.service';
 import { Commerce } from './entities/commerce.entity';
 import { CreateCommerceDto } from './dto/create-commerce.dto';
 import { UpdateCommerceDto } from './dto/update-commerce.dto';
 
-@ApiTags("Commerces")
+@ApiTags('Commerces')
 @Controller('commerce')
 export class CommerceController {
   constructor(private readonly commerceService: CommerceService) {}
 
   @Get()
-  async getCommerce (): Promise<Commerce> {
-    return await this.commerceService.getCommerce()
+  async getCommerce(): Promise<Commerce> {
+    return await this.commerceService.getCommerce();
   }
 
   // @Get("user/:userId")
@@ -35,8 +44,11 @@ export class CommerceController {
   //   return await this.commerceService.unsubscribeCommerce(id);
   // }
 
-  @Put(":id")
-  async updateCommerce(@Param("id", ParseUUIDPipe) id: string, @Body() commerce: UpdateCommerceDto): Promise<string> {
+  @Put(':id')
+  async updateCommerce(
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() commerce: UpdateCommerceDto,
+  ): Promise<string> {
     return await this.commerceService.updateCommerce(id, commerce);
   }
 
@@ -44,5 +56,4 @@ export class CommerceController {
   // async deleteCommerce(@Param("id", ParseUUIDPipe) id: string): Promise<string> {
   //   return await this.commerceService.deleteCommerce(id);
   // }
-
 }

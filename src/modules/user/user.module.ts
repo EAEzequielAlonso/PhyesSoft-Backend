@@ -11,5 +11,6 @@ import { Sex } from './entities/sex.entity';
   imports: [TypeOrmModule.forFeature([User, UserRole, Sex])],
   controllers: [UserController],
   providers: [UserService, UserRepository],
+  exports: [UserRepository, TypeOrmModule.forFeature([User, UserRole, Sex])],
 })
 export class UserModule {}

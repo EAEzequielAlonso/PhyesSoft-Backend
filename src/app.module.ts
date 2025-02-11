@@ -27,7 +27,8 @@ import { SizeModule } from './modules/size/size.module';
     }),
     TypeOrmModule.forRootAsync({
       inject: [ConfigService],
-      useFactory: (configService: ConfigService) => configService.get('typeorm'),
+      useFactory: (configService: ConfigService) =>
+        configService.get('typeorm'),
     }),
 
     // modulo para generar los token
@@ -36,9 +37,22 @@ import { SizeModule } from './modules/size/size.module';
       signOptions: { expiresIn: '5h' },
       secret: process.env.JWT_SECRET,
     }),
-  PreloadsModule, AuthModule, CommerceModule, ProductModule, UserModule, BranchModule, SaleProductsModule, 
-  SaleModule, BrandModule, CategoryModule, ColorModule, ModelModule, ProviderModule, SizeModule, 
-  SubcategoryModule],
+    PreloadsModule,
+    AuthModule,
+    CommerceModule,
+    ProductModule,
+    UserModule,
+    BranchModule,
+    SaleProductsModule,
+    SaleModule,
+    BrandModule,
+    CategoryModule,
+    ColorModule,
+    ModelModule,
+    ProviderModule,
+    SizeModule,
+    SubcategoryModule,
+  ],
   controllers: [],
   providers: [],
 })

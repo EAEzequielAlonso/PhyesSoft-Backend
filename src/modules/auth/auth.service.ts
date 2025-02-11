@@ -10,23 +10,30 @@ import { Role } from '../user/roles/roles.enum';
 
 @Injectable()
 export class AuthService {
-
-  constructor (private readonly userRepository: UserRepository,
+  constructor(
+    private readonly userRepository: UserRepository,
     private readonly jwtService: JwtService,
   ) {}
 
   async signup(user: CreateUserDto): Promise<Omit<User, 'password'>> {
-
     let userDB: User = await this.userRepository.getUserByEmail(user.email);
-    if (userDB) throw new BadRequestException(`Yo existe un usuario registrado con este email, Prueba con "Olvide mi contraseña"`);
+    if (userDB)
+      throw new BadRequestException(
+        `Yo existe un usuario registrado con este email, Prueba con "Olvide mi contraseña"`,
+      );
 
     userDB = await this.userRepository.getUserByDni(user.dni);
-    if (userDB) throw new BadRequestException(`Yo existe un usuario registrado con este DNI, Prueba con "Olvide mi contraseña"`);
-    
+    if (userDB)
+      throw new BadRequestException(
+        `Yo existe un usuario registrado con este DNI, Prueba con "Olvide mi contraseña"`,
+      );
+
     const passwordHash = await bcrypt.hash(user.password, 10);
     const { passwordConfirm, ...createUser } = user;
 
-    const userRole: UserRole = await this.userRepository.getRolesUsersByRole(Role.Admin);
+    const userRole: UserRole = await this.userRepository.getRolesUsersByRole(
+      Role.Admin,
+    );
 
     const userSave = await this.userRepository.createUser({
       ...createUser,
@@ -45,9 +52,7 @@ export class AuthService {
 
   async signin(userLogin: LoginUserDto): Promise<Object> {
     // comprueba que el usuario exista, sino devuelve un error
-    const userDB = await this.userRepository.getUserByDni(
-      userLogin.dni,
-    );
+    const userDB = await this.userRepository.getUserByDni(userLogin.dni);
     if (!userDB) {
       throw new BadRequestException('Usuario o Clave incorrectos');
     }
@@ -63,9 +68,9 @@ export class AuthService {
 
     //creo el Payload a guardar en el token, con id, email, y los roles asignados al usuario
     const userPayload = {
-      ...userDB, 
+      ...userDB,
     };
     const token = this.jwtService.sign(userPayload);
-    return {token: token};
+    return { token: token };
   }
 }

@@ -4,44 +4,43 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Branch } from './entities/branch.entity';
 @Injectable()
 export class BranchRepository {
+  constructor(
+    @InjectRepository(Branch) private branchRepository: Repository<Branch>,
+  ) {}
 
-    constructor (
-          @InjectRepository(Branch) private branchRepository: Repository<Branch>) {}
+  async getBranchs(): Promise<Branch[]> {
+    return await this.branchRepository.find();
+  }
 
-    async getBranchs (): Promise<Branch[]> {
-        return await this.branchRepository.find()
-    }
+  async getBranchById(id: string): Promise<Branch> {
+    return await this.branchRepository.findOne({ where: { id } });
+  }
 
-    async getBranchById (id: string): Promise<Branch> {
-      return await this.branchRepository.findOne({where: {id}})
-    }
+  async exist(branchId: string, userId: string): Promise<Boolean> {
+    return await this.branchRepository.exists({ where: { id: branchId } });
+  }
 
-    async exist (branchId: string, userId: string): Promise<Boolean> {
-      return await this.branchRepository.exists({where: {id:branchId}}) 
-    }
+  // async getBranchByCommerceId (commerceId: string): Promise<Branch[]> {
+  //     return await this.branchRepository.find({where: {commerceId}})
+  // }
 
-    // async getBranchByCommerceId (commerceId: string): Promise<Branch[]> {
-    //     return await this.branchRepository.find({where: {commerceId}})
-    // }
+  // async getBranchByUserId (userId: string): Promise<Branch[]> {
+  //     return await this.branchRepository.find({where: {commerce: {userPropId: userId}}})
+  // }
 
-    // async getBranchByUserId (userId: string): Promise<Branch[]> {
-    //     return await this.branchRepository.find({where: {commerce: {userPropId: userId}}})
-    // }
+  async createBranch(user: Partial<Branch>): Promise<Branch> {
+    return await this.branchRepository.save(user);
+  }
 
-    async createBranch(user: Partial<Branch>): Promise<Branch> {
-      return await this.branchRepository.save(user);
-    }
+  async updateBranch(id: string, user: Partial<Branch>): Promise<UpdateResult> {
+    return await this.branchRepository.update(id, user);
+  }
 
-    async updateBranch(id: string, user: Partial<Branch>): Promise<UpdateResult> {
-      return await this.branchRepository.update(id, user);
-    }
+  async deleteBranch(id: string): Promise<DeleteResult> {
+    return await this.branchRepository.delete(id);
+  }
 
-    async deleteBranch(id: string): Promise<DeleteResult> {
-      return await this.branchRepository.delete(id);
-    }
-
-    async unsubscribeBranch(id: string): Promise<UpdateResult> {
-      return await this.branchRepository.update(id, {endDate:new Date()});
-    }
-
+  async unsubscribeBranch(id: string): Promise<UpdateResult> {
+    return await this.branchRepository.update(id, { endDate: new Date() });
+  }
 }
