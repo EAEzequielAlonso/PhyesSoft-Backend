@@ -1,3 +1,4 @@
+import { DailyCash } from 'src/modules/daily-cash/entities/daily-cash.entity';
 import { Branch } from '../../branch/entities/branch.entity';
 import { SaleProducts } from '../../saleProducts/entities/saleProducts.entity';
 import { User } from '../../user/entities/user.entity';
@@ -9,6 +10,7 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
+import { PaymentSale } from 'src/modules/payment-sales/entities/payment-sale.entity';
 
 @Entity({
   name: 'sales',
@@ -32,12 +34,15 @@ export class Sale {
   @Column('float')
   total: number;
 
-  // @ManyToOne(() => CajaVenta, (cajaVenta) => cajaVenta.sales)
-  // @JoinColumn({name: "cajaVentaId"})
-  // cajaVenta : CajaVenta;
-  // @Column("uuid")
-  // cajaVentaId: string
+  @ManyToOne(() => DailyCash, (dailyCash) => dailyCash.sales)
+  @JoinColumn({name: "dailyCashId"})
+  dailyCash : DailyCash;
+  @Column("uuid")
+  dailyCashId: string
 
   @OneToMany(() => SaleProducts, (saleProducts) => saleProducts.sale)
-  saleProducts: SaleProducts;
+  saleProducts: SaleProducts[];
+
+  @OneToMany (() => PaymentSale, (paymentSale) => paymentSale.sale)
+  paymentSales: PaymentSale[];
 }

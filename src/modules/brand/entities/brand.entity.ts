@@ -1,5 +1,6 @@
 import { Commerce } from 'src/modules/commerce/entities/commerce.entity';
 import { Model } from 'src/modules/model/entities/model.entity';
+import { Product } from 'src/modules/product/entities/product.entity';
 import {
   Column,
   Entity,
@@ -22,9 +23,12 @@ export class Brand {
   @OneToMany(() => Model, (model) => model.brand)
   models: Model[];
 
-  // @ManyToOne (() => Commerce, (commerce) => commerce.brands)
-  // @JoinColumn({name:"commerceId"})
-  // commerce: Commerce;
-  // @Column({type: "uuid", nullable:true})
-  // commerceId:string;
+  @OneToMany(() => Product, (product) => product.brand)
+  products: Product[];
+
+  @ManyToOne (() => Commerce, (commerce) => commerce.brands)
+  @JoinColumn({name:"commerceId"})
+  commerce: Commerce;
+  @Column({type: "uuid", nullable:true})
+  commerceId:string;
 }

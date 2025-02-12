@@ -10,6 +10,8 @@ import {
 } from 'typeorm';
 import { Subcategory } from 'src/modules/subcategory/entities/subcategory.entity';
 import { Commerce } from 'src/modules/commerce/entities/commerce.entity';
+import { Brand } from 'src/modules/brand/entities/brand.entity';
+import { SizeType } from 'src/modules/size-type/entities/size-type.entity';
 
 @Entity({ name: 'products' })
 export class Product {
@@ -53,12 +55,25 @@ export class Product {
   @Column({ type: 'uuid', nullable: true })
   modelId: string;
 
-  // @ManyToOne (() => Commerce, (commerce) => commerce.products)
-  // @JoinColumn({name:"commerceId"})
-  // commerce: Commerce;
-  // @Column({type: "uuid", nullable:true})
-  // commerceId: string;
+  @ManyToOne(() => Brand, (brand) => brand.products)
+  @JoinColumn({ name: 'brandId' })
+  brand: Brand;
+  @Column({ type: 'uuid', nullable: true })
+  brandId: string;
+
+  @ManyToOne (() => Commerce, (commerce) => commerce.products)
+  @JoinColumn({name:"commerceId"})
+  commerce: Commerce;
+  @Column({type: "uuid", nullable:true})
+  commerceId: string;
+
+  @ManyToOne (() => SizeType, (sizeType) => sizeType.products)
+  @JoinColumn({name:"sizeTypeId"})
+  sizeType: SizeType;
+  @Column({type: "uuid", nullable:true})
+  sizeTypeId: string;
 
   @OneToMany(() => SaleProducts, (saleProducts) => saleProducts.product)
   saleProducts: SaleProducts[];
+
 }

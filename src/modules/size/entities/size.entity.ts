@@ -1,11 +1,10 @@
 import { Commerce } from 'src/modules/commerce/entities/commerce.entity';
-import { Product } from 'src/modules/product/entities/product.entity';
 import { SaleProducts } from 'src/modules/saleProducts/entities/saleProducts.entity';
+import { SizeType } from 'src/modules/size-type/entities/size-type.entity';
 import {
   Column,
   Entity,
   JoinColumn,
-  ManyToMany,
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
@@ -16,15 +15,22 @@ export class Size {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({ type: 'varchar', length: 20 })
+  @Column('varchar')
   size: string;
 
-  @OneToMany(() => SaleProducts, (saleProduct) => saleProduct.size)
+  @OneToMany(() => SaleProducts, (saleProducts) => saleProducts.size)
   saleProducts: SaleProducts[];
 
-  // @ManyToOne (() => Commerce, (commerce) => commerce.sizes)
-  // @JoinColumn({name:"commerceId"})
-  // commerce: Commerce;
-  // @Column({type: "uuid", nullable:true})
-  // commerceId:string;
+  @ManyToOne(() => SizeType, (sizeType) => sizeType.sizes)
+  @JoinColumn({ name: 'sizeTypeId' })
+  sizeType: SizeType;
+  @Column({ type: 'uuid', nullable: true })
+  sizeTypeId: string;
+
+  @ManyToOne (() => Commerce, (commerce) => commerce.sizes)
+  @JoinColumn({name:"commerceId"})
+  commerce: Commerce;
+  @Column({type: "uuid", nullable:true})
+  commerceId:string;
+
 }

@@ -26,25 +26,6 @@ export class SaleService {
     return await this.saleRepository.getSales();
   }
 
-  async getSalesByClient(
-    clientId: string,
-    startDate?: Date,
-    endDate?: Date,
-  ): Promise<Sale[]> {
-    if (startDate) {
-      if (endDate) {
-        return await this.saleRepository.getSalesByClient(
-          clientId,
-          startDate,
-          endDate,
-        );
-      } else {
-        return await this.saleRepository.getSalesByClient(clientId, startDate);
-      }
-    }
-    return await this.saleRepository.getSalesByClient(clientId);
-  }
-
   async getSalesByBranch(
     branchId: string,
     startDate?: Date,

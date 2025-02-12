@@ -9,6 +9,7 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { UserRoleBranch } from './userBranch.entity';
+import { DailyCash } from 'src/modules/daily-cash/entities/daily-cash.entity';
 
 @Entity({
   name: 'branches',
@@ -61,4 +62,6 @@ export class Branch {
   @OneToMany (() => UserRoleBranch, (userRoleBranch) => userRoleBranch.branch)
   userRoleBranches: UserRoleBranch[];
 
+  @OneToMany (() => DailyCash, (dailyCash) => dailyCash.branch)
+  dailyCash: DailyCash[];
 }

@@ -32,26 +32,6 @@ export class SaleController {
     return await this.saleService.getSales();
   }
 
-  @Get('client/:clientId')
-  async getSalesByClient(
-    @Param('clientId', ParseUUIDPipe) clientId: string,
-    @Query('startDate') startDate?: Date,
-    @Query('endDate') endDate?: Date,
-  ): Promise<Sale[]> {
-    if (startDate) {
-      if (endDate) {
-        return await this.saleService.getSalesByClient(
-          clientId,
-          startDate,
-          endDate,
-        );
-      } else {
-        return await this.saleService.getSalesByClient(clientId, startDate);
-      }
-    }
-    return await this.saleService.getSalesByClient(clientId);
-  }
-
   @Get('branch/:branchId')
   async getSalesByBranch(
     @Param('branchId', ParseUUIDPipe) branchId: string,

@@ -8,8 +8,9 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Sex } from './sex.entity';
-import { UserRoleCommerce } from './userRoleCommerce.entity';
 import { UserRoleBranch } from 'src/modules/branch/entities/userBranch.entity';
+import { DailyCash } from 'src/modules/daily-cash/entities/daily-cash.entity';
+import { UserRole } from './role.entity';
 
 @Entity({
   name: 'users',
@@ -66,10 +67,15 @@ export class User {
   @Column({ type: 'uuid', nullable: true })
   sexId: string;
 
-  @OneToMany (() => UserRoleCommerce, (userRoleCommerce) => userRoleCommerce.user)
-  userRoleCommerces: UserRoleCommerce[];
+  @ManyToOne(() => UserRole, (role) => role.users)
+  @JoinColumn({ name: 'roleId' })
+  role: UserRole;
+  @Column({ type: 'uuid', nullable: true })
+  roleId: string;
 
   @OneToMany (() => UserRoleBranch, (userRoleBranch) => userRoleBranch.user)
   userRoleBranches: UserRoleBranch[];
 
+  @OneToMany (() => DailyCash, (dailyCash) => dailyCash.userOpen)
+  dailyCash: DailyCash[];
 }
