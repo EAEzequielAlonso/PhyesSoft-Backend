@@ -1,7 +1,7 @@
 [
     {
-        "name": "Ricardo Salazar",
-        "email": "ricardo.salazar@gmail.com",
+        "name": "Graciela Junco",
+        "email": "herz@gmail.com",
         "imgProfile": "https://st.depositphotos.com/1537427/3571/v/450/depositphotos_35717211-stock-illustration-vector-user-icon.jpg",
         "dni": 11111111,
         "cuit": "20111111114",
@@ -11,7 +11,7 @@
         "phone": 1156789012,
         "address": "calle Las Flores 123",
         "city": "Mar del Plata",
-        "role": "admin",
+        "role": "commerceAdmin",
         "sex": "Masculino" 
     },
     {
@@ -41,12 +41,12 @@
         "phone": 1134567890,
         "address": "avenida San Martín 789",
         "city": "Rosario",
-        "role": "client",
+        "role": "employee",
         "sex": "Masculino"
     },
     {
         "name": "Carla Méndez",
-        "email": "carla.mendez@gmail.com",
+        "email": "open@gmail.com",
         "imgProfile": "https://st.depositphotos.com/1537427/3571/v/450/depositphotos_35717211-stock-illustration-vector-user-icon.jpg",
         "dni": 31876543,
         "cuit": "20318765434",
@@ -56,12 +56,12 @@
         "phone": 1123456789,
         "address": "calle Río 45",
         "city": "Buenos Aires",
-        "role": "client",
+        "role": "commerceAdmin",
         "sex": "Femenino"
     },
     {
-        "name": "Diego Peralta",
-        "email": "diego.peralta@gmail.com",
+        "name": "Ezequiel Alonso",
+        "email": "eze.g.alonso@gmail.com",
         "imgProfile": "https://st.depositphotos.com/1537427/3571/v/450/depositphotos_35717211-stock-illustration-vector-user-icon.jpg",
         "dni": 34567892,
         "cuit": "20345678924",
@@ -71,7 +71,7 @@
         "phone": 1198765432,
         "address": "calle 12 nro 234",
         "city": "Córdoba",
-        "role": "client",
+        "role": "admin",
         "sex": "Masculino"
     }
 ]

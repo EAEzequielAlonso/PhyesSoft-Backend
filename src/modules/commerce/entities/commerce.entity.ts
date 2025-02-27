@@ -6,13 +6,16 @@ import {
   Column,
   Entity,
   Index,
+  JoinColumn,
   OneToMany,
+  OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Size } from "src/modules/size/entities/size.entity";
 import { Color } from "src/modules/color/entities/color.entity";
 import { SizeType } from "src/modules/size-type/entities/size-type.entity";
 import { PaymentMethod } from "src/modules/payment-method/entities/payment-method.entity";
+import { User } from "src/modules/user/entities/user.entity";
 
 @Entity({
   name: 'commerces',
@@ -50,6 +53,12 @@ export class Commerce {
 
   @Column({ type: 'date', nullable: true })
   endDate: Date;
+
+  @OneToOne(() => User, (user) => user.commerce)
+  @JoinColumn({ name: "userId" }) // Clave foránea en la tabla Comercio
+  user: User;
+  @Column({type: "uuid", nullable:false})
+  userId: string;
 
   @OneToMany (() => Branch, (branch) => branch.commerce)
   branches: Branch[];

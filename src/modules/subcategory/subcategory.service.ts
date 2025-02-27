@@ -14,8 +14,8 @@ export class SubcategoryService {
     return this.subcategoryRepository.getSubcategories();
   }
 
-  async getSubcategoriesByBrand(brandId: string): Promise<Subcategory[]> {
-    return this.subcategoryRepository.getSubcategoriesByBrand(brandId);
+  async getSubcategoriesByCategory(categoryId: string): Promise<Subcategory[]> {
+    return this.subcategoryRepository.getSubcategoriesByCategory(categoryId);
   }
 
   async getSubcategoryById(id: string): Promise<Subcategory> {

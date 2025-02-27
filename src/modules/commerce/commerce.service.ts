@@ -10,8 +10,8 @@ import { Commerce } from './entities/commerce.entity';
 export class CommerceService {
   constructor(private readonly commerceRepository: CommerceRepository) {}
 
-  async getCommerce(): Promise<Commerce> {
-    return await this.commerceRepository.getCommerce();
+  async getCommerce(id: string): Promise<Commerce> {
+    return await this.commerceRepository.getCommerce(id);
   }
 
   // async getCommerceByUserId (userId: string): Promise<Commerce[]> {

@@ -1,10 +1,10 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, UnauthorizedException } from '@nestjs/common';
 import { User } from '../user/entities/user.entity';
 import { UserRepository } from '../user/user.repository';
-import * as bcrypt from 'bcrypt';
 import { CreateUserDto } from '../user/dto/create-user.dto';
 import { LoginUserDto } from './dto/loginUser.dto';
 import { JwtService } from '@nestjs/jwt';
+import * as bcrypt from 'bcrypt';
 import { UserRole } from '../user/entities/role.entity';
 import { Role } from '../user/roles/roles.enum';
 
@@ -16,29 +16,23 @@ export class AuthService {
   ) {}
 
   async signup(user: CreateUserDto): Promise<Omit<User, 'password'>> {
+    
     let userDB: User = await this.userRepository.getUserByEmail(user.email);
     if (userDB)
-      throw new BadRequestException(
-        `Yo existe un usuario registrado con este email, Prueba con "Olvide mi contraseña"`,
-      );
+      throw new UnauthorizedException(
+        `Ya existe un usuario registrado con este email, Prueba con "Olvide mi contraseña"`,
+      );// compruebo que no exista el email
 
-    userDB = await this.userRepository.getUserByDni(user.dni);
-    if (userDB)
-      throw new BadRequestException(
-        `Yo existe un usuario registrado con este DNI, Prueba con "Olvide mi contraseña"`,
-      );
-
-    const passwordHash = await bcrypt.hash(user.password, 10);
-    const { passwordConfirm, ...createUser } = user;
+    const { passwordConfirm, ...createUser } = user; // saco el confirmPassword que viene en el DTO
 
     const userRole: UserRole = await this.userRepository.getRolesUsersByRole(
-      Role.Admin,
+      Role.CommerceAdmin,
     );
-
+    const HashPassword = await bcrypt.hash(user.password, 10);
     const userSave = await this.userRepository.createUser({
       ...createUser,
       roleId: userRole.id,
-      password: passwordHash,
+      password: HashPassword,
     });
 
     //envio email de bienvenida
@@ -52,12 +46,15 @@ export class AuthService {
 
   async signin(userLogin: LoginUserDto): Promise<Object> {
     // comprueba que el usuario exista, sino devuelve un error
-    const userDB = await this.userRepository.getUserByDni(userLogin.dni);
+    console.log("userLogin ", userLogin)
+    const userDB = await this.userRepository.getUserByEmail(userLogin.email);
     if (!userDB) {
       throw new BadRequestException('Usuario o Clave incorrectos');
     }
-
+    console.log("userLogin ", userLogin)
     // comprueba que la clave sea correcta, sino devuelve un error
+    console.log("userLogin.password ", userLogin.password)
+    console.log("userDB.password ", userDB.password)
     const isPasswordValid = await bcrypt.compare(
       userLogin.password,
       userDB.password,

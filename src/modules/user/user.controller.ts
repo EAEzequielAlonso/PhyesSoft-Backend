@@ -8,6 +8,7 @@ import {
   ParseUUIDPipe,
   Put,
   UseGuards,
+  Req,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -17,6 +18,7 @@ import { Role } from './roles/roles.enum';
 import { UserRole } from './entities/role.entity';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { AuthGuard } from '../auth/guards/Auth.guard';
+import { Request } from 'express';
 
 @ApiTags('Users')
 @Controller('user')
@@ -26,13 +28,6 @@ export class UserController {
   @Get()
   async getUsers(): Promise<User[]> {
     return await this.userService.getUsers();
-  }
-
-  @Get('clients')
-  @ApiBearerAuth()
-  @UseGuards(AuthGuard)
-  async getClients(): Promise<User[]> {
-    return await this.userService.getClients();
   }
 
   @Get('email/:email')
@@ -49,11 +44,11 @@ export class UserController {
     return await this.userService.getRolesUsersByRole(role);
   }
 
-  @Get(':id')
+  @Get('user')
   @ApiBearerAuth()
   @UseGuards(AuthGuard)
-  async getUsersById(@Param('id', ParseUUIDPipe) id: string): Promise<User> {
-    return await this.userService.getUserById(id);
+  async getUser(@Req() request:Request): Promise<User> {
+    return await this.userService.getUserById(request.user.id);
   }
 
   @Post()

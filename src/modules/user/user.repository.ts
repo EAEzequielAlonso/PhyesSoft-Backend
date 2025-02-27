@@ -26,7 +26,7 @@ export class UserRepository {
   async getUserByEmail(email: string): Promise<User> {
     return await this.userRepository.findOne({
       where: { email },
-      relations: { role: true, sex: true },
+      relations: { role: true, sex: true, commerce: true},
     });
   }
 
@@ -63,12 +63,6 @@ export class UserRepository {
 
   async getSexes(): Promise<Sex[]> {
     return this.sexRepository.find();
-  }
-
-  async getClients(): Promise<User[]> {
-    return await this.userRepository.find({
-      where: { role: { role: Role.Client } },
-    });
   }
 
   async getUserRoleByName(userRole: string): Promise<UserRole> {

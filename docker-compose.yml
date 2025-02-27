@@ -3,7 +3,7 @@ services:
   nestapp:
     image: styleflow/styleflow-latest
     ports:
-      - "3001:3000"
+      - "4001:4000"
     env_file: 
       - .env
     depends_on:

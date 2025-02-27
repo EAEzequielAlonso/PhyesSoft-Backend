@@ -16,10 +16,6 @@ export class UserService {
     return await this.userRepository.getUsers();
   }
 
-  async getClients(): Promise<User[]> {
-    return await this.userRepository.getClients();
-  }
-
   async getUserById(id: string): Promise<User> {
     const user = await this.userRepository.getUserById(id);
     if (!user) throw new NotFoundException('Usuario no encontrado');

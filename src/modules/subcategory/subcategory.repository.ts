@@ -14,7 +14,7 @@ export class SubcategoryRepository {
     return this.subcategoryRepository.find({ relations: { category: true } });
   }
 
-  async getSubcategoriesByBrand(categoryId: string): Promise<Subcategory[]> {
+  async getSubcategoriesByCategory(categoryId: string): Promise<Subcategory[]> {
     return this.subcategoryRepository.find({ where: { categoryId } });
   }
 

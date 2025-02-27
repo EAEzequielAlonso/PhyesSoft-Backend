@@ -11,6 +11,7 @@ import { Model } from '../model/entities/model.entity';
 import { Color } from '../color/entities/color.entity';
 import { Size } from '../size/entities/size.entity';
 import { Product } from '../product/entities/product.entity';
+import { Commerce } from '../commerce/entities/commerce.entity';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { Product } from '../product/entities/product.entity';
       Color,
       Size,
       Product,
+      Commerce
     ]),
   ],
   controllers: [],

@@ -3,7 +3,6 @@ import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { ValidationPipe } from '@nestjs/common';
 import cors from 'cors';
-import { NestExpressApplication } from '@nestjs/platform-express';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -34,7 +33,7 @@ async function bootstrap() {
     },
   });
 
-  await app.listen(3000);
-  console.log('Server Listening on Port 3000');
+  await app.listen(4000);
+  console.log('Server Listening on Port 4000');
 }
 bootstrap();

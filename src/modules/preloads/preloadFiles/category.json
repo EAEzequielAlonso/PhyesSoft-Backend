@@ -1,11 +1,54 @@
 [
     {
-        "category": "Calzados"
+        "category": "Calzados",
+        "emailCompany": "herz@gmail.com"
     },
     {
-        "category": "Ropa"
+        "category": "Remeras",
+        "emailCompany": "herz@gmail.com"
     },
     {
-        "category": "Accesorios"
+        "category": "Buzos",
+        "emailCompany": "herz@gmail.com"
+    },
+    {
+        "category": "Camperas",
+        "emailCompany": "herz@gmail.com"
+    },
+    {
+        "category": "Tenis",
+        "emailCompany": "herz@gmail.com"
+    },
+    {
+        "category": "Futbol",
+        "emailCompany": "herz@gmail.com"
+    },
+    {
+        "category": "Natacion",
+        "emailCompany": "herz@gmail.com"
+    },
+    {
+        "category": "Medias",
+        "emailCompany": "herz@gmail.com"
+    },
+    {
+        "category": "Pantuflas",
+        "emailCompany": "herz@gmail.com"
+    },
+    {
+        "category": "Gafas",
+        "emailCompany": "herz@gmail.com"
+    },
+    {
+        "category": "Mochilas",
+        "emailCompany": "herz@gmail.com"
+    },
+    {
+        "category": "Ropa",
+        "emailCompany": "herz@gmail.com"
+    },
+    {
+        "category": "Accesorios",
+        "emailCompany": "herz@gmail.com"
     }
 ]

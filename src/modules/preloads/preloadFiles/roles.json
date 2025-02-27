@@ -6,6 +6,6 @@
         "role" : "employee"
     },
     {
-        "role" : "client"
+        "role" : "commerceAdmin"
     }
 ]

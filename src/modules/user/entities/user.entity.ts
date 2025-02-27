@@ -1,16 +1,19 @@
 import {
+  BeforeInsert,
   Column,
   Entity,
   Index,
   JoinColumn,
   ManyToOne,
   OneToMany,
+  OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Sex } from './sex.entity';
 import { UserRoleBranch } from 'src/modules/branch/entities/userBranch.entity';
 import { DailyCash } from 'src/modules/daily-cash/entities/daily-cash.entity';
 import { UserRole } from './role.entity';
+import { Commerce } from 'src/modules/commerce/entities/commerce.entity';
 
 @Entity({
   name: 'users',
@@ -78,4 +81,8 @@ export class User {
 
   @OneToMany (() => DailyCash, (dailyCash) => dailyCash.userOpen)
   dailyCash: DailyCash[];
+
+  @OneToOne(() => Commerce, (commerce) => commerce.user)
+  commerce: Commerce;
+
 }
