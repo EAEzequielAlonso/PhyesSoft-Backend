@@ -15,10 +15,14 @@ export class CategoryRepository {
     search: string,
     sortField: string,
     sortOrder: string): Promise<[Category[], number]> {
-    return this.categoryRepository.findAndCount({where: { category: Like(`%${search}%`) },
+    return this.categoryRepository.findAndCount({where: { name: Like(`%${search}%`), commerceId },
     order: { [sortField]: sortOrder.toUpperCase() },
     skip: (pageNumber - 1) * limitNumber,
     take: limitNumber,});
+  }
+
+  async getCategoryByCommerce(commerceId:string): Promise<Category[]> {
+    return await this.categoryRepository.find({where: {commerceId}});
   }
 
   async getCategoryById(id: string): Promise<Category> {

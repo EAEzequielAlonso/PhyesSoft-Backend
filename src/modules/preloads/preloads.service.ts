@@ -10,6 +10,7 @@ import preloadColor from './preloadFiles/color.json';
 import preloadSize from './preloadFiles/size.json';
 import preloadProduct from './preloadFiles/product.json';
 import preloadCommerce from './preloadFiles/commerce.json';
+import preloadSizeType from './preloadFiles/sizeType.json'
 
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -26,6 +27,7 @@ import { Color } from '../color/entities/color.entity';
 import { Size } from '../size/entities/size.entity';
 import { Product } from '../product/entities/product.entity';
 import { Commerce } from '../commerce/entities/commerce.entity';
+import { SizeType } from '../size-type/entities/size-type.entity';
 
 @Injectable()
 export class PreloadsService {
@@ -41,6 +43,7 @@ export class PreloadsService {
     @InjectRepository(Color) private colorRepository: Repository<Color>,
     @InjectRepository(Size) private sizeRepository: Repository<Size>,
     @InjectRepository(Product) private productRepository: Repository<Product>,
+    @InjectRepository(SizeType) private sizeTypeRepository: Repository<SizeType>,
   ) {}
 
   async preloadRole(): Promise<void> {
@@ -61,12 +64,12 @@ export class PreloadsService {
     let count: number = 0;
     for (const category of preloadCategory) {
       const catFind = await this.categoryRepository.findOne({
-        where: { category: category.category },
+        where: { name: category.name },
       });
       if (!catFind) {
         const commerceFind:Commerce = await this.commerceRepository.findOneBy({emailCompany:category.emailCompany})
         if (commerceFind){
-          await this.categoryRepository.save({category: category.category, commerceId: commerceFind.id});
+          await this.categoryRepository.save({name: category.name, commerceId: commerceFind.id});
           count++;}
       }
     }
@@ -77,17 +80,19 @@ export class PreloadsService {
     let count: number = 0;
     for (const subcategory of preloadSubcategory) {
       const subcatFind = await this.subcategoryRepository.findOne({
-        where: { subcategory: subcategory.subcategory },
+        where: { name: subcategory.name }, 
       });
       if (!subcatFind) {
         const catFind = await this.categoryRepository.findOne({
-          where: { category: subcategory.category },
+          where: { name: subcategory.category },
         });
-        await this.subcategoryRepository.save({
-          subcategory: subcategory.subcategory,
-          categoryId: catFind.id,
-        });
-        count++;
+        if (catFind) {
+          await this.subcategoryRepository.save({
+            name: subcategory.name,
+            categoryId: catFind.id,
+          });
+          count++;
+        }
       }
     }
     console.log(`Se agregaron ${count} Subcategorias`);
@@ -97,11 +102,14 @@ export class PreloadsService {
     let count: number = 0;
     for (const brand of preloadBrand) {
       const brandFind = await this.brandRepository.findOne({
-        where: { brand: brand.brand },
+        where: { name: brand.name },
       });
       if (!brandFind) {
-        await this.brandRepository.save(brand);
-        count++;
+        const commerceFind:Commerce = await this.commerceRepository.findOneBy({emailCompany:brand.emailCompany})
+        if (commerceFind){
+          await this.brandRepository.save({name: brand.name, commerceId: commerceFind.id});
+          count++;
+        }
       }
     }
     console.log(`Se agregaron ${count} Marcas`);
@@ -111,11 +119,14 @@ export class PreloadsService {
     let count: number = 0;
     for (const color of preloadColor) {
       const colorFind = await this.colorRepository.findOne({
-        where: { color: color.color },
+        where: { name: color.name },
       });
       if (!colorFind) {
-        await this.colorRepository.save(color);
-        count++;
+        const commerceFind:Commerce = await this.commerceRepository.findOneBy({emailCompany:color.emailCompany})
+        if (commerceFind){
+          await this.colorRepository.save({name: color.name, commerceId: commerceFind.id});
+          count++;
+        }
       }
     }
     console.log(`Se agregaron ${count} Colores`);
@@ -125,28 +136,50 @@ export class PreloadsService {
     let count: number = 0;
     for (const size of preloadSize) {
       const sizeFind = await this.sizeRepository.findOne({
-        where: { size: size.size },
+        where: { name: size.name }
       });
       if (!sizeFind) {
-        await this.sizeRepository.save(size);
-        count++;
+        const sizeTypeFind = await this.sizeTypeRepository.findOne({
+          where: { name: size.sizeType },
+        });
+        if (sizeTypeFind) {
+            await this.sizeRepository.save({name: size.name, sizeTypeId: sizeTypeFind.id});
+            count++;
+        }
       }
     }
     console.log(`Se agregaron ${count} Talles`);
+  }
+
+  async preloadSizeType(): Promise<void> {
+    let count: number = 0;
+    for (const sizeType of preloadSizeType) {
+      const sizeTypeFind = await this.sizeTypeRepository.findOne({
+        where: { name: sizeType.name },
+      });
+      if (!sizeTypeFind) {
+        const commerceFind:Commerce = await this.commerceRepository.findOneBy({emailCompany:sizeType.emailCompany})
+        if (commerceFind){
+          await this.sizeTypeRepository.save({name: sizeType.name, commerceId: commerceFind.id});
+          count++;
+        }
+      }
+    }
+    console.log(`Se agregaron ${count} Grupos de Talles`);
   }
 
   async preloadModel(): Promise<void> {
     let count: number = 0;
     for (const model of preloadModel) {
       const modelFind = await this.modelRepository.findOne({
-        where: { model: model.model },
+        where: { name: model.name },
       });
       if (!modelFind) {
         const brandFind = await this.brandRepository.findOne({
-          where: { brand: model.brand },
+          where: { name: model.brand },
         });
         await this.modelRepository.save({
-          model: model.model,
+          name: model.name,
           brandId: brandFind.id,
         });
         count++;
@@ -168,8 +201,6 @@ export class PreloadsService {
     }
     console.log(`Se agregaron ${count} sexos`);
   }
-
-
 
   async preloadUsers(): Promise<void> {
     let count: number = 0;
@@ -208,15 +239,28 @@ export class PreloadsService {
       });
       if (!productFind) {
         const subcatFind = await this.subcategoryRepository.findOne({
-          where: { subcategory: product.subcategory },
+          where: { name: product.subcategory },
         });
         const modelFind = await this.modelRepository.findOne({
-          where: { model: product.model },
+          where: { name: product.model },
         });
-        await this.subcategoryRepository.save({
-          ...product,
+        const siseTypeFind = await this.sizeTypeRepository.findOne({
+          where: { name: product.sizeType },
+        });
+        const commerceFind = await this.commerceRepository.findOne({
+          where: { emailCompany: product.email },
+        });
+
+
+        const {subcategory, model, sizeType, email, ...productSave} = product;
+        await this.productRepository.save({
+          ...productSave,
+          categoryId: subcatFind.categoryId,
           subcategoryId: subcatFind.id,
-          model: modelFind.id,
+          brandId: modelFind.brandId,
+          modelId: modelFind.id,
+          sizeTypeId: siseTypeFind.id,
+          commerceId: commerceFind.id
         });
         count++;
       }
@@ -248,16 +292,17 @@ export class PreloadsService {
 
 
   async onModuleInit() {
-    await this.preloadColor();
-    await this.preloadSize();
-    await this.preloadBrand();
-    await this.preloadModel();
     await this.preloadSexes();
     await this.preloadRole();
     await this.preloadUsers();
-    await this.preloadCommerce()
+    await this.preloadCommerce();
+    await this.preloadSizeType(); 
+    await this.preloadSize();
+    await this.preloadBrand();
+    await this.preloadModel();
+    await this.preloadColor();
     await this.preloadCategory();
     await this.preloadSubcategory();
     await this.preloadProduct();
-  }
+  } 
 }

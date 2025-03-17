@@ -16,7 +16,7 @@ export class Size {
   id: string;
 
   @Column('varchar')
-  size: string;
+  name: string;
 
   @OneToMany(() => SaleProducts, (saleProducts) => saleProducts.size)
   saleProducts: SaleProducts[];

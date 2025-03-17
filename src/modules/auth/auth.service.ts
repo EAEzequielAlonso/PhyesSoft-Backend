@@ -46,15 +46,11 @@ export class AuthService {
 
   async signin(userLogin: LoginUserDto): Promise<Object> {
     // comprueba que el usuario exista, sino devuelve un error
-    console.log("userLogin ", userLogin)
     const userDB = await this.userRepository.getUserByEmail(userLogin.email);
     if (!userDB) {
       throw new BadRequestException('Usuario o Clave incorrectos');
     }
-    console.log("userLogin ", userLogin)
     // comprueba que la clave sea correcta, sino devuelve un error
-    console.log("userLogin.password ", userLogin.password)
-    console.log("userDB.password ", userDB.password)
     const isPasswordValid = await bcrypt.compare(
       userLogin.password,
       userDB.password,

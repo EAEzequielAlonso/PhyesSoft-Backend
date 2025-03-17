@@ -5,23 +5,46 @@ import {
   Body,
   Param,
   Delete,
-  ParseUUIDPipe,
+  ParseUUIDPipe, 
   Put,
+  UseGuards,
+  Req,
+  Query,
 } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { ProductService } from './product.service';
 import { Product } from './entities/product.entity';
-import { CreateProductDto } from './dto/create-product.dto';
+import { CreateProductDto, searchDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
+import { AuthGuard } from '../auth/guards/Auth.guard';
+import { Request } from 'express';
 
 @ApiTags('Products')
 @Controller('product')
+@UseGuards(AuthGuard)
+@ApiBearerAuth()
 export class ProductController {
   constructor(private readonly productService: ProductService) {}
 
-  @Get()
-  async getProducts(): Promise<Product[]> {
-    return await this.productService.getProducts();
+  @Post("getproducts")
+  async getProducts(
+          @Req() req: Request, 
+          @Query('page') page = '1',
+          @Query('limit') limit = '10',
+          @Query('sortField') sortField = 'name',
+          @Query('sortOrder') sortOrder: 'asc' | 'desc' = 'asc',
+          @Body() search 
+        ): Promise<[Product[], number]> {
+          const pageNumber = parseInt(page, 10) || 1;
+          const limitNumber = parseInt(limit, 10) || 10;
+          
+          return await this.productService.getProducts(
+            req.user.commerce.id,
+            pageNumber,
+            limitNumber,
+            search,
+            sortField,
+            sortOrder);
   }
 
   @Get('subcategory/:subcategoryId')
@@ -46,8 +69,8 @@ export class ProductController {
   }
 
   @Post()
-  async createProduct(@Body() product: CreateProductDto): Promise<Product> {
-    return await this.productService.createProduct(product);
+  async createProduct(@Body() product: CreateProductDto, @Req() req:Request): Promise<Product> {
+    return await this.productService.createProduct({...product, commerceId: req.user.commerce.id});
   }
 
   @Put('unsubscribe/:id')

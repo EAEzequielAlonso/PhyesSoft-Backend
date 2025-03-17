@@ -5,15 +5,26 @@ import {
 } from '@nestjs/common';
 import { ProductRepository } from './product.repositor';
 import { Product } from './entities/product.entity';
+import { searchDto } from './dto/create-product.dto';
 
 @Injectable()
 export class ProductService {
   constructor(private readonly productRepository: ProductRepository) {}
 
-  async getProducts(): Promise<Product[]> {
-    return await this.productRepository.getProducts();
+  async getProducts(
+        commerceId: string, 
+        pageNumber:number,
+        limitNumber: number,
+        search: searchDto,
+        sortField: string,
+        sortOrder: string): Promise<[Product[], number]> {
+        return this.productRepository.getProducts(commerceId, pageNumber,
+          limitNumber,
+          search,
+          sortField,
+          sortOrder);
   }
-
+ 
   async getProductById(id: string): Promise<Product> {
     const user = await this.productRepository.getProductById(id);
     if (!user) throw new NotFoundException('Producto no encontrado');

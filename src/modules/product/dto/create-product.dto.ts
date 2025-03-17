@@ -8,7 +8,20 @@ import {
   IsUUID,
 } from 'class-validator';
 
+export class searchDto {
+  name:string = "";
+  categoryId: string = "";
+  brandId:string = "";
+  sizeTypeId:string = "";
+}
+
 export class CreateProductDto {
+  
+  @IsString()
+  @IsNotEmpty()
+  @ApiProperty()
+  name: string;
+  
   @IsString()
   @IsNotEmpty()
   @ApiProperty()
@@ -34,9 +47,22 @@ export class CreateProductDto {
   @ApiProperty()
   startDate: Date;
 
-  // @IsUUID() @IsNotEmpty() @ApiProperty()
-  // subcategoryId:string;
+  @IsUUID() @IsOptional() @ApiProperty()
+  subcategoryId:string;
 
-  // @IsUUID() @IsNotEmpty() @ApiProperty()
-  // modelId:string;
+  @IsUUID() @IsOptional() @ApiProperty()
+  modelId:string;
+
+  @IsUUID() @IsOptional() @ApiProperty()
+  categoryId:string;
+
+  @IsUUID() @IsOptional() @ApiProperty()
+  brandId:string;
+
+  @IsUUID() @IsOptional() @ApiProperty()
+  sizeTypeId:string;
+
+  @IsUUID() @IsOptional() @ApiProperty()
+  commerceId:string;
+
 }

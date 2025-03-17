@@ -5,5 +5,5 @@ export class CreateBrandDto {
   @IsString()
   @IsNotEmpty()
   @ApiProperty({ example: 'Nike' })
-  brand: string;
+  name: string;
 }

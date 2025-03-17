@@ -1,38 +1,66 @@
 [
     {
-        "size": "35"
+        "name": "20",
+        "sizeType": "Talles Zapatillas Kids"
     },
     {
-        "size": "36"
+        "name": "22",
+        "sizeType": "Talles Zapatillas Kids"
     },
     {
-        "size": "38"
+        "name": "24",
+        "sizeType": "Talles Zapatillas Kids"
     },
     {
-        "size": "39"
+        "name": "29",
+        "sizeType": "Talles Zapatillas Kids"
     },
     {
-        "size": "40"
+        "name": "35",
+        "sizeType": "Talles Zapatillas Adultos"
     },
     {
-        "size": "41"
+        "name": "36",
+        "sizeType": "Talles Zapatillas Adultos"
     },
     {
-        "size": "42"
+        "name": "38",
+        "sizeType": "Talles Zapatillas Adultos"
     },
     {
-        "size": "S"
+        "name": "39",
+        "sizeType": "Talles Zapatillas Adultos"
     },
     {
-        "size": "M"
+        "name": "40",
+        "sizeType": "Talles Zapatillas Adultos"
     },
     {
-        "size": "L"
+        "name": "41",
+        "sizeType": "Talles Zapatillas Adultos"
     },
     {
-        "size": "XL"
+        "name": "42",
+        "sizeType": "Talles Zapatillas Adultos"
     },
     {
-        "size": "XXL"
+        "name": "S",
+        "sizeType": "Talles Ropa Adulto"
+    },
+    {
+        "name": "M",
+        "sizeType": "Talles Ropa Adulto"
+    },
+    {
+        "name": "L",
+        "sizeType": "Talles Ropa Adulto"
+    },
+    {
+        "name": "XL",
+        "sizeType": "Talles Ropa Adulto"
+    },
+    {
+        "name": "XXL",
+        "sizeType": "Talles Ropa Adulto"
     }
 ]

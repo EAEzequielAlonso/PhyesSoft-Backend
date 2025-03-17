@@ -44,13 +44,18 @@ export class CategoryController {
       sortOrder);
   }
 
+  @Get('commerce')
+  async getCategoryByCommerce(@Req() req:Request): Promise<Category[]> {
+    console.log(`entramos en el controlador de category ${req.user.commerce.id}`)
+    return await this.categoryService.getCategoryByCommerce(req.user.commerce.id);
+  }
+
   @Get(':id')
   async getCategoryById(
     @Param('id', ParseUUIDPipe) id: string,
   ): Promise<Category> {
-    return this.categoryService.getCategoryById(id);
+    return await this.categoryService.getCategoryById(id);
   }
-
   @Post()
   async createCategory(@Body() category: CreateCategoryDto, @Req() req:Request): Promise<Category> {
     return await this.categoryService.createCategory({...category, commerceId: req.user.commerce.id});
@@ -63,7 +68,7 @@ export class CategoryController {
   ): Promise<Category> {
     return await this.categoryService.updateCategory(id, category);
   }
-
+ 
   @Delete(':id')
   async deleteCategory(
     @Param('id', ParseUUIDPipe) id: string,

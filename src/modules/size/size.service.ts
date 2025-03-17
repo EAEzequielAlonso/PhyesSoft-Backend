@@ -1,26 +1,68 @@
-import { Injectable } from '@nestjs/common';
-import { CreateSizeDto } from './dto/create-size.dto';
-import { UpdateSizeDto } from './dto/update-size.dto';
+import {
+  Injectable,
+  InternalServerErrorException,
+  NotFoundException, 
+} from '@nestjs/common';
+import { SizeRepository } from './size.repository';
+import { Size } from './entities/size.entity';
+import { DeleteResult, UpdateResult } from 'typeorm';
 
 @Injectable()
 export class SizeService {
-  create(createSizeDto: CreateSizeDto) {
-    return 'This action adds a new size';
+  constructor(private readonly repository: SizeRepository) {}
+ 
+  async findAll(commerceId: string, pageNumber:number,
+      limitNumber: number,
+      name: string,
+      optionId: string,
+      sortField: string,
+      sortOrder: string): Promise<[Size[], number]> {
+      return this.repository.findAll(commerceId, pageNumber,
+        limitNumber,
+        name,
+        optionId,
+        sortField,
+        sortOrder);
+    }
+
+  async findByCategory(sizeTypeId: string): Promise<Size[]> {
+    return this.repository.findByCategory(sizeTypeId);
   }
 
-  findAll() {
-    return `This action returns all size`;
+  async findOne(id: string): Promise<Size> {
+    const res: Size =
+      await this.repository.findOne(id);
+    if (!res) throw new NotFoundException('Talle no encontrada');
+    return res;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} size`;
+  async create(size: Partial<Size>): Promise<Size> {
+    const res: Size = await this.repository.create(size);
+    if (!res) throw new InternalServerErrorException(
+        'No se pudo crear el talle',
+      );
+    return res;
   }
 
-  update(id: number, updateSizeDto: UpdateSizeDto) {
-    return `This action updates a #${id} size`;
+  async update(
+    id: string,
+    size: Partial<Size>,
+  ): Promise<UpdateResult> {
+    const res =
+      await this.repository.update(id, size);
+    if (res.affected === 0)
+      throw new NotFoundException(
+        'No se encontro la subcategoria a actualizar',
+      );
+    return res;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} size`;
+  async remove(id: string): Promise<DeleteResult> {
+    const res = await this.repository.remove(id);
+    if (res.affected === 0)
+      throw new NotFoundException(
+        'No se encontro el talle',
+      );
+    return res;
   }
 }

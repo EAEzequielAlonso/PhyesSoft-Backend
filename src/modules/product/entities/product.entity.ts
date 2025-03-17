@@ -12,11 +12,15 @@ import { Subcategory } from 'src/modules/subcategory/entities/subcategory.entity
 import { Commerce } from 'src/modules/commerce/entities/commerce.entity';
 import { Brand } from 'src/modules/brand/entities/brand.entity';
 import { SizeType } from 'src/modules/size-type/entities/size-type.entity';
+import { Category } from 'src/modules/category/entities/category.entity';
 
 @Entity({ name: 'products' })
 export class Product {
   @PrimaryGeneratedColumn('uuid')
   id: string;
+
+  @Column('varchar')
+  name: string;
 
   @Column('varchar')
   description: string;
@@ -40,8 +44,14 @@ export class Product {
   @Column('date')
   startDate: Date;
 
-  @Column('date')
+  @Column({type: 'date', nullable:true})
   endDate: Date;
+
+  @ManyToOne(() => Category, (category) => category.products)
+  @JoinColumn({ name: 'categoryId' })
+  category: Category;
+  @Column({ type: 'uuid', nullable: true })
+  categoryId: string;
 
   @ManyToOne(() => Subcategory, (subcategory) => subcategory.products)
   @JoinColumn({ name: 'subcategoryId' })

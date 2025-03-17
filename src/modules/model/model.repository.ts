@@ -3,14 +3,41 @@ import { Model } from './entities/model.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DeleteResult, Repository, UpdateResult } from 'typeorm';
 
-@Injectable()
+@Injectable() 
 export class ModelRepository {
   constructor(
     @InjectRepository(Model) private modelRepository: Repository<Model>,
   ) {}
 
-  async getModels(): Promise<Model[]> {
-    return this.modelRepository.find({ relations: { brand: true } });
+  async getModels(commerceId:string, pageNumber:number,
+         limitNumber: number,
+         name: string,
+         optionId: string,
+         sortField: string, 
+         sortOrder: string): Promise<[Model[], number]> {
+          
+         const query = this.modelRepository.createQueryBuilder("model")
+           .leftJoinAndSelect("model.brand", "brand")
+           .where("model.name LIKE :name", { name: `%${name}%` })
+           .andWhere("brand.commerceId = :commerceId", { commerceId })
+         
+         if (optionId !== '') query.andWhere("model.brandId = :optionId", { optionId });
+           
+         // Agregar orden dinámico
+         if (sortField !== "name") {
+           query.orderBy("brand.name", sortOrder.toUpperCase() as "ASC" | "DESC");
+         } else {
+           query.orderBy("model.name", sortOrder.toUpperCase() as "ASC" | "DESC");
+         }
+         
+         // Aplicar paginación
+         query.skip((pageNumber - 1) * limitNumber).take(limitNumber);
+         
+         return await query.getManyAndCount();
+       }
+
+  async getModelCommerce(commerceId:string): Promise<Model[]> {
+    return await this.modelRepository.find({where: {brand:{commerceId}}});
   }
 
   async getModelsByBrand(brandId: string): Promise<Model[]> {

@@ -1,4 +1,5 @@
 import { Commerce } from 'src/modules/commerce/entities/commerce.entity';
+import { Product } from 'src/modules/product/entities/product.entity';
 import { Subcategory } from 'src/modules/subcategory/entities/subcategory.entity';
 import {
   Column,
@@ -15,10 +16,13 @@ export class Category {
   id: string;
 
   @Column('varchar')
-  category: string;
+  name: string; 
 
   @OneToMany(() => Subcategory, (subcategory) => subcategory.category)
   subcategories: Subcategory[];
+
+  @OneToMany(() => Product, (products) => products.category)
+  products: Product[];
 
   @ManyToOne (() => Commerce, (commerce) => commerce.categories)
   @JoinColumn({name:"commerceId"})

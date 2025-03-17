@@ -7,43 +7,67 @@ import {
   Delete,
   ParseUUIDPipe,
   Put,
+  UseGuards,
+  Req,
+  Query,
 } from '@nestjs/common';
 import { BrandService } from './brand.service';
 import { CreateBrandDto } from './dto/create-brand.dto';
 import { UpdateBrandDto } from './dto/update-brand.dto';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { Brand } from './entities/brand.entity';
+import { AuthGuard } from '../auth/guards/Auth.guard';
+import { Request } from 'express';
 
 @ApiTags('Brand')
 @Controller('brand')
+@UseGuards(AuthGuard)
 export class BrandController {
   constructor(private readonly brandService: BrandService) {}
 
-  @Get()
-  async getBrands(): Promise<Brand[]> {
-    return this.brandService.getBrands();
+ @Get()
+  @ApiBearerAuth()
+  async findAll(
+      @Req() req: Request, 
+      @Query('page') page = '1',
+      @Query('limit') limit = '10',
+      @Query('search') search = '',
+      @Query('sortField') sortField = 'name',
+      @Query('sortOrder') sortOrder: 'asc' | 'desc' = 'asc', ): Promise<[Brand[], number]> {
+    const pageNumber = parseInt(page, 10);
+    const limitNumber = parseInt(limit, 10);
+    return await this.brandService.findAll(
+      req.user.commerce.id,
+      pageNumber,
+      limitNumber,
+      search,
+      sortField,
+      sortOrder);
   }
 
-  @Get('id')
-  async getBrandById(@Param('id', ParseUUIDPipe) id: string): Promise<Brand> {
-    return this.brandService.getBrandById(id);
+  @Get('commerce')
+  async findCommerce(@Req() req: Request): Promise<Brand[]> {
+    console.log("este es el id de commerce; ", req.user.commerce.id)
+    return await this.brandService.findCommerce(req.user.commerce.id);
   }
 
+  @Get(':id')
+  async findOne(@Param('id', ParseUUIDPipe) id: string): Promise<Brand> {
+    return await this.brandService.findOne(id);
+  }
+ 
   @Post()
-  async createBrand(@Body() brand: CreateBrandDto): Promise<Brand> {
-    return await this.brandService.createBrand(brand);
+  async create(@Body() brand: CreateBrandDto, @Req() req:Request): Promise<Brand> {
+      return await this.brandService.create({...brand, commerceId: req.user.commerce.id});
+    }
+
+  @Put(':id')
+  update(@Param('id', ParseUUIDPipe) id: string, @Body() updateBrandDto: UpdateBrandDto) {
+    return this.brandService.update(id, updateBrandDto);
   }
 
-  @Put('id')
-  async updateBrand(
-    @Param('id', ParseUUIDPipe) id: string,
-    brand: UpdateBrandDto,
-  ): Promise<Brand> {
-    return await this.brandService.updateBrand(id, brand);
-  }
-
-  @Delete('id')
-  async deleteBrand(@Param('id', ParseUUIDPipe) id: string): Promise<Brand> {
-    return await this.brandService.deleteBrand(id);
+  @Delete(':id')
+  remove(@Param('id', ParseUUIDPipe) id: string) {
+    return this.brandService.remove(id);
   }
 }

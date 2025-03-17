@@ -8,31 +8,48 @@ import {
   ParseUUIDPipe,
   Put,
   UseGuards,
+  Req,
+  Query,
 } from '@nestjs/common';
 import { SubcategoryService } from './subcategory.service';
 import { CreateSubcategoryDto } from './dto/create-subcategory.dto';
 import { UpdateSubcategoryDto } from './dto/update-subcategory.dto';
 import { Subcategory } from './entities/subcategory.entity';
 import { AuthGuard } from '../auth/guards/Auth.guard';
+import { Request } from 'express';
 
 @Controller('subcategory')
 @UseGuards(AuthGuard)
 export class SubcategoryController {
   constructor(private readonly subcategoryService: SubcategoryService) {}
   
-  @Get()
-  async getSubcategories(): Promise<Subcategory[]> {
-    return this.subcategoryService.getSubcategories();
+  @Get() 
+  async getSubcategories(
+      @Req() req: Request, 
+      @Query('page') page = '1',
+      @Query('limit') limit = '10',
+      @Query('name') name = '',
+      @Query('optionId') optionId = '',
+      @Query('sortField') sortField = 'name',
+      @Query('sortOrder') sortOrder: 'asc' | 'desc' = 'asc', ): Promise<[Subcategory[], number]> {
+      const pageNumber = parseInt(page, 10);
+      const limitNumber = parseInt(limit, 10);
+      return this.subcategoryService.getSubcategories(
+        req.user.commerce.id,
+        pageNumber,
+        limitNumber,
+        name,
+        optionId,
+        sortField,
+        sortOrder);
+    }
+
+  @Get('commerce')
+  async getSubcategoryCommerce(@Req() req:Request ): Promise<Subcategory[]> {
+    return this.subcategoryService.getSubcategoryCommerce(req.user.commerce.id);
   }
 
-  @Get('category/:categoryId')
-  async getSubcategoriesByCategory(
-    @Param('categoryId', ParseUUIDPipe) categoryId: string,
-  ): Promise<Subcategory[]> {
-    return this.subcategoryService.getSubcategoriesByCategory(categoryId);
-  }
-
-  @Get(':id')
+  @Get(':id') 
   async getSubcategoryById(
     @Param('id', ParseUUIDPipe) id: string,
   ): Promise<Subcategory> {
@@ -46,7 +63,7 @@ export class SubcategoryController {
     return await this.subcategoryService.createSubcategory(subcategory);
   }
 
-  @Put(':id')
+  @Put(':id') 
   async updateSubcategory(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() subcategory: UpdateSubcategoryDto,

@@ -1,34 +1,59 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete, Req, Query, UseGuards, ParseUUIDPipe, Put } from '@nestjs/common';
 import { SizeTypeService } from './size-type.service';
 import { CreateSizeTypeDto } from './dto/create-size-type.dto';
 import { UpdateSizeTypeDto } from './dto/update-size-type.dto';
+import { SizeType } from './entities/size-type.entity';
+import { Request } from 'express';
+import { AuthGuard } from '../auth/guards/Auth.guard';
+import { ApiBearerAuth } from '@nestjs/swagger';
 
-@Controller('size-type')
+@Controller('size-type')  
+@UseGuards(AuthGuard)
 export class SizeTypeController {
-  constructor(private readonly sizeTypeService: SizeTypeService) {}
-
-  @Post()
-  create(@Body() createSizeTypeDto: CreateSizeTypeDto) {
-    return this.sizeTypeService.create(createSizeTypeDto);
-  }
+  constructor(private readonly service: SizeTypeService) {}
 
   @Get()
-  findAll() {
-    return this.sizeTypeService.findAll();
+  @ApiBearerAuth()
+  async findAll(
+      @Req() req: Request, 
+      @Query('page') page = '1',
+      @Query('limit') limit = '10',
+      @Query('search') search = '',
+      @Query('sortField') sortField = 'name',
+      @Query('sortOrder') sortOrder: 'asc' | 'desc' = 'asc', ): Promise<[SizeType[], number]> {
+    const pageNumber = parseInt(page, 10);
+    const limitNumber = parseInt(limit, 10);
+    return await this.service.findAll(
+      req.user.commerce.id,
+      pageNumber,
+      limitNumber,
+      search,
+      sortField,
+      sortOrder);
+  }
+
+  @Get('commerce')
+  async findCemmerce(@Req() req: Request): Promise<SizeType[]> {
+    return await this.service.findCemmerce(req.user.commerce.id);
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.sizeTypeService.findOne(+id);
+  async findOne(@Param('id', ParseUUIDPipe) id: string): Promise<SizeType> {
+    return await this.service.findOne(id);
   }
+ 
+  @Post()
+  async create(@Body() sizeTipe: CreateSizeTypeDto, @Req() req:Request): Promise<SizeType> {
+      return await this.service.create({...sizeTipe, commerceId: req.user.commerce.id});
+    }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateSizeTypeDto: UpdateSizeTypeDto) {
-    return this.sizeTypeService.update(+id, updateSizeTypeDto);
+  @Put(':id')
+  update(@Param('id', ParseUUIDPipe) id: string, @Body() sizeTipe: UpdateSizeTypeDto) {
+    return this.service.update(id, sizeTipe);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.sizeTypeService.remove(+id);
+  remove(@Param('id', ParseUUIDPipe) id: string) {
+    return this.service.remove(id);
   }
 }

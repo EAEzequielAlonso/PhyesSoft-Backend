@@ -1,38 +1,54 @@
 [
     {
-        "subcategory": "Ojotas",
+        "name": "Ojotas",
         "category": "Calzados"
     },
     {
-        "subcategory": "Botines",
+        "name": "Botines",
         "category": "Calzados"
     },
     {
-        "subcategory": "Zapatos",
+        "name": "Zapatos",
         "category": "Calzados"
     },
     {
-        "subcategory": "Remeras",
+        "name": "Remeras",
         "category": "Ropa"
     },
     {
-        "subcategory": "Bermudas",
+        "name": "Bermudas",
         "category": "Ropa"
     },
     {
-        "subcategory": "Medias",
+        "name": "Medias",
         "category": "Ropa"
     },
     {
-        "subcategory": "Pelotas",
+        "name": "Pelotas",
         "category": "Accesorios"
     },
     {
-        "subcategory": "Antiparras",
+        "name": "Antiparras",
         "category": "Accesorios"
     },
     {
-        "subcategory": "Guantes",
+        "name": "Guantes",
+        "category": "Accesorios"
+    },
+    {
+        "name": "raqueta",
+        "category": "Accesorios"
+    },
+    {
+        "name": "pelota tenia",
+        "category": "Accesorios"
+    },
+    {
+        "name": "Guantes Arquero",
+        "category": "Accesorios"
+    },
+    {
+        "name": "Muñequeras",
         "category": "Accesorios"
     }
 ]

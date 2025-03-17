@@ -15,7 +15,7 @@ export class Model {
   id: string;
 
   @Column('varchar')
-  model: string;
+  name: string;
 
   @OneToMany(() => Product, (product) => product.model)
   products: Product[];

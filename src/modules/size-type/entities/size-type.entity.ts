@@ -1,6 +1,5 @@
 import { Commerce } from 'src/modules/commerce/entities/commerce.entity';
 import { Product } from 'src/modules/product/entities/product.entity';
-import { SaleProducts } from 'src/modules/saleProducts/entities/saleProducts.entity';
 import { Size } from 'src/modules/size/entities/size.entity';
 import {
   Column,
@@ -17,7 +16,7 @@ export class SizeType {
   id: string;
 
   @Column('varchar')
-  sizeType: string;
+  name: string;
 
   @OneToMany(() => Size, (size) => size.sizeType)
   sizes: Size[];
@@ -25,10 +24,10 @@ export class SizeType {
   @OneToMany(() => Product, (product) => product.sizeType)
   products: Product[];
 
-    @ManyToOne (() => Commerce, (commerce) => commerce.sizeTypes)
-    @JoinColumn({name:"commerceId"})
-    commerce: Commerce;
-    @Column({type: "uuid", nullable:true})
-    commerceId:string;
+  @ManyToOne (() => Commerce, (commerce) => commerce.sizeTypes)
+  @JoinColumn({name:"commerceId"})
+  commerce: Commerce;
+  @Column({type: "uuid", nullable:true})
+  commerceId:string;
 
 }

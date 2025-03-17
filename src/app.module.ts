@@ -18,6 +18,7 @@ import { SaleModule } from './modules/sale/sale.module';
 import { PreloadsModule } from './modules/preloads/preloads.module';
 import { ColorModule } from './modules/color/color.module';
 import { SizeModule } from './modules/size/size.module';
+import { SizeTypeModule } from './modules/size-type/size-type.module';
 
 @Module({
   imports: [
@@ -52,6 +53,7 @@ import { SizeModule } from './modules/size/size.module';
     ProviderModule,
     SizeModule,
     SubcategoryModule,
+    SizeTypeModule,
   ],
   controllers: [],
   providers: [],

@@ -12,6 +12,7 @@ import { Color } from '../color/entities/color.entity';
 import { Size } from '../size/entities/size.entity';
 import { Product } from '../product/entities/product.entity';
 import { Commerce } from '../commerce/entities/commerce.entity';
+import { SizeType } from '../size-type/entities/size-type.entity';
 
 @Module({
   imports: [
@@ -26,7 +27,8 @@ import { Commerce } from '../commerce/entities/commerce.entity';
       Color,
       Size,
       Product,
-      Commerce
+      Commerce,
+      SizeType
     ]),
   ],
   controllers: [],

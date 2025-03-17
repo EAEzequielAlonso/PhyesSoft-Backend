@@ -5,5 +5,5 @@ export class CreateCategoryDto {
   @IsString()
   @IsNotEmpty()
   @ApiProperty({ example: 'Indumentaria' })
-  category: string;
+  name: string;
 }

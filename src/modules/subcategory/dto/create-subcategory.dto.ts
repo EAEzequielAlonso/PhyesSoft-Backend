@@ -5,7 +5,7 @@ export class CreateSubcategoryDto {
   @IsString()
   @IsNotEmpty()
   @ApiProperty({ example: 'Remeras' })
-  subcategory: string;
+  name: string;
 
   @IsUUID()
   @IsNotEmpty()

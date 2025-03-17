@@ -1,45 +1,47 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DeleteResult, Like, Repository, UpdateResult } from 'typeorm';
-import { Brand } from './entities/brand.entity';
+import { SizeType } from './entities/size-type.entity';
 
 @Injectable()
-export class BrandRepository {
+export class SizeTypeRepository {
   constructor(
-    @InjectRepository(Brand)
-    private repository: Repository<Brand>,
+    @InjectRepository(SizeType)
+    private repository: Repository<SizeType>,
   ) {}
 
   async findAll(commerceId:string, pageNumber:number,
     limitNumber: number,
     search: string,
     sortField: string,
-    sortOrder: string): Promise<[Brand[], number]> {
+    sortOrder: string): Promise<[SizeType[], number]> {
     return this.repository.findAndCount({where: { name: Like(`%${search}%`), commerceId },
     order: { [sortField]: sortOrder.toUpperCase() },
     skip: (pageNumber - 1) * limitNumber,
     take: limitNumber,});
   }
 
-  async findCommerce(commerceId:string): Promise<Brand[]> {
-    return await this.repository.find({where: {commerceId}});
+  async findCommerce(commerceId: string): Promise<SizeType[]> {
+    return this.repository.find({
+      where: { commerceId }
+    });
   }
 
-  async findOne(id: string): Promise<Brand> {
+  async findOne(id: string): Promise<SizeType> {
     return this.repository.findOne({
       where: { id }
     });
   }
 
-  async create(brand: Partial<Brand>): Promise<Brand> {
-    return await this.repository.save(brand);
+  async create(sizeType: Partial<SizeType>): Promise<SizeType> {
+    return await this.repository.save(sizeType);
   }
 
   async update(
     id: string,
-    brand: Partial<Brand>,
+    sizeType: Partial<SizeType>,
   ): Promise<UpdateResult> {
-    return await this.repository.update(id, brand);
+    return await this.repository.update(id, sizeType);
   }
 
   async remove(id: string): Promise<DeleteResult> {

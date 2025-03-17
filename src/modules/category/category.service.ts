@@ -22,6 +22,10 @@ export class CategoryService {
       sortOrder);
   }
 
+  async getCategoryByCommerce(commerceId:string): Promise<Category[]> {
+      return await this.categoryRepository.getCategoryByCommerce(commerceId);
+    }
+
   async getCategoryById(id: string): Promise<Category> {
     const category: Category =
       await this.categoryRepository.getCategoryById(id);

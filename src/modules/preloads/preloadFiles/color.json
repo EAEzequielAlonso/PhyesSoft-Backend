@@ -1,26 +1,34 @@
 [
     {
-        "color": "Blanco"
+        "name": "Blanco",
+        "emailCompany": "herz@gmail.com"
     },
     {
-        "color": "Negro"
+        "name": "Negro",
+        "emailCompany": "herz@gmail.com"
     },
     {
-        "color": "Verde"
+        "name": "Verde",
+        "emailCompany": "herz@gmail.com"
     },
     {
-        "color": "Naranja"
+        "name": "Naranja",
+        "emailCompany": "herz@gmail.com"
     },
     {
-        "color": "Marron"
+        "name": "Marron",
+        "emailCompany": "herz@gmail.com"
     },
     {
-        "color": "Violeta"
+        "name": "Violeta",
+        "emailCompany": "herz@gmail.com"
     },
     {
-        "color": "Blanco y Negro"
+        "name": "Blanco y Negro",
+        "emailCompany": "herz@gmail.com"
     },
     {
-        "color": "Blanco y Azul"
+        "name": "Blanco y Azul",
+        "emailCompany": "herz@gmail.com"
     }
 ]

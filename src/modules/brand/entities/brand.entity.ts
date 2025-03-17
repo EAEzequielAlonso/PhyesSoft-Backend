@@ -17,8 +17,8 @@ export class Brand {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column('varchar')
-  brand: string;
+  @Column('varchar') 
+  name: string;
 
   @OneToMany(() => Model, (model) => model.brand)
   models: Model[];

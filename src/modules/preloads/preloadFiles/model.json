@@ -1,34 +1,34 @@
 [
     {
-        "model": "Shoot Sun",
+        "name": "Shoot Sun",
         "brand": "Nike"
     },
     {
-        "model": "Croos Holiday",
+        "name": "Croos Holiday",
         "brand": "Nike"
     },
     {
-        "model": "Big Mont",
+        "name": "Big Mont",
         "brand": "Nike"
     },
     {
-        "model": "Elegant Camis",
+        "name": "Elegant Camis",
         "brand": "Armani"
     },
     {
-        "model": "Funny Creazy",
+        "name": "Funny Creazy",
         "brand": "Armani"
     },
     {
-        "model": "Zapa",
+        "name": "Zapa",
         "brand": "Adidas"
     },
     {
-        "model": "Carrier",
+        "name": "Carrier",
         "brand": "Adidas"
     },
     {
-        "model": "Munisher",
+        "name": "Munisher",
         "brand": "Adidas"
     }
 ]

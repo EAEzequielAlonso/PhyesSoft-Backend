@@ -15,7 +15,7 @@ export class Subcategory {
   id: string;
 
   @Column('varchar')
-  subcategory: string;
+  name: string; 
 
   @OneToMany(() => Product, (product) => product.subcategory)
   products: Product[];

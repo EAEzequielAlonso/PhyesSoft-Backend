@@ -1,11 +1,14 @@
 [
     {
-        "brand": "Nike"
+        "name": "Nike",
+        "emailCompany": "herz@gmail.com"
     },
     {
-        "brand": "Armani"
+        "name": "Armani",
+        "emailCompany": "herz@gmail.com"
     },
     {
-        "brand": "Adidas"
+        "name": "Adidas",
+        "emailCompany": "herz@gmail.com"
     }
 ]

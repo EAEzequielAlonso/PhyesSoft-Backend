@@ -5,7 +5,7 @@ export class CreateModelDto {
   @IsString()
   @IsNotEmpty()
   @ApiProperty({ example: 'Nikelodeon' })
-  model: string;
+  name: string;
 
   @IsUUID()
   @IsNotEmpty()

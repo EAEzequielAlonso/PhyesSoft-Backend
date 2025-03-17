@@ -16,7 +16,7 @@ export class Color {
   id: string;
 
   @Column('varchar')
-  color: string;
+  name: string;
 
   @OneToMany(() => SaleProducts, (saleProducts) => saleProducts.color)
   saleProducts: SaleProducts[];

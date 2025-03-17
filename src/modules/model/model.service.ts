@@ -5,13 +5,28 @@ import {
 } from '@nestjs/common';
 import { ModelRepository } from './model.repository';
 import { Model } from './entities/model.entity';
+import { UpdateResult } from 'typeorm';
 
 @Injectable()
 export class ModelService {
   constructor(private readonly modelRepository: ModelRepository) {}
 
-  async getModels(): Promise<Model[]> {
-    return this.modelRepository.getModels();
+  async getModels(commerceId: string, pageNumber:number,
+        limitNumber: number,
+        name: string,
+        optionId: string,
+        sortField: string,
+        sortOrder: string): Promise<[Model[], number]> {
+        return this.modelRepository.getModels(commerceId, pageNumber,
+          limitNumber,
+          name,
+          optionId,
+          sortField,
+          sortOrder);
+      }
+  
+  async getModelCommerce(commerceId:string): Promise<Model[]> {
+    return await this.modelRepository.getModelCommerce(commerceId);
   }
 
   async getModelsByBrand(brandId: string): Promise<Model[]> {
@@ -31,11 +46,11 @@ export class ModelService {
     return modeloCreate;
   }
 
-  async updateModel(id: string, model: Partial<Model>): Promise<Model> {
-    const modeloUpdate = await this.modelRepository.updateModel(id, model);
-    if (modeloUpdate.affected === 0)
+  async updateModel(id: string, model: Partial<Model>): Promise<UpdateResult> {
+    const res = await this.modelRepository.updateModel(id, model);
+    if (res.affected === 0)
       throw new NotFoundException('No se encontro el modelo a actualizar');
-    return await this.modelRepository.getModelById(id);
+    return res;
   }
 
   async deleteModel(id: string): Promise<Model> {
