@@ -32,7 +32,7 @@ export class CategoryController {
     @Query('limit') limit = '10',
     @Query('search') search = '',
     @Query('sortField') sortField = 'name',
-    @Query('sortOrder') sortOrder: 'asc' | 'desc' = 'asc', ): Promise<[Category[], number]> {
+    @Query('sortOrder') sortOrder: 'asc' | 'desc' = 'asc'): Promise<[Category[], number]> {
     const pageNumber = parseInt(page, 10);
     const limitNumber = parseInt(limit, 10);
     return this.categoryService.getCategories(
@@ -46,7 +46,6 @@ export class CategoryController {
 
   @Get('commerce')
   async getCategoryByCommerce(@Req() req:Request): Promise<Category[]> {
-    console.log(`entramos en el controlador de category ${req.user.commerce.id}`)
     return await this.categoryService.getCategoryByCommerce(req.user.commerce.id);
   }
 

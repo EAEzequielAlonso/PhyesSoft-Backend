@@ -12,11 +12,8 @@ export class BrandRepository {
 
   async findAll(commerceId:string, pageNumber:number,
     limitNumber: number,
-    search: string,
-    sortField: string,
-    sortOrder: string): Promise<[Brand[], number]> {
+    search: string): Promise<[Brand[], number]> {
     return this.repository.findAndCount({where: { name: Like(`%${search}%`), commerceId },
-    order: { [sortField]: sortOrder.toUpperCase() },
     skip: (pageNumber - 1) * limitNumber,
     take: limitNumber,});
   }

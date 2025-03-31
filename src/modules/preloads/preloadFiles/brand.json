@@ -10,5 +10,41 @@
     {
         "name": "Adidas",
         "emailCompany": "herz@gmail.com"
+    },
+    {
+        "name": "Puma",
+        "emailCompany": "herz@gmail.com"
+    },
+    {
+        "name": "Reebok",
+        "emailCompany": "herz@gmail.com"
+    },
+    {
+        "name": "Under Armour",
+        "emailCompany": "herz@gmail.com"
+    },
+    {
+        "name": "New Balance",
+        "emailCompany": "herz@gmail.com"
+    },
+    {
+        "name": "Asics",
+        "emailCompany": "herz@gmail.com"
+    },
+    {
+        "name": "Converse",
+        "emailCompany": "herz@gmail.com"
+    },
+    {
+        "name": "Vans",
+        "emailCompany": "herz@gmail.com"
+    },
+    {
+        "name": "Fila",
+        "emailCompany": "herz@gmail.com"
+    },
+    {
+        "name": "Jordan",
+        "emailCompany": "herz@gmail.com"
     }
 ]

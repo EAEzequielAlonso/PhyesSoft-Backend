@@ -15,12 +15,15 @@ export class AuthGuard implements CanActivate {
   ): boolean | Promise<boolean> | Observable<boolean> {
     const request = context.switchToHttp().getRequest();
 
-    const token = request.headers['authorization']?.split(' ')[1] ?? '';
+    let token = request.cookies['token']; 
+    console.log("token ", token)
     if (!token)
-      throw new HttpException(
-        { status: 401, error: `No se ha encontrado el Bearer token` },
-        401,
-      );
+      token = request.headers['authorization']?.split(' ')[1] ?? '';
+      if (!token)
+          throw new HttpException(
+            { status: 401, error: `No se ha encontrado el Bearer token` },
+            401,
+          );
     try {
       const secret = process.env.JWT_SECRET;
       const payload = this.jwtService.verify(token, { secret });

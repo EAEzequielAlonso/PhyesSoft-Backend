@@ -8,15 +8,11 @@ export class BrandService {
 
   async findAll(commerceId: string, pageNumber:number,
       limitNumber: number,
-      search: string,
-      sortField: string,
-      sortOrder: string): Promise<[Brand[], number]> {
+      search: string): Promise<[Brand[], number]> {
     try {  
       const response = await this.repository.findAll(commerceId, pageNumber,
         limitNumber,
-        search,
-        sortField,
-        sortOrder);
+        search);
       return response
     } catch (error) {
       throw new InternalServerErrorException(error)

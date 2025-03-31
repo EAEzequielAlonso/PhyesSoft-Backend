@@ -45,7 +45,7 @@ export class CreateProductDto {
   @IsDateString()
   @IsNotEmpty()
   @ApiProperty()
-  startDate: Date;
+  createAt: Date;
 
   @IsUUID() @IsOptional() @ApiProperty()
   subcategoryId:string;

@@ -3,9 +3,11 @@ import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { ValidationPipe } from '@nestjs/common';
 import cors from 'cors';
+const cookieParser = require('cookie-parser');
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  app.use(cookieParser()); // Habilita el parsing de cookies
   app.useGlobalPipes(
     new ValidationPipe({
       // whitelist hace que solo se admitan las propiedades del DTO y ninguna adicional.
@@ -14,7 +16,10 @@ async function bootstrap() {
   );
   app.useGlobalPipes(new ValidationPipe({ transform: true }));
 
-  app.use(cors());
+  app.use(cors({
+    origin: "http://localhost:3000",
+    credentials: true // Esto permite el envío de cookies
+}));
   //genero el Document Builder donde preconfiguro los datos basicos
   const swaggerConfig = new DocumentBuilder()
     .setTitle('StyleFlow - Backend para SaaS de Indumentaria')
