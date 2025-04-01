@@ -10,12 +10,21 @@ export class BrandRepository {
     private repository: Repository<Brand>,
   ) {}
 
-  async findAll(commerceId:string, pageNumber:number,
+  async findAll(
+    commerceId: string,
+    pageNumber: number,
     limitNumber: number,
-    search: string): Promise<[Brand[], number]> {
-    return this.repository.findAndCount({where: { name: Like(`%${search}%`), commerceId },
-    skip: (pageNumber - 1) * limitNumber,
-    take: limitNumber,});
+    search: string
+  ): Promise<[Brand[], number]> {
+    return this.repository.findAndCount({
+      where: { 
+        name: Like(`%${search}%`), 
+        commerceId 
+      },
+      order: { createdAt: "DESC" }, // Asegúrate de que la entidad tenga un campo createdAt
+      skip: (pageNumber - 1) * limitNumber,
+      take: limitNumber,
+    });
   }
 
   async findCommerce(commerceId:string): Promise<Brand[]> {

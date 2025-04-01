@@ -20,6 +20,9 @@ export class Brand {
   @Column('varchar') 
   name: string;
 
+  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+  createdAt: Date;
+
   @OneToMany(() => Model, (model) => model.brand)
   models: Model[];
 
