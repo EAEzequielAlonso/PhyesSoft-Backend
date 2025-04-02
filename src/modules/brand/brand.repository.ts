@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { DeleteResult, Like, Repository, UpdateResult } from 'typeorm';
+import { DeleteResult, ILike, Repository, UpdateResult } from 'typeorm';
 import { Brand } from './entities/brand.entity';
 
 @Injectable()
@@ -18,7 +18,7 @@ export class BrandRepository {
   ): Promise<[Brand[], number]> {
     return this.repository.findAndCount({
       where: { 
-        name: Like(`%${search}%`), 
+        name: ILike(`%${search}%`), 
         commerceId 
       },
       order: { createdAt: "DESC" }, // Asegúrate de que la entidad tenga un campo createdAt
