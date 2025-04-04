@@ -15,14 +15,10 @@ export class ProductService {
         commerceId: string, 
         pageNumber:number,
         limitNumber: number,
-        search: searchDto,
-        sortField: string,
-        sortOrder: string): Promise<[Product[], number]> {
+        search: string): Promise<[Product[], number]> {
         return this.productRepository.getProducts(commerceId, pageNumber,
           limitNumber,
-          search,
-          sortField,
-          sortOrder);
+          search);
   }
  
   async getProductById(id: string): Promise<Product> {

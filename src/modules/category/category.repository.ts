@@ -1,7 +1,7 @@
 import { ConflictException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Category } from './entities/category.entity';
-import { DeleteResult, Like, Repository, UpdateResult } from 'typeorm';
+import { DeleteResult, ILike, Repository, UpdateResult } from 'typeorm';
 
 @Injectable()
 export class CategoryRepository {
@@ -12,11 +12,9 @@ export class CategoryRepository {
 
   async getCategories(commerceId:string, pageNumber:number,
     limitNumber: number,
-    search: string,
-    sortField: string,
-    sortOrder: string): Promise<[Category[], number]> {
-    return this.categoryRepository.findAndCount({where: { name: Like(`%${search}%`), commerceId },
-    order: { [sortField]: sortOrder.toUpperCase() },
+    search: string): Promise<[Category[], number]> {
+    return this.categoryRepository.findAndCount({where: { name: ILike(`%${search}%`), commerceId },
+    order: { createdAt: "DESC" },
     skip: (pageNumber - 1) * limitNumber,
     take: limitNumber,});
   }

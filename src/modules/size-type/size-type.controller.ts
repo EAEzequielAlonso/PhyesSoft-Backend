@@ -7,7 +7,7 @@ import { Request } from 'express';
 import { AuthGuard } from '../auth/guards/Auth.guard';
 import { ApiBearerAuth } from '@nestjs/swagger';
 
-@Controller('size-type')  
+@Controller('sizetype')  
 @UseGuards(AuthGuard)
 export class SizeTypeController {
   constructor(private readonly service: SizeTypeService) {}
@@ -18,18 +18,14 @@ export class SizeTypeController {
       @Req() req: Request, 
       @Query('page') page = '1',
       @Query('limit') limit = '10',
-      @Query('search') search = '',
-      @Query('sortField') sortField = 'name',
-      @Query('sortOrder') sortOrder: 'asc' | 'desc' = 'asc', ): Promise<[SizeType[], number]> {
+      @Query('search') search = ''): Promise<[SizeType[], number]> {
     const pageNumber = parseInt(page, 10);
     const limitNumber = parseInt(limit, 10);
     return await this.service.findAll(
       req.user.commerce.id,
       pageNumber,
       limitNumber,
-      search,
-      sortField,
-      sortOrder);
+      search);
   }
 
   @Get('commerce')

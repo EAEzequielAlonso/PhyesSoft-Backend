@@ -1,6 +1,6 @@
 import { ConflictException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { DeleteResult, Like, Repository, UpdateResult } from 'typeorm';
+import { DeleteResult, ILike, Repository, UpdateResult } from 'typeorm';
 import { Subcategory } from './entities/subcategory.entity';
 import { Category } from '../category/entities/category.entity';
 import { Commerce } from '../commerce/entities/commerce.entity';
@@ -14,29 +14,14 @@ export class SubcategoryRepository {
  
   async getSubcategories(commerceId:string, pageNumber:number,
       limitNumber: number,
-      name: string,
-      optionId: string,
-      sortField: string,
-      sortOrder: string): Promise<[Subcategory[], number]> {
+      search: string): Promise<[Subcategory[], number]> {
         
-      const query = this.subcategoryRepository.createQueryBuilder("subcategory")
-        .leftJoinAndSelect("subcategory.category", "category")
-        .where("subcategory.name LIKE :name", { name: `%${name}%` })
-        .andWhere("category.commerceId = :commerceId", { commerceId })
-      
-      if (optionId !== '') query.andWhere("subcategory.categoryId = :optionId", { optionId });
-        
-      // Agregar orden dinámico
-      if (sortField === "category") {
-        query.orderBy("category.name ", sortOrder.toUpperCase() as "ASC" | "DESC");
-      } else {
-        query.orderBy("subcategory.name", sortOrder.toUpperCase() as "ASC" | "DESC");
-      }
-      
-      // Aplicar paginación
-      query.skip((pageNumber - 1) * limitNumber).take(limitNumber);
-      
-      return await query.getManyAndCount();
+      return this.subcategoryRepository.findAndCount({where: { name: ILike(`%${search}%`), category: {commerceId} },
+          order: { createdAt: "DESC" },
+          skip: (pageNumber - 1) * limitNumber,
+          take: limitNumber,
+          relations: {category:true},
+        });
     }
 
   async getSubcategoriesByCategory(categoryId: string): Promise<Subcategory[]> {

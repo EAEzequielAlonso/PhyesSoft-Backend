@@ -18,18 +18,14 @@ export class ColorController {
       @Req() req: Request, 
       @Query('page') page = '1',
       @Query('limit') limit = '10',
-      @Query('search') search = '',
-      @Query('sortField') sortField = 'name',
-      @Query('sortOrder') sortOrder: 'asc' | 'desc' = 'asc', ): Promise<[Color[], number]> {
+      @Query('search') search = ''): Promise<[Color[], number]> {
     const pageNumber = parseInt(page, 10);
     const limitNumber = parseInt(limit, 10);
     return await this.colorService.findAll(
       req.user.commerce.id,
       pageNumber,
       limitNumber,
-      search,
-      sortField,
-      sortOrder);
+      search);
   }
 
   @Get(':id')

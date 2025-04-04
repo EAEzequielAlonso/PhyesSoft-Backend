@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { DeleteResult, Like, Repository, UpdateResult } from 'typeorm';
+import { DeleteResult, ILike, Repository, UpdateResult } from 'typeorm';
 import { Color } from './entities/color.entity';
 
 @Injectable()
@@ -12,11 +12,9 @@ export class ColorRepository {
 
   async findAll(commerceId:string, pageNumber:number,
     limitNumber: number,
-    search: string,
-    sortField: string,
-    sortOrder: string): Promise<[Color[], number]> {
-    return this.colorRepository.findAndCount({where: { name: Like(`%${search}%`), commerceId },
-    order: { [sortField]: sortOrder.toUpperCase() },
+    search: string): Promise<[Color[], number]> {
+    return this.colorRepository.findAndCount({where: { name: ILike(`%${search}%`), commerceId },
+    order: { createdAt: "DESC" },
     skip: (pageNumber - 1) * limitNumber,
     take: limitNumber,});
   }

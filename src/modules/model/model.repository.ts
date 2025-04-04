@@ -1,7 +1,7 @@
 import { ConflictException, Injectable } from '@nestjs/common';
 import { Model } from './entities/model.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { DeleteResult, Repository, UpdateResult } from 'typeorm';
+import { DeleteResult, ILike, Repository, UpdateResult } from 'typeorm';
 
 @Injectable() 
 export class ModelRepository {
@@ -11,29 +11,14 @@ export class ModelRepository {
 
   async getModels(commerceId:string, pageNumber:number,
          limitNumber: number,
-         name: string,
-         optionId: string,
-         sortField: string, 
-         sortOrder: string): Promise<[Model[], number]> {
+         search: string): Promise<[Model[], number]> {
           
-         const query = this.modelRepository.createQueryBuilder("model")
-           .leftJoinAndSelect("model.brand", "brand")
-           .where("model.name LIKE :name", { name: `%${name}%` })
-           .andWhere("brand.commerceId = :commerceId", { commerceId })
-         
-         if (optionId !== '') query.andWhere("model.brandId = :optionId", { optionId });
-           
-         // Agregar orden dinámico
-         if (sortField !== "name") {
-           query.orderBy("brand.name", sortOrder.toUpperCase() as "ASC" | "DESC");
-         } else {
-           query.orderBy("model.name", sortOrder.toUpperCase() as "ASC" | "DESC");
-         }
-         
-         // Aplicar paginación
-         query.skip((pageNumber - 1) * limitNumber).take(limitNumber);
-         
-         return await query.getManyAndCount();
+         return this.modelRepository.findAndCount({where: { name: ILike(`%${search}%`), brand: {commerceId} },
+                   order: { createdAt: "DESC" },
+                   skip: (pageNumber - 1) * limitNumber,
+                   take: limitNumber,
+                   relations: {brand:true},
+                 });
        }
 
   async getModelCommerce(commerceId:string): Promise<Model[]> {

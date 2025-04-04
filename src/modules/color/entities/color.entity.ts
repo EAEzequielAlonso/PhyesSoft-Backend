@@ -18,6 +18,9 @@ export class Color {
   @Column('varchar')
   name: string;
 
+  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+  createdAt: Date; 
+
   @OneToMany(() => SaleProducts, (saleProducts) => saleProducts.color)
   saleProducts: SaleProducts[];
 

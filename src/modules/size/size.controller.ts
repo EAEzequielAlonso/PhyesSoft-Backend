@@ -16,10 +16,7 @@ export class SizeController {
         @Req() req: Request, 
         @Query('page') page = '1',
         @Query('limit') limit = '10',
-        @Query('name') name = '',
-        @Query('optionId') optionId = '',
-        @Query('sortField') sortField = 'name',
-        @Query('sortOrder') sortOrder: 'asc' | 'desc' = 'asc', ): Promise<[Size[], number]> {
+        @Query('search') search = ''): Promise<[Size[], number]> {
         const pageNumber = parseInt(page, 10);
         const limitNumber = parseInt(limit, 10);
         
@@ -27,10 +24,7 @@ export class SizeController {
           req.user.commerce.id,
           pageNumber,
           limitNumber,
-          name,
-          optionId,
-          sortField,
-          sortOrder);
+          search);
   }
 
   @Post()

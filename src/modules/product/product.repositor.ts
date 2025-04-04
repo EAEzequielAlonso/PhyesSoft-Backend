@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { DeleteResult, Repository, UpdateResult } from 'typeorm';
+import { DeleteResult, ILike, Repository, UpdateResult } from 'typeorm';
 import { Product } from './entities/product.entity';
 import { searchDto } from './dto/create-product.dto';
 
@@ -12,32 +12,14 @@ export class ProductRepository {
 
   async getProducts(commerceId:string, pageNumber:number,
          limitNumber: number,
-         search: searchDto,
-         sortField: string,
-         sortOrder: string): Promise<[Product[], number]> {
-         const query = this.productRepository.createQueryBuilder("product")
-           .leftJoinAndSelect("product.sizeType", "sizeType")
-           .leftJoinAndSelect("product.category", "category")
-           .leftJoinAndSelect("product.subcategory", "subcategory")
-           .leftJoinAndSelect("product.brand", "brand")
-           .leftJoinAndSelect("product.model", "model")
-           .where("product.name LIKE :name", { name: `%${search.name}%` })
-           .andWhere("product.commerceId = :commerceId", { commerceId })
-          
-         if (search.categoryId !== '') query.andWhere("product.categoryId = :catId", { catId: search.categoryId });
-         if (search.brandId !== '') query.andWhere("product.brandId = :braId", { braId: search.brandId });
-         if (search.sizeTypeId !== '') query.andWhere("product.sizeTypeId = :stId", { stId: search.sizeTypeId });
-         // Agregar orden dinámico
-         if (sortField === "name") {
-           query.orderBy("product.name", sortOrder.toUpperCase() as "ASC" | "DESC");
-         } else {
-           query.orderBy(`${sortField}.name`, sortOrder.toUpperCase() as "ASC" | "DESC");
-         }
+         search: string): Promise<[Product[], number]> {
          
-         // Aplicar paginación
-         query.skip((pageNumber - 1) * limitNumber).take(limitNumber);
-         const result = await query.getManyAndCount();
-         return await query.getManyAndCount();
+          return await this.productRepository.findAndCount({where: { name: ILike(`%${search}%`), commerceId },
+                order: { createdAt: "DESC" },
+                skip: (pageNumber - 1) * limitNumber,
+                take: limitNumber,
+                relations: {sizetype:true, category: true, brand:true, model:true, subcategory:true},
+            })
   }
  
   async getProductById(id: string): Promise<Product> {

@@ -1,6 +1,6 @@
  import { ConflictException, Injectable } from '@nestjs/common';
  import { InjectRepository } from '@nestjs/typeorm';
- import { DeleteResult, Repository, UpdateResult } from 'typeorm';
+ import { DeleteResult, ILike, Repository, UpdateResult } from 'typeorm';
 import { Size } from './entities/size.entity';
  
  @Injectable()
@@ -12,44 +12,28 @@ import { Size } from './entities/size.entity';
   
    async findAll(commerceId:string, pageNumber:number,
        limitNumber: number,
-       name: string,
-       optionId: string,
-       sortField: string,
-       sortOrder: string): Promise<[Size[], number]> {
-         
-       const query = this.repository.createQueryBuilder("size")
-         .leftJoinAndSelect("size.sizeType", "sizeType")
-         .where("size.name LIKE :name", { name: `%${name}%` })
-         .andWhere("sizeType.commerceId = :commerceId", { commerceId })
-       
-       if (optionId !== '') query.andWhere("size.sizeTypeId = :optionId", { optionId });
-         
-       // Agregar orden dinámico
-       if (sortField !== "name") {
-         query.orderBy("sizeType.name", sortOrder.toUpperCase() as "ASC" | "DESC");
-       } else {
-         query.orderBy("size.name", sortOrder.toUpperCase() as "ASC" | "DESC");
-       }
-       
-       // Aplicar paginación
-       query.skip((pageNumber - 1) * limitNumber).take(limitNumber);
-       
-       return await query.getManyAndCount();
+       search: string): Promise<[Size[], number]> {
+        return await this.repository.findAndCount({where: { name: ILike(`%${search}%`), sizetype: {commerceId} },
+       order: { createdAt: "DESC" },
+       skip: (pageNumber - 1) * limitNumber,
+       take: limitNumber,
+       relations: {sizetype:true},
+     });
      }
  
-   async findByCategory(sizeTypeId: string): Promise<Size[]> {
-     return this.repository.find({ where: { sizeTypeId } });
+   async findByCategory(sizetypeId: string): Promise<Size[]> {
+     return this.repository.find({ where: { sizetypeId } });
    }
  
    async findOne(id: string): Promise<Size> {
      return this.repository.findOne({
        where: { id },
-       relations: { sizeType: true },
+       relations: { sizetype: true },
      });
    }
  
    async create(
-    size: Partial<Size>,
+    size: Partial<Size>, 
    ): Promise<Size> {
      return await this.repository.save(size);
    }

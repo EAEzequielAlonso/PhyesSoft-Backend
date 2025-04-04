@@ -9,5 +9,5 @@ export class CreateSizeDto {
 
   @IsUUID()
   @IsNotEmpty()
-  sizeTypeId: string
+  sizetypeId: string
 }

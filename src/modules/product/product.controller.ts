@@ -26,14 +26,12 @@ import { Request } from 'express';
 export class ProductController {
   constructor(private readonly productService: ProductService) {}
 
-  @Post("getproducts")
+  @Get()
   async getProducts(
           @Req() req: Request, 
           @Query('page') page = '1',
           @Query('limit') limit = '10',
-          @Query('sortField') sortField = 'name',
-          @Query('sortOrder') sortOrder: 'asc' | 'desc' = 'asc',
-          @Body() search 
+          @Query('search') search = ''
         ): Promise<[Product[], number]> {
           const pageNumber = parseInt(page, 10) || 1;
           const limitNumber = parseInt(limit, 10) || 10;
@@ -42,9 +40,7 @@ export class ProductController {
             req.user.commerce.id,
             pageNumber,
             limitNumber,
-            search,
-            sortField,
-            sortOrder);
+            search);
   }
 
   @Get('subcategory/:subcategoryId')

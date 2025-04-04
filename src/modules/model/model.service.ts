@@ -13,16 +13,10 @@ export class ModelService {
 
   async getModels(commerceId: string, pageNumber:number,
         limitNumber: number,
-        name: string,
-        optionId: string,
-        sortField: string,
-        sortOrder: string): Promise<[Model[], number]> {
+        search: string): Promise<[Model[], number]> {
         return this.modelRepository.getModels(commerceId, pageNumber,
           limitNumber,
-          name,
-          optionId,
-          sortField,
-          sortOrder);
+          search);
       }
   
   async getModelCommerce(commerceId:string): Promise<Model[]> {

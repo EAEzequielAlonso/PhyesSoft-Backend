@@ -82,5 +82,5 @@ export class Commerce {
   colors: Color[];
 
   @OneToMany (() => SizeType, (size) => size.commerce)
-  sizeTypes: SizeType[];
+  sizetypes: SizeType[];
 }

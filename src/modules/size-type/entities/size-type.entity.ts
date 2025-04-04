@@ -18,13 +18,16 @@ export class SizeType {
   @Column('varchar')
   name: string;
 
-  @OneToMany(() => Size, (size) => size.sizeType)
+  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+  createdAt: Date;
+
+  @OneToMany(() => Size, (size) => size.sizetype)
   sizes: Size[];
 
-  @OneToMany(() => Product, (product) => product.sizeType)
+  @OneToMany(() => Product, (product) => product.sizetype)
   products: Product[];
 
-  @ManyToOne (() => Commerce, (commerce) => commerce.sizeTypes)
+  @ManyToOne (() => Commerce, (commerce) => commerce.sizetypes)
   @JoinColumn({name:"commerceId"})
   commerce: Commerce;
   @Column({type: "uuid", nullable:true})

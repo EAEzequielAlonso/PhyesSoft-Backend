@@ -45,7 +45,7 @@ export class CreateProductDto {
   @IsDateString()
   @IsNotEmpty()
   @ApiProperty()
-  createAt: Date;
+  createdAt: Date;
 
   @IsUUID() @IsOptional() @ApiProperty()
   subcategoryId:string;
@@ -60,7 +60,7 @@ export class CreateProductDto {
   brandId:string;
 
   @IsUUID() @IsOptional() @ApiProperty()
-  sizeTypeId:string;
+  sizetypeId:string;
 
   @IsUUID() @IsOptional() @ApiProperty()
   commerceId:string;

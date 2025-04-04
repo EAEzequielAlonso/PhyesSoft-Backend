@@ -18,6 +18,9 @@ export class Category {
   @Column('varchar')
   name: string; 
 
+  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+  createdAt: Date;
+
   @OneToMany(() => Subcategory, (subcategory) => subcategory.category)
   subcategories: Subcategory[];
 

@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { DeleteResult, Like, Repository, UpdateResult } from 'typeorm';
+import { DeleteResult, ILike, Repository, UpdateResult } from 'typeorm';
 import { SizeType } from './entities/size-type.entity';
 
 @Injectable()
@@ -12,11 +12,9 @@ export class SizeTypeRepository {
 
   async findAll(commerceId:string, pageNumber:number,
     limitNumber: number,
-    search: string,
-    sortField: string,
-    sortOrder: string): Promise<[SizeType[], number]> {
-    return this.repository.findAndCount({where: { name: Like(`%${search}%`), commerceId },
-    order: { [sortField]: sortOrder.toUpperCase() },
+    search: string): Promise<[SizeType[], number]> {
+    return this.repository.findAndCount({where: { name: ILike(`%${search}%`), commerceId },
+    order: { createdAt: "DESC" },
     skip: (pageNumber - 1) * limitNumber,
     take: limitNumber,});
   }

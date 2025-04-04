@@ -8,15 +8,11 @@ export class ColorService {
 
   async findAll(commerceId: string, pageNumber:number,
       limitNumber: number,
-      search: string,
-      sortField: string,
-      sortOrder: string): Promise<[Color[], number]> {
+      search: string): Promise<[Color[], number]> {
     try {  
       const response = await this.colorRepository.findAll(commerceId, pageNumber,
         limitNumber,
-        search,
-        sortField,
-        sortOrder);
+        search);
       return response
     } catch (error) {
       throw new InternalServerErrorException(error)

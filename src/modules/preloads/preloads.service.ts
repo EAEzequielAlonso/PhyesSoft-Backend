@@ -140,10 +140,10 @@ export class PreloadsService {
       });
       if (!sizeFind) {
         const sizeTypeFind = await this.sizeTypeRepository.findOne({
-          where: { name: size.sizeType },
+          where: { name: size.sizetype },
         });
         if (sizeTypeFind) {
-            await this.sizeRepository.save({name: size.name, sizeTypeId: sizeTypeFind.id});
+            await this.sizeRepository.save({name: size.name, sizetypeId: sizeTypeFind.id});
             count++;
         }
       }

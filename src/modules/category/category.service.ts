@@ -12,14 +12,10 @@ export class CategoryService {
 
   async getCategories(commerceId: string, pageNumber:number,
     limitNumber: number,
-    search: string,
-    sortField: string,
-    sortOrder: string): Promise<[Category[], number]> {
+    search: string): Promise<[Category[], number]> {
     return this.categoryRepository.getCategories(commerceId, pageNumber,
       limitNumber,
-      search,
-      sortField,
-      sortOrder);
+      search);
   }
 
   async getCategoryByCommerce(commerceId:string): Promise<Category[]> {

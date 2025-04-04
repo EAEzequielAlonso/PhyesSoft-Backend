@@ -13,16 +13,10 @@ export class SizeService {
  
   async findAll(commerceId: string, pageNumber:number,
       limitNumber: number,
-      name: string,
-      optionId: string,
-      sortField: string,
-      sortOrder: string): Promise<[Size[], number]> {
-      return this.repository.findAll(commerceId, pageNumber,
+      search: string): Promise<[Size[], number]> {
+      return await this.repository.findAll(commerceId, pageNumber,
         limitNumber,
-        name,
-        optionId,
-        sortField,
-        sortOrder);
+        search);
     }
 
   async findByCategory(sizeTypeId: string): Promise<Size[]> {

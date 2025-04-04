@@ -28,20 +28,14 @@ export class SubcategoryController {
       @Req() req: Request, 
       @Query('page') page = '1',
       @Query('limit') limit = '10',
-      @Query('name') name = '',
-      @Query('optionId') optionId = '',
-      @Query('sortField') sortField = 'name',
-      @Query('sortOrder') sortOrder: 'asc' | 'desc' = 'asc', ): Promise<[Subcategory[], number]> {
+      @Query('search') search = ''): Promise<[Subcategory[], number]> {
       const pageNumber = parseInt(page, 10);
       const limitNumber = parseInt(limit, 10);
       return this.subcategoryService.getSubcategories(
         req.user.commerce.id,
         pageNumber,
         limitNumber,
-        name,
-        optionId,
-        sortField,
-        sortOrder);
+        search);
     }
 
   @Get('commerce')

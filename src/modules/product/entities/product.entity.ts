@@ -34,8 +34,8 @@ export class Product {
   @Column('float')
   price: number;
 
-  @Column('date')
-  createAt: Date;
+  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+  createdAt: Date;
 
   @Column({type: 'date', nullable:true})
   endDate: Date;
@@ -70,11 +70,11 @@ export class Product {
   @Column({type: "uuid", nullable:true})
   commerceId: string;
 
-  @ManyToOne (() => SizeType, (sizeType) => sizeType.products)
-  @JoinColumn({name:"sizeTypeId"})
-  sizeType: SizeType;
+  @ManyToOne (() => SizeType, (sizetype) => sizetype.products)
+  @JoinColumn({name:"sizetypeId"})
+  sizetype: SizeType;
   @Column({type: "uuid", nullable:true})
-  sizeTypeId: string;
+  sizetypeId: string;
 
   @OneToMany(() => SaleProducts, (saleProducts) => saleProducts.product)
   saleProducts: SaleProducts[];

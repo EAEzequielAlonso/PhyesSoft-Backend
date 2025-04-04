@@ -29,10 +29,7 @@ export class ModelController {
           @Req() req: Request, 
           @Query('page') page = '1',
           @Query('limit') limit = '10',
-          @Query('name') name = '',
-          @Query('optionId') optionId = '',
-          @Query('sortField') sortField = 'name',
-          @Query('sortOrder') sortOrder: 'asc' | 'desc' = 'asc', ): Promise<[Model[], number]> {
+          @Query('search') search = '', ): Promise<[Model[], number]> {
           const pageNumber = parseInt(page, 10);
           const limitNumber = parseInt(limit, 10);
           
@@ -40,10 +37,7 @@ export class ModelController {
             req.user.commerce.id,
             pageNumber,
             limitNumber,
-            name,
-            optionId,
-            sortField,
-            sortOrder);
+            search);
     }
   
     @Get('commerce')

@@ -17,6 +17,9 @@ export class Model {
   @Column('varchar')
   name: string;
 
+  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+  createdAt: Date; 
+
   @OneToMany(() => Product, (product) => product.model)
   products: Product[];
 

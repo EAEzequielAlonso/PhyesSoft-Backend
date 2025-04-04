@@ -12,16 +12,10 @@ export class SubcategoryService {
  
   async getSubcategories(commerceId: string, pageNumber:number,
       limitNumber: number,
-      name: string,
-      optionId: string,
-      sortField: string,
-      sortOrder: string): Promise<[Subcategory[], number]> {
+      search: string): Promise<[Subcategory[], number]> {
       return this.subcategoryRepository.getSubcategories(commerceId, pageNumber,
         limitNumber,
-        name,
-        optionId,
-        sortField,
-        sortOrder);
+        search);
     }
   
     async getSubcategoryCommerce(commerceId:string): Promise<Subcategory[]> {
