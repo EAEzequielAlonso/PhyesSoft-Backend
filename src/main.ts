@@ -12,9 +12,9 @@ async function bootstrap() {
     new ValidationPipe({
       // whitelist hace que solo se admitan las propiedades del DTO y ninguna adicional.
       whitelist: true,
+      transform: true,
     }),
   );
-  app.useGlobalPipes(new ValidationPipe({ transform: true }));
 
   app.use(cors({
     origin: "http://localhost:3000",

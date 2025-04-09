@@ -8,6 +8,7 @@ import { Subcategory } from './entities/subcategory.entity';
 
 @Injectable()
 export class SubcategoryService {
+  
   constructor(private readonly subcategoryRepository: SubcategoryRepository) {}
  
   async getSubcategories(commerceId: string, pageNumber:number,

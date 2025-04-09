@@ -1,19 +1,12 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { Transform } from 'class-transformer';
 import {
-  IsDateString,
   IsNotEmpty,
   IsNumber,
   IsOptional,
   IsString,
   IsUUID,
 } from 'class-validator';
-
-export class searchDto {
-  name:string = "";
-  categoryId: string = "";
-  brandId:string = "";
-  sizeTypeId:string = "";
-}
 
 export class CreateProductDto {
   
@@ -28,24 +21,22 @@ export class CreateProductDto {
   description: string;
 
   @IsNumber()
+  @Transform(({ value }) => parseFloat(value))
   @IsNotEmpty()
   @ApiProperty()
   cost: number;
 
   @IsNumber()
+  @Transform(({ value }) => parseFloat(value))
   @IsNotEmpty()
   @ApiProperty()
   profit: number;
 
   @IsNumber()
+  @Transform(({ value }) => parseFloat(value))
   @IsNotEmpty()
   @ApiProperty()
   price: number;
-
-  @IsDateString()
-  @IsNotEmpty()
-  @ApiProperty()
-  createdAt: Date;
 
   @IsUUID() @IsOptional() @ApiProperty()
   subcategoryId:string;
@@ -61,8 +52,5 @@ export class CreateProductDto {
 
   @IsUUID() @IsOptional() @ApiProperty()
   sizetypeId:string;
-
-  @IsUUID() @IsOptional() @ApiProperty()
-  commerceId:string;
 
 }

@@ -2,8 +2,6 @@ import { ConflictException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DeleteResult, ILike, Repository, UpdateResult } from 'typeorm';
 import { Subcategory } from './entities/subcategory.entity';
-import { Category } from '../category/entities/category.entity';
-import { Commerce } from '../commerce/entities/commerce.entity';
 
 @Injectable()
 export class SubcategoryRepository {

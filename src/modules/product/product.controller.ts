@@ -14,7 +14,7 @@ import {
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { ProductService } from './product.service';
 import { Product } from './entities/product.entity';
-import { CreateProductDto, searchDto } from './dto/create-product.dto';
+import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { AuthGuard } from '../auth/guards/Auth.guard';
 import { Request } from 'express';
@@ -22,7 +22,6 @@ import { Request } from 'express';
 @ApiTags('Products')
 @Controller('product')
 @UseGuards(AuthGuard)
-@ApiBearerAuth()
 export class ProductController {
   constructor(private readonly productService: ProductService) {}
 
@@ -66,6 +65,7 @@ export class ProductController {
 
   @Post()
   async createProduct(@Body() product: CreateProductDto, @Req() req:Request): Promise<Product> {
+    console.log(`este es el producto en el POST ${JSON.stringify(product)}`)
     return await this.productService.createProduct({...product, commerceId: req.user.commerce.id});
   }
 
@@ -73,6 +73,7 @@ export class ProductController {
   async unsubscribeProduct(
     @Param('id', ParseUUIDPipe) id: string,
   ): Promise<string> {
+
     return await this.productService.unsubscribeProduct(id);
   }
 
@@ -81,6 +82,7 @@ export class ProductController {
     @Param('id', ParseUUIDPipe) id: string,
     @Body() product: UpdateProductDto,
   ): Promise<string> {
+    console.log(`este es el producto en el PUT ${JSON.stringify(product)}`)
     return await this.productService.updateProduct(id, product);
   }
 

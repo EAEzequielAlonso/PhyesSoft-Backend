@@ -43,6 +43,13 @@ export class SubcategoryController {
     return this.subcategoryService.getSubcategoryCommerce(req.user.commerce.id);
   }
 
+  @Get('category/:categoryId')
+  async getSubcategoryByCategory(
+    @Param('categoryId', ParseUUIDPipe) categoryId: string,
+  ): Promise<Subcategory[]> {
+    return this.subcategoryService.getSubcategoriesByCategory(categoryId);
+  }
+
   @Get(':id') 
   async getSubcategoryById(
     @Param('id', ParseUUIDPipe) id: string,

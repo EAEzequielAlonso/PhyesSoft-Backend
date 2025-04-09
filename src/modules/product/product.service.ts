@@ -5,7 +5,6 @@ import {
 } from '@nestjs/common';
 import { ProductRepository } from './product.repositor';
 import { Product } from './entities/product.entity';
-import { searchDto } from './dto/create-product.dto';
 
 @Injectable()
 export class ProductService {
