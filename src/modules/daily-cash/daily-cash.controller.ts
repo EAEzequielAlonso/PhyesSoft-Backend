@@ -3,7 +3,7 @@ import { DailyCashService } from './daily-cash.service';
 import { CreateDailyCashDto } from './dto/create-daily-cash.dto';
 import { UpdateDailyCashDto } from './dto/update-daily-cash.dto';
 
-@Controller('daily-cash')
+@Controller('cashday')
 export class DailyCashController {
   constructor(private readonly dailyCashService: DailyCashService) {}
 

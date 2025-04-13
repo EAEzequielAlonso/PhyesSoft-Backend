@@ -19,6 +19,8 @@ import { PreloadsModule } from './modules/preloads/preloads.module';
 import { ColorModule } from './modules/color/color.module';
 import { SizeModule } from './modules/size/size.module';
 import { SizeTypeModule } from './modules/size-type/size-type.module';
+import { PaymentMethodModule } from './modules/payment-method/payment-method.module';
+import { MovementTypeModule } from './modules/movement-type/movement-type.module';
 
 @Module({
   imports: [
@@ -54,6 +56,8 @@ import { SizeTypeModule } from './modules/size-type/size-type.module';
     SizeModule,
     SubcategoryModule,
     SizeTypeModule,
+    PaymentMethodModule,
+    MovementTypeModule,
   ],
   controllers: [],
   providers: [],

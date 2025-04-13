@@ -1,1 +1,9 @@
-export class CreateMovementTypeDto {}
+import { ApiProperty } from "@nestjs/swagger";
+import { IsNotEmpty, IsString } from "class-validator";
+
+export class CreateMovementTypeDto {
+      @IsString()
+      @IsNotEmpty()
+      @ApiProperty({ example: 'Nikelodeon' })
+      name: string;
+}

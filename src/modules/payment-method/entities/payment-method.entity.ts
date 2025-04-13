@@ -15,10 +15,13 @@ export class PaymentMethod {
   id: string;
 
   @Column('varchar')
-  method: string;
+  name: string;
 
   @Column({ type: 'numeric', precision: 5, scale: 2, default: 0 })
   adjustment: number; // Valor de ajuste (positivo para recargo, negativo para descuento)
+
+  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+  createdAt: Date;
 
   @ManyToOne (() => Commerce, (commerce) => commerce.paymentMethods)
   @JoinColumn({name:"commerceId"})

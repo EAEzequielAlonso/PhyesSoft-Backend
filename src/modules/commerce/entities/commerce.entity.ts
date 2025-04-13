@@ -16,6 +16,7 @@ import { Color } from "src/modules/color/entities/color.entity";
 import { SizeType } from "src/modules/size-type/entities/size-type.entity";
 import { PaymentMethod } from "src/modules/payment-method/entities/payment-method.entity";
 import { User } from "src/modules/user/entities/user.entity";
+import { MovementType } from "src/modules/movement-type/entities/movement-type.entity";
 
 @Entity({
   name: 'commerces',
@@ -83,4 +84,7 @@ export class Commerce {
 
   @OneToMany (() => SizeType, (size) => size.commerce)
   sizetypes: SizeType[];
+
+  @OneToMany (() => MovementType, (movementType) => movementType.commerce)
+  movementTypes: SizeType[];
 }

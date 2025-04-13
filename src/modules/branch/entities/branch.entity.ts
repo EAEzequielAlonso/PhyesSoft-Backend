@@ -44,7 +44,7 @@ export class Branch {
   InitDate: Date;
 
   @Column({ type: 'date' })
-  createAt: Date;
+  createdAt: Date;
 
   @Column({ type: 'date', nullable: true })
   endDate: Date;
