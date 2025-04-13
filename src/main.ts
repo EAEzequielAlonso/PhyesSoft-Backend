@@ -17,7 +17,7 @@ async function bootstrap() {
   );
 
   app.use(cors({
-    origin: "http://localhost:3000",
+    origin: ["http://localhost:3000", "https://phyes-soft-frontend.vercel.app"],
     credentials: true // Esto permite el envío de cookies
 }));
   //genero el Document Builder donde preconfiguro los datos basicos
