@@ -43,7 +43,6 @@ export class BrandController {
 
   @Get('commerce')
   async findCommerce(@Req() req: Request): Promise<Brand[]> {
-    console.log("este es el id de commerce; ", req.user.commerce.id)
     return await this.brandService.findCommerce(req.user.commerce.id);
   }
 

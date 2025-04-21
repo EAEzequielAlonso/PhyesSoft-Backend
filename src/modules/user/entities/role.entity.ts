@@ -9,7 +9,7 @@ export class UserRole {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({ type: 'varchar', length: 50, nullable: true })
+  @Column({ type: 'varchar', length: 50})
   role: string;
 
   @OneToMany (() => User, (user) => user.role)

@@ -14,16 +14,31 @@ export class AuthGuard implements CanActivate {
     context: ExecutionContext,
   ): boolean | Promise<boolean> | Observable<boolean> {
     const request = context.switchToHttp().getRequest();
+    // Primero tratamos de obtener el token de las cookies
+    let token = request.cookies?.token;
+    console.log("token desde la cookie: ", JSON.stringify(request.cookies))
+    if (!token) {
+      // Si no hay token en las cookies, intentar obtenerlo del header Authorization
+      const authorizationHeader = request.headers['authorization'];
 
-    let token = request.cookies['token']; 
-    console.log("token ", token)
-    if (!token)
-      token = request.headers['authorization']?.split(' ')[1] ?? '';
-      if (!token)
-          throw new HttpException(
-            { status: 401, error: `No se ha encontrado el Bearer token` },
-            401,
-          );
+      if (authorizationHeader) {
+        // El token estará en el formato "Bearer <token>"
+        const parts = authorizationHeader.split(' ');
+
+        if (parts.length === 2 && parts[0] === 'Bearer') {
+          token = parts[1];
+        }
+      }
+    }
+    console.log("token desde el header bearer: ",JSON.stringify(token))
+    if (!token) {
+      // Si no encontramos el token ni en cookies ni en headers, lanzamos un error
+      throw new HttpException(
+        { status: 401, error: 'No autorizado. Token no proporcionado.' },
+        401,
+      );
+    }
+    
     try {
       const secret = process.env.JWT_SECRET;
       const payload = this.jwtService.verify(token, { secret });
@@ -33,7 +48,7 @@ export class AuthGuard implements CanActivate {
       return true;
     } catch (err) {
       throw new HttpException(
-        { status: 401, error: `Token Invalido ${err}` },
+        { status: 401, error: `Token Invalido` },
         401,
       );
     }

@@ -1,12 +1,13 @@
 import { BadRequestException, Injectable, UnauthorizedException } from '@nestjs/common';
-import { User } from '../user/entities/user.entity';
 import { UserRepository } from '../user/user.repository';
-import { CreateUserDto } from '../user/dto/create-user.dto';
-import { LoginUserDto } from './dto/loginUser.dto';
 import { JwtService } from '@nestjs/jwt';
-import * as bcrypt from 'bcrypt';
-import { UserRole } from '../user/entities/role.entity';
 import { Role } from '../user/roles/roles.enum';
+import { LoginUserDto } from './dto/loginUser.dto';
+import * as bcrypt from "bcrypt"
+import { UserRole } from '../user/entities/role.entity';
+import { CreateUserDto } from '../user/dto/create-user.dto';
+import { User } from '../user/entities/user.entity';
+import { Response } from 'express';
 
 @Injectable()
 export class AuthService {
@@ -17,7 +18,7 @@ export class AuthService {
 
   async signup(user: CreateUserDto): Promise<Omit<User, 'password'>> {
     
-    let userDB: User = await this.userRepository.getUserByEmail(user.email);
+    const userDB: User = await this.userRepository.getUserByEmail(user.email);
     if (userDB)
       throw new UnauthorizedException(
         `Ya existe un usuario registrado con este email, Prueba con "Olvide mi contraseña"`,
@@ -35,7 +36,7 @@ export class AuthService {
       password: HashPassword,
     });
 
-    //envio email de bienvenida
+  //   //envio email de bienvenida
     // if (userSave.email) {
     //   this.emailService.WelcomeEmail(userSave, passwordConfirm, false);
     // }
@@ -44,7 +45,7 @@ export class AuthService {
     return sendUser;
   }
 
-  async signin(userLogin: LoginUserDto): Promise<Object> {
+  async signin(userLogin: LoginUserDto, res: Response): Promise<Object> {
     // comprueba que el usuario exista, sino devuelve un error
     const userDB = await this.userRepository.getUserByEmail(userLogin.email);
     if (!userDB) {
@@ -61,9 +62,32 @@ export class AuthService {
 
     //creo el Payload a guardar en el token, con id, email, y los roles asignados al usuario
     const userPayload = {
-      ...userDB,
+      ...userDB
     };
     const token = this.jwtService.sign(userPayload);
-    return { token: token };
+
+    const isProd = process.env.NODE_ENV === 'production';
+
+    res.cookie('token', token, {
+      httpOnly: true,
+      secure: isProd,
+      sameSite: isProd ? 'none' : 'lax',
+      path: '/',
+    });
+    return res.json({ token });
   }
+
+  async signOut(res: Response): Promise<Object> {
+    const isProd = process.env.NODE_ENV === 'production';
+  
+    res.clearCookie('token', {
+      httpOnly: true,
+      secure: isProd,
+      sameSite: isProd ? 'none' : 'lax',
+      path: '/',
+    });
+  
+    return res.json({ message: 'Sesión cerrada correctamente' });
+  }
+
 }

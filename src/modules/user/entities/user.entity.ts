@@ -1,5 +1,4 @@
 import {
-  BeforeInsert,
   Column,
   Entity,
   Index,
@@ -26,7 +25,7 @@ export class User {
   @Column({ type: 'varchar', length: 50, nullable: true })
   name: string;
 
-  @Column({ type: 'varchar', length: 50, nullable: true, unique: true })
+  @Column({ type: 'varchar', length: 50, unique: true })
   email: string;
 
   @Column({
@@ -36,8 +35,7 @@ export class User {
   })
   imgProfile: string;
 
-  @Index()
-  @Column({ unique: true })
+  @Column({ unique: true , nullable:true})
   dni: number;
 
   @Column({ nullable: true, unique: true })
@@ -49,8 +47,8 @@ export class User {
   @Column({ type: 'date', nullable: true })
   birthdate: Date;
 
-  @Column({ type: 'date' })
-  startDate: Date;
+  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+  createdAt: Date;
 
   @Column({ type: 'date', nullable: true })
   endDate: Date;

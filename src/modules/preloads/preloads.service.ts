@@ -222,7 +222,6 @@ export class PreloadsService {
             sexId: sexFind.id,
             password: passwordHash,
             birthdate: new Date(user.birthdate),
-            startDate: new Date(user.startDate),
           });
           count++;
         }

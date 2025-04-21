@@ -49,8 +49,8 @@ export class Commerce {
   @Column({ type: 'date', nullable: true })
   InitDate: Date;
 
-  @Column({ type: 'date' })
-  createAt: Date;
+  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+  createdAt: Date;
 
   @Column({ type: 'date', nullable: true })
   endDate: Date;

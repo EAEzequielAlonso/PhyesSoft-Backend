@@ -1,13 +1,12 @@
 [
     {
         "name": "Graciela Junco",
-        "email": "herz@gmail.com",
+        "email": "nadiaayaelen@gmail.com",
         "imgProfile": "https://st.depositphotos.com/1537427/3571/v/450/depositphotos_35717211-stock-illustration-vector-user-icon.jpg",
         "dni": 11111111,
         "cuit": "20111111114",
         "password": "Prueba@0",
         "birthdate": "1990/09/12",
-        "startDate": "2023/02/01",
         "phone": 1156789012,
         "address": "calle Las Flores 123",
         "city": "Mar del Plata",
@@ -22,7 +21,6 @@
         "cuit": "20222222224",
         "password": "Prueba@0",
         "birthdate": "1990/09/12",
-        "startDate": "2023/02/01",
         "phone": 1145678901,
         "address": "calle 45 nro 678",
         "city": "La Plata",
@@ -37,7 +35,6 @@
         "cuit": "20333333334",
         "password": "Prueba@0",
         "birthdate": "1990/09/12",
-        "startDate": "2023/02/01",
         "phone": 1134567890,
         "address": "avenida San Martín 789",
         "city": "Rosario",
@@ -52,26 +49,11 @@
         "cuit": "20318765434",
         "password": "Prueba@0",
         "birthdate": "1990/09/12",
-        "startDate": "2023/02/01",
         "phone": 1123456789,
         "address": "calle Río 45",
         "city": "Buenos Aires",
         "role": "commerceAdmin",
         "sex": "Femenino"
-    },
-    {
-        "name": "Ezequiel Alonso",
-        "email": "eze.g.alonso@gmail.com",
-        "imgProfile": "https://st.depositphotos.com/1537427/3571/v/450/depositphotos_35717211-stock-illustration-vector-user-icon.jpg",
-        "dni": 34567892,
-        "cuit": "20345678924",
-        "password": "Prueba@0",
-        "birthdate": "1990/09/12",
-        "startDate": "2023/02/01",
-        "phone": 1198765432,
-        "address": "calle 12 nro 234",
-        "city": "Córdoba",
-        "role": "admin",
-        "sex": "Masculino"
     }
+    
 ]

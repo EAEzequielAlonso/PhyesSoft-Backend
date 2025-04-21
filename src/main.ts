@@ -16,10 +16,11 @@ async function bootstrap() {
     }),
   );
 
-  app.use(cors({
+  app.enableCors({
     origin: ["http://localhost:3000", "https://phyes-soft-frontend.vercel.app"],
-    credentials: true // Esto permite el envío de cookies
-}));
+    credentials: true,
+  });
+
   //genero el Document Builder donde preconfiguro los datos basicos
   const swaggerConfig = new DocumentBuilder()
     .setTitle('StyleFlow - Backend para SaaS de Indumentaria')
