@@ -10,6 +10,8 @@ import {
 } from 'typeorm';
 import { UserRoleBranch } from './userBranch.entity';
 import { DailyCash } from 'src/modules/daily-cash/entities/daily-cash.entity';
+import { SalePoint } from 'src/modules/sale-point/entities/sales-point.entity';
+import { FiscalData } from 'src/modules/fiscal-data/entities/fiscal-data.entity';
 
 @Entity({
   name: 'branches',
@@ -32,24 +34,19 @@ export class Branch {
   @Column({ type: 'varchar', length: 50, unique: true })
   emailBranch: string;
 
-  @Column({
-    type: 'varchar',
-    length: 100,
-    default:
-      'https://img.freepik.com/vector-gratis/apoye-concepto-ilustracion-negocio-local_23-2148587056.jpg',
-  })
-  image: string;
+  @Column({ length: 20, nullable: true })
+  telefono?: string;
 
   @Column({ type: 'date', nullable: true })
-  InitDate: Date;
+  initDate: Date;
 
-  @Column({ type: 'date' })
+  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   createdAt: Date;
 
   @Column({ type: 'date', nullable: true })
   endDate: Date;
 
-  @Column({ type: 'boolean' })
+  @Column({ type: 'boolean' , default:false})
   central: boolean;
 
   @ManyToOne(() => Commerce, (commerce) => commerce.branches)
@@ -59,9 +56,18 @@ export class Branch {
   @Column("uuid")
   commerceId: string;
 
+  @ManyToOne(() => FiscalData, (fiscalData) => fiscalData.branches)
+  @JoinColumn({name: "fiscalDataId"})
+  fiscalData: FiscalData;
+  @Column({type:"uuid", nullable: true})
+  fiscalDataId: string;
+
   @OneToMany (() => UserRoleBranch, (userRoleBranch) => userRoleBranch.branch)
   userRoleBranches: UserRoleBranch[];
 
   @OneToMany (() => DailyCash, (dailyCash) => dailyCash.branch)
   dailyCash: DailyCash[];
+
+  @OneToMany (() => SalePoint, (salesPoint) => salesPoint.branch)
+  salesPoints: DailyCash[];
 }

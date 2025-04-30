@@ -3,7 +3,6 @@ import { PreloadsService } from './preloads.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from '../user/entities/user.entity';
 import { UserRole } from '../user/entities/role.entity';
-import { Sex } from '../user/entities/sex.entity';
 import { Category } from '../category/entities/category.entity';
 import { Subcategory } from '../subcategory/entities/subcategory.entity';
 import { Brand } from '../brand/entities/brand.entity';
@@ -19,7 +18,6 @@ import { SizeType } from '../size-type/entities/size-type.entity';
     TypeOrmModule.forFeature([
       User,
       UserRole,
-      Sex,
       Category,
       Subcategory,
       Brand,

@@ -16,5 +16,6 @@ export class UserRole {
   users: User[];
 
   @OneToMany (() => UserRoleBranch, (userRoleBranch) => userRoleBranch.role)
-  userRoleBranches: UserRoleBranch[];
+  userRoleBranches: UserRoleBranch[]; 
 }
+ 

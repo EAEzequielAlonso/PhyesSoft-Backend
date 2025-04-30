@@ -37,6 +37,13 @@ export class UserController {
     return await this.userService.getUserByEmail(email);
   }
 
+  @Get('check-email/:email')
+  @ApiBearerAuth()
+  @UseGuards(AuthGuard)
+  async checkUserByEmail(@Param('email') email: string): Promise<boolean> {
+    return await this.userService.checkUserByEmail(email);
+  }
+
   @Get('role/:role')
   @ApiBearerAuth()
   @UseGuards(AuthGuard)

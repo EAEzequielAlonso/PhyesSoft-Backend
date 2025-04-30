@@ -10,21 +10,34 @@ import { BranchRepository } from './branch.repository';
 export class BranchService {
   constructor(private readonly branchRepository: BranchRepository) {}
 
-  async getBranches(): Promise<Branch[]> {
-    return await this.branchRepository.getBranchs();
-  }
+  async getBranchs(commerceId: string, pageNumber:number,
+        limitNumber: number,
+        search: string): Promise<[Branch[], number]> {
+      try {  
+        const response = await this.branchRepository.getBranchs(commerceId, pageNumber,
+          limitNumber,
+          search);
+        return response
+      } catch (error) {
+        throw new InternalServerErrorException(error)
+      }
+    }
 
   async getBranchById(id: string): Promise<Branch> {
     return await this.branchRepository.getBranchById(id);
   }
 
-  // async getBranchByCommerceId (commerceId: string): Promise<Branch[]> {
-  //   return await this.branchRepository.getBranchByCommerceId(commerceId)
-  // }
+  async findCommerce(commerceId:string): Promise<Branch[]> {
+    return await this.branchRepository.findCommerce(commerceId);
+  }
 
-  // async getBranchByUserId (userId: string): Promise<Branch[]> {
-  //   return await this.branchRepository.getBranchByUserId(userId)
-  // }
+  async getBranchByCommerceId (commerceId: string): Promise<Branch[]> {
+    return await this.branchRepository.getBranchByCommerceId(commerceId)
+  }
+
+  async getBranchByUserId (userId: string): Promise<Branch[]> {
+    return await this.branchRepository.getBranchByUserId(userId)
+  }
 
   async createBranch(branch: Partial<Branch>): Promise<Branch> {
     const branchFind = await this.branchRepository.createBranch(branch);

@@ -14,7 +14,7 @@ export class SizeTypeRepository {
     limitNumber: number,
     search: string): Promise<[SizeType[], number]> {
     return this.repository.findAndCount({where: { name: ILike(`%${search}%`), commerceId },
-    order: { createdAt: "DESC" },
+    order: { createdAt: "DESC" }, 
     skip: (pageNumber - 1) * limitNumber,
     take: limitNumber,});
   }

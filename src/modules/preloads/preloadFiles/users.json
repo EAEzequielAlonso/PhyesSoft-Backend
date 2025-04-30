@@ -10,8 +10,7 @@
         "phone": 1156789012,
         "address": "calle Las Flores 123",
         "city": "Mar del Plata",
-        "role": "commerceAdmin",
-        "sex": "Masculino" 
+        "role": "commerceAdmin"
     },
     {
         "name": "Elena Ortega",
@@ -24,8 +23,7 @@
         "phone": 1145678901,
         "address": "calle 45 nro 678",
         "city": "La Plata",
-        "role": "employee",
-        "sex": "Femenino"
+        "role": "employee"
     },
     {
         "name": "Lucas Fernández",
@@ -38,8 +36,7 @@
         "phone": 1134567890,
         "address": "avenida San Martín 789",
         "city": "Rosario",
-        "role": "employee",
-        "sex": "Masculino"
+        "role": "employee"
     },
     {
         "name": "Carla Méndez",
@@ -52,8 +49,7 @@
         "phone": 1123456789,
         "address": "calle Río 45",
         "city": "Buenos Aires",
-        "role": "commerceAdmin",
-        "sex": "Femenino"
+        "role": "commerceAdmin"
     }
     
 ]

@@ -9,6 +9,7 @@ import {
   Put,
   Req,
   UseGuards,
+  Query,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { BranchService } from './branch.service';
@@ -20,27 +21,30 @@ import { AuthGuard } from '../auth/guards/Auth.guard';
 
 @ApiTags('Branches')
 @Controller('branch')
+@UseGuards(AuthGuard)
 export class BranchController {
   constructor(private readonly branchService: BranchService) {}
 
-  @Get()
-  async getBranches(): Promise<Branch[]> {
-    return await this.branchService.getBranches();
-  }
-
-  // @Get("commerce/:commerceId")
-  // @ApiBearerAuth()
-  // @UseGuards(AuthGuard)
-  // async getBranchByCommerceId (@Param("commerceId", ParseUUIDPipe) commerceId: string): Promise<Branch[]> {
-  //   return await this.branchService.getBranchByCommerceId(commerceId)
-  // }
-
-  // @Get("user")
-  // @ApiBearerAuth()
-  // @UseGuards(AuthGuard)
-  // async getBranchByUser (@Req() request: Request): Promise<Branch[]> {
-  //   return await this.branchService.getBranchByUserId(request.user?.id)
-  // }
+   @Get()
+    @ApiBearerAuth()
+    async getBranchs(
+        @Req() req: Request, 
+        @Query('page') page = '1',
+        @Query('limit') limit = '10',
+        @Query('search') search = ''): Promise<[Branch[], number]> {
+      const pageNumber = parseInt(page, 10);
+      const limitNumber = parseInt(limit, 10);
+      return await this.branchService.getBranchs(
+        req.user.commerce.id,
+        pageNumber,
+        limitNumber,
+        search);
+    }
+  
+    @Get('commerce')
+    async findCommerce(@Req() req: Request): Promise<Branch[]> {
+      return await this.branchService.findCommerce(req.user.commerce.id);
+    }
 
   @Get(':id')
   @ApiBearerAuth()
@@ -52,8 +56,9 @@ export class BranchController {
   @Post()
   @ApiBearerAuth()
   @UseGuards(AuthGuard)
-  async createBranch(@Body() branch: CreateBranchDto): Promise<Branch> {
-    return await this.branchService.createBranch(branch);
+  async createBranch(@Body() branch: CreateBranchDto, @Req() req: Request, ): Promise<Branch> {
+    const commerceId = req.user.commerce.id
+    return await this.branchService.createBranch({...branch, commerceId});
   }
 
   @Put('unsubscribe/:id')

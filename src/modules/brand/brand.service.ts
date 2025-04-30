@@ -18,7 +18,7 @@ export class BrandService {
       throw new InternalServerErrorException(error)
     }
   }
-
+ 
   async findCommerce(commerceId:string): Promise<Brand[]> {
     return await this.repository.findCommerce(commerceId);
   }

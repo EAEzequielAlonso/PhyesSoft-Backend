@@ -13,7 +13,7 @@ export class SizeTypeService {
       const response = await this.repository.findAll(commerceId, pageNumber,
         limitNumber,
         search);
-      return response
+      return response 
     } catch (error) {
       throw new InternalServerErrorException(error)
     }

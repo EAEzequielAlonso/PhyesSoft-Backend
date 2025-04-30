@@ -1,11 +1,10 @@
-import { Controller, Post, Body, Res, Headers, HttpCode, HttpStatus, Req, HttpException } from '@nestjs/common';
+import { Controller, Post, Body, Res, HttpCode, HttpStatus } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { ApiBody, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { LoginUserDto } from './dto/loginUser.dto';
-import { User } from '../user/entities/user.entity';
-import { CreateUserDto } from '../user/dto/create-user.dto';
 import { Response } from 'express';   // servicio que verifica Clerk
 import { JwtService } from "@nestjs/jwt";
+import { RegisterUserDto } from './dto/registerUser.dto';
 
 
 @ApiTags('Autentication')
@@ -29,8 +28,8 @@ export class AuthController {
   //   type: CreateUserDto,
    })
    async signup(
-     @Body() user: CreateUserDto,
-   ): Promise<Omit<User, 'password' | 'role'>> {
+     @Body() user: RegisterUserDto,
+   ): Promise<{message:string}> {
      return await this.authService.signup(user);
    }
 
@@ -40,6 +39,12 @@ export class AuthController {
      return await this.authService.signOut(res);
    }
 
+   @Post('reset-password')
+   @ApiOperation({ summary: 'Realiza el reestablecimiento de las claves' })
+   @ApiBody({ description: 'Las credenciales', type: LoginUserDto })
+   async resetPassword(@Body() userLogin: LoginUserDto): Promise<Object> {
+     return await this.authService.resetPassword(userLogin.email, userLogin.password);
+   }
 }
 
 

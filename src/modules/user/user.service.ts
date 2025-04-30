@@ -28,6 +28,10 @@ export class UserService {
     return user;
   }
 
+  async checkUserByEmail(email: string): Promise<boolean> {
+      return await this.userRepository.checkUserByEmail(email);
+    }
+
   async getRolesUsersByRole(role: Role): Promise<UserRole> {
     const userRole = await this.userRepository.getRolesUsersByRole(role);
     if (!userRole) throw new NotFoundException('Rol de Usuario no encontrado');

@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { DeleteResult, Repository, UpdateResult } from 'typeorm';
+import { DeleteResult, ILike, Repository, UpdateResult } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Branch } from './entities/branch.entity';
 @Injectable()
@@ -8,8 +8,25 @@ export class BranchRepository {
     @InjectRepository(Branch) private branchRepository: Repository<Branch>,
   ) {}
 
-  async getBranchs(): Promise<Branch[]> {
-    return await this.branchRepository.find();
+  async getBranchs(
+      commerceId: string,
+      pageNumber: number,
+      limitNumber: number,
+      search: string
+    ): Promise<[Branch[], number]> {
+      return this.branchRepository.findAndCount({
+        where: { 
+          name: ILike(`%${search}%`), 
+          commerceId 
+        },
+        order: { createdAt: "DESC" }, // Asegúrate de que la entidad tenga un campo createdAt
+        skip: (pageNumber - 1) * limitNumber,
+        take: limitNumber,
+      });
+    }
+  
+  async findCommerce(commerceId:string): Promise<Branch[]> {
+    return await this.branchRepository.find({where: {commerceId}});
   }
 
   async getBranchById(id: string): Promise<Branch> {
@@ -20,13 +37,13 @@ export class BranchRepository {
     return await this.branchRepository.exists({ where: { id: branchId } });
   }
 
-  // async getBranchByCommerceId (commerceId: string): Promise<Branch[]> {
-  //     return await this.branchRepository.find({where: {commerceId}})
-  // }
+  async getBranchByCommerceId (commerceId: string): Promise<Branch[]> {
+      return await this.branchRepository.find({where: {commerceId}})
+  }
 
-  // async getBranchByUserId (userId: string): Promise<Branch[]> {
-  //     return await this.branchRepository.find({where: {commerce: {userPropId: userId}}})
-  // }
+  async getBranchByUserId (userId: string): Promise<Branch[]> {
+      return await this.branchRepository.find({where: {commerce: {userId}}})
+  }
 
   async createBranch(user: Partial<Branch>): Promise<Branch> {
     return await this.branchRepository.save(user);

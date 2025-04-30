@@ -21,6 +21,8 @@ import { SizeModule } from './modules/size/size.module';
 import { SizeTypeModule } from './modules/size-type/size-type.module';
 import { PaymentMethodModule } from './modules/payment-method/payment-method.module';
 import { MovementTypeModule } from './modules/movement-type/movement-type.module';
+import { SalePointModule } from './modules/sale-point/sales-point.module';
+import { FiscalDataModule } from './modules/fiscal-data/fiscal-data.module';
 
 @Module({
   imports: [
@@ -58,6 +60,8 @@ import { MovementTypeModule } from './modules/movement-type/movement-type.module
     SizeTypeModule,
     PaymentMethodModule,
     MovementTypeModule,
+    SalePointModule,
+    FiscalDataModule,
   ],
   controllers: [],
   providers: [],

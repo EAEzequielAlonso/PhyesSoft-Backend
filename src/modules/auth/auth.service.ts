@@ -1,48 +1,55 @@
-import { BadRequestException, Injectable, UnauthorizedException } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { UserRepository } from '../user/user.repository';
 import { JwtService } from '@nestjs/jwt';
 import { Role } from '../user/roles/roles.enum';
 import { LoginUserDto } from './dto/loginUser.dto';
 import * as bcrypt from "bcrypt"
 import { UserRole } from '../user/entities/role.entity';
-import { CreateUserDto } from '../user/dto/create-user.dto';
 import { User } from '../user/entities/user.entity';
 import { Response } from 'express';
+import { RegisterUserDto } from './dto/registerUser.dto';
+import { CommerceRepository } from '../commerce/commerce.repository';
 
 @Injectable()
 export class AuthService {
   constructor(
     private readonly userRepository: UserRepository,
+    private readonly commerceRepository: CommerceRepository,
     private readonly jwtService: JwtService,
   ) {}
 
-  async signup(user: CreateUserDto): Promise<Omit<User, 'password'>> {
+  async signup(user: RegisterUserDto): Promise<{message:string}> {
     
+    try {
     const userDB: User = await this.userRepository.getUserByEmail(user.email);
     if (userDB)
       throw new UnauthorizedException(
         `Ya existe un usuario registrado con este email, Prueba con "Olvide mi contraseña"`,
       );// compruebo que no exista el email
 
-    const { passwordConfirm, ...createUser } = user; // saco el confirmPassword que viene en el DTO
-
     const userRole: UserRole = await this.userRepository.getRolesUsersByRole(
       Role.CommerceAdmin,
     );
     const HashPassword = await bcrypt.hash(user.password, 10);
+
     const userSave = await this.userRepository.createUser({
-      ...createUser,
+      email: user.email,
       roleId: userRole.id,
       password: HashPassword,
     });
+
+    await this.commerceRepository.createCommerce({nameCompany: user.commerce, nameFantacy: user.commerce, userId: userSave.id});
 
   //   //envio email de bienvenida
     // if (userSave.email) {
     //   this.emailService.WelcomeEmail(userSave, passwordConfirm, false);
     // }
 
-    const { password, ...sendUser } = userSave;
-    return sendUser;
+    return {message: "Usuario Registrado Con Exito"};
+  } catch (error) {
+
+  }
+    
   }
 
   async signin(userLogin: LoginUserDto, res: Response): Promise<Object> {
@@ -88,6 +95,17 @@ export class AuthService {
     });
   
     return res.json({ message: 'Sesión cerrada correctamente' });
+  }
+
+  async resetPassword(email:string, password:string): Promise<Object> {
+    
+    const HashPassword = await bcrypt.hash(password, 10);
+    
+    const resp = await this.userRepository.resetPassword(email, HashPassword)
+    
+    if ( resp.affected === 0 ) throw new NotFoundException("Email no encontrado")
+      
+    return {message: "Contraseña Actualizada"};
   }
 
 }

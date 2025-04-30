@@ -13,7 +13,7 @@ export class SizeTypeController {
   constructor(private readonly service: SizeTypeService) {}
 
   @Get()
-  @ApiBearerAuth()
+  @ApiBearerAuth() 
   async findAll(
       @Req() req: Request, 
       @Query('page') page = '1',

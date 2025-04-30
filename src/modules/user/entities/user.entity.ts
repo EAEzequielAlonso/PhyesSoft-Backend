@@ -8,7 +8,6 @@ import {
   OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { Sex } from './sex.entity';
 import { UserRoleBranch } from 'src/modules/branch/entities/userBranch.entity';
 import { DailyCash } from 'src/modules/daily-cash/entities/daily-cash.entity';
 import { UserRole } from './role.entity';
@@ -61,12 +60,6 @@ export class User {
 
   @Column({ type: 'varchar', nullable: true })
   city: string;
-
-  @ManyToOne(() => Sex, (sex) => sex.users)
-  @JoinColumn({ name: 'sexId' })
-  sex: Sex;
-  @Column({ type: 'uuid', nullable: true })
-  sexId: string;
 
   @ManyToOne(() => UserRole, (role) => role.users)
   @JoinColumn({ name: 'roleId' })

@@ -6,7 +6,6 @@ import {
   IsNotEmpty,
   IsOptional,
   IsString,
-  IsUUID,
 } from 'class-validator';
 
 export class CreateBranchDto {
@@ -27,32 +26,28 @@ export class CreateBranchDto {
   city: string;
 
   @IsEmail()
-  @IsNotEmpty()
+  @IsOptional()
   @ApiProperty()
   emailBranch: string;
 
-  @IsString()
+  @IsEmail()
   @IsOptional()
-  @ApiPropertyOptional()
-  image: string;
+  @ApiProperty()
+  phone: string;
 
   @IsDateString()
   @IsNotEmpty()
   @ApiProperty()
-  InitDate: Date;
-
-  @IsDateString()
-  @IsNotEmpty()
-  @ApiProperty()
-  createAt: Date;
+  initDate: Date;
 
   @IsBoolean()
   @IsNotEmpty()
   @ApiProperty()
   central: boolean;
 
-  @IsUUID()
-  @IsNotEmpty()
+  @IsEmail()
+  @IsOptional()
   @ApiProperty()
-  commerceId: string;
+  fiscalDataId: string;
+
 }
