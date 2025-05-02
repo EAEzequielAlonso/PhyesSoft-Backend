@@ -30,7 +30,7 @@ export class CreateBranchDto {
   @ApiProperty()
   emailBranch: string;
 
-  @IsEmail()
+  @IsString()
   @IsOptional()
   @ApiProperty()
   phone: string;
@@ -45,7 +45,7 @@ export class CreateBranchDto {
   @ApiProperty()
   central: boolean;
 
-  @IsEmail()
+  @IsString()
   @IsOptional()
   @ApiProperty()
   fiscalDataId: string;

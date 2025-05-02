@@ -16,7 +16,7 @@ export class AuthGuard implements CanActivate {
     const request = context.switchToHttp().getRequest();
     // Primero tratamos de obtener el token de las cookies
     let token = request.cookies?.token;
-    console.log("token desde la cookie: ", JSON.stringify(request.cookies))
+
     if (!token) {
       // Si no hay token en las cookies, intentar obtenerlo del header Authorization
       const authorizationHeader = request.headers['authorization'];
@@ -30,7 +30,7 @@ export class AuthGuard implements CanActivate {
         }
       }
     }
-    console.log("token desde el header bearer: ",JSON.stringify(token))
+    
     if (!token) {
       // Si no encontramos el token ni en cookies ni en headers, lanzamos un error
       throw new HttpException(

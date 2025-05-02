@@ -17,6 +17,7 @@ import { SizeType } from "src/modules/size-type/entities/size-type.entity";
 import { PaymentMethod } from "src/modules/payment-method/entities/payment-method.entity";
 import { User } from "src/modules/user/entities/user.entity";
 import { MovementType } from "src/modules/movement-type/entities/movement-type.entity";
+import { FiscalData } from "src/modules/fiscal-data/entities/fiscal-data.entity";
 
 @Entity({
   name: 'commerces',
@@ -27,7 +28,7 @@ export class Commerce {
 
   @Index()
   @Column({ type: 'varchar', length: 50 })
-  nameFantacy: string;
+  nameFantasy: string;
 
   @Index()
   @Column({ type: 'varchar', length: 50 })
@@ -87,4 +88,7 @@ export class Commerce {
 
   @OneToMany (() => MovementType, (movementType) => movementType.commerce)
   movementTypes: SizeType[];
+
+  @OneToMany (() => FiscalData, (fiscalData) => fiscalData.commerce)
+  fiscalData: SizeType[];
 }

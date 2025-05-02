@@ -4,34 +4,38 @@ import {
     IsDateString,
     IsOptional,
     Length,
+    IsNotEmpty,
+    Matches,
   } from 'class-validator';
-import { CondicionIVA, TipoComprobante } from '../entities/fiscal-data.entity';
+import { ConditionIVA, TicketType } from '../Enums/enumsFiscal';
   
   export class CreateFiscalDataDto {
     @IsString()
     @Length(1, 100)
-    razonSocial: string;
+    name: string;
   
     @IsString()
-    @Length(11, 20) // CUIT suele tener 11 dígitos
+    @Length(11, 11)
+    @IsNotEmpty()
+    @Matches(/^\d{11}$/, { message: 'CUIT debe tener exactamente 11 dígitos numéricos' })
     cuit: string;
   
-    @IsEnum(CondicionIVA)
-    condicionIva: CondicionIVA;
+    @IsEnum(ConditionIVA)
+    conditionIva: ConditionIVA;
   
     @IsString()
     @Length(1, 200)
-    domicilioComercial: string;
+    addressCommerce: string;
   
     @IsDateString()
-    inicioActividad: Date;
+    initActivity: Date;
   
     @IsString()
     @Length(1, 20)
     ingresosBrutos: string;
   
-    @IsEnum(TipoComprobante)
-    tipoComprobante: TipoComprobante;
+    @IsEnum(TicketType)
+    ticketType: TicketType;
   
     @IsOptional()
     @IsString()

@@ -1,6 +1,6 @@
 [
     {
-        "nameFantacy": "Casa de Deportes Herz",
+        "nameFantasy": "Casa de Deportes Herz",
         "nameCompany": "Graciela Junco SRL",
         "slogan": "Lo mejor para tu salud y comodidad",
         "emailCompany": "nadiaayaelen@gmail.com",
@@ -8,10 +8,10 @@
         "createAt": "10/09/2024"
     },
     {
-        "nameFantacy": "Open Sport",
+        "nameFantasy": "Open Sport",
         "nameCompany": "Open Sport SRL",
         "slogan": "¡Sabemos todo de ropa deportiva!",
-        "emailCompany": "eze_g_alonso@gmail.com",
+        "emailCompany": "eze.g.alonso@gmail.com",
         "InitDate": "09/09/2002",
         "createAt": "10/09/2024"
     }

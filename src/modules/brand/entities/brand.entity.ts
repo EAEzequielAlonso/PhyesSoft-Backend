@@ -1,4 +1,5 @@
 import { Commerce } from 'src/modules/commerce/entities/commerce.entity';
+import { FiscalData } from 'src/modules/fiscal-data/entities/fiscal-data.entity';
 import { Model } from 'src/modules/model/entities/model.entity';
 import { Product } from 'src/modules/product/entities/product.entity';
 import {

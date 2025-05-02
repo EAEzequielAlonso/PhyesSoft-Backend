@@ -10,6 +10,11 @@ import preloadSize from './preloadFiles/size.json';
 import preloadProduct from './preloadFiles/product.json';
 import preloadCommerce from './preloadFiles/commerce.json';
 import preloadSizeType from './preloadFiles/sizeType.json'
+import preloadFiscalData from './preloadFiles/fiscalData.json'
+import preloadBranch from './preloadFiles/branch.json'
+import preloadSalePoint from "./preloadFiles/salePoint.json"
+import preloadPayment from "./preloadFiles/methodPayment.json"
+import preloadMovementType from "./preloadFiles/movementType.json"
  
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -26,6 +31,12 @@ import { Size } from '../size/entities/size.entity';
 import { Product } from '../product/entities/product.entity';
 import { Commerce } from '../commerce/entities/commerce.entity';
 import { SizeType } from '../size-type/entities/size-type.entity';
+import { FiscalData } from '../fiscal-data/entities/fiscal-data.entity';
+import { ConditionIVA, EmissionType, TicketType } from '../fiscal-data/Enums/enumsFiscal';
+import { Branch } from '../branch/entities/branch.entity';
+import { SalePoint } from '../sale-point/entities/sales-point.entity';
+import { PaymentMethod } from '../payment-method/entities/payment-method.entity';
+import { MovementType } from '../movement-type/entities/movement-type.entity';
 
 @Injectable()
 export class PreloadsService {
@@ -41,6 +52,11 @@ export class PreloadsService {
     @InjectRepository(Size) private sizeRepository: Repository<Size>,
     @InjectRepository(Product) private productRepository: Repository<Product>,
     @InjectRepository(SizeType) private sizeTypeRepository: Repository<SizeType>,
+    @InjectRepository(FiscalData) private fiscalDataRepository: Repository<FiscalData>,
+    @InjectRepository(Branch) private branchRepository: Repository<Branch>,
+    @InjectRepository(SalePoint) private salePointRepository: Repository<SalePoint>,
+    @InjectRepository(PaymentMethod) private paymentRepository: Repository<PaymentMethod>,
+    @InjectRepository(MovementType) private movementTypeRepository: Repository<MovementType>,
   ) {}
 
   async preloadRole(): Promise<void> {
@@ -165,6 +181,99 @@ export class PreloadsService {
     console.log(`Se agregaron ${count} Grupos de Talles`);
   }
 
+  async preloadFiscalData(): Promise<void> {
+    let count: number = 0;
+    for (const fiscalData of preloadFiscalData) {
+      const find = await this.fiscalDataRepository.findOne({
+        where: { name: fiscalData.name },
+      });
+      if (!find) {
+        const commerceFind:Commerce = await this.commerceRepository.findOneBy({emailCompany:fiscalData.emailCompany})
+        if (commerceFind){
+          const {emailCompany, ...save} = fiscalData
+          await this.fiscalDataRepository.save({...save, conditionIva: save.conditionIva as ConditionIVA, ticketType: save.ticketType as TicketType, commerceId: commerceFind.id});
+          count++;
+        }
+      }
+    }
+    console.log(`Se agregaron ${count} Datos Fiscales`);
+  }
+
+  async preloadPayment(): Promise<void> {
+    let count: number = 0;
+    for (const payment of preloadPayment) {
+      const find = await this.paymentRepository.findOne({
+        where: { name: payment.name },
+      });
+      if (!find) {
+        const commerceFind:Commerce = await this.commerceRepository.findOneBy({emailCompany:payment.email})
+        if (commerceFind){
+          const {email, ...save} = payment
+          await this.paymentRepository.save({...save, commerceId: commerceFind.id});
+          count++;
+        }
+      }
+    }
+    console.log(`Se agregaron ${count} Metodos de Pago`);
+  }
+
+  async preloadMovementType(): Promise<void> {
+    let count: number = 0;
+    for (const mov of preloadMovementType) {
+      const find = await this.movementTypeRepository.findOne({
+        where: { name: mov.name },
+      });
+      if (!find) {
+        const commerceFind:Commerce = await this.commerceRepository.findOneBy({emailCompany:mov.email})
+        if (commerceFind){
+          const {email, ...save} = mov
+          await this.movementTypeRepository.save({...save, commerceId: commerceFind.id});
+          count++;
+        }
+      }
+    }
+    console.log(`Se agregaron ${count} Tipos de Movimientos`);
+  }
+
+
+  async preloadSalePoint(): Promise<void> {
+    let count: number = 0;
+    for (const salePoint of preloadSalePoint) {
+      const find = await this.salePointRepository.findOne({
+        where: { name: salePoint.name },
+      });
+      if (!find) {
+        const branchFind:Branch = await this.branchRepository.findOneBy({name:salePoint.branch})
+        if (branchFind){
+          const {branch, ...save} = salePoint
+          await this.salePointRepository.save({...save, branchId: branchFind.id, emissionType: save.emissionType as EmissionType});
+          count++;
+        }
+      }
+    }
+    console.log(`Se agregaron ${count} Puntos de Venta`);
+  }
+
+  async preloadBranch(): Promise<void> {
+    let count: number = 0;
+    for (const branch of preloadBranch) {
+      const find = await this.branchRepository.findOne({
+        where: { name: branch.name },
+      });
+      if (!find) {
+        const commerceFind: Commerce = await this.commerceRepository.findOneBy({emailCompany:branch.emailCompany})
+        const fiscalFind: FiscalData  = await this.fiscalDataRepository.findOneBy({name: branch.nameFiscal})
+
+        if (commerceFind && fiscalFind){
+          const {emailCompany, nameFiscal, ...save} = branch
+          await this.branchRepository.save({...save, commerceId: commerceFind.id, fiscalDataId: fiscalFind.id});
+          count++;
+        }
+      }
+    }
+    console.log(`Se agregaron ${count} Branch`);
+  }
+
   async preloadModel(): Promise<void> {
     let count: number = 0;
     for (const model of preloadModel) {
@@ -275,6 +384,11 @@ export class PreloadsService {
     await this.preloadRole();
     await this.preloadUsers();
     await this.preloadCommerce();
+    await this.preloadFiscalData();
+    await this.preloadBranch();
+    await this.preloadPayment();
+    await this.preloadMovementType();
+    await this.preloadSalePoint();
     await this.preloadSizeType(); 
     await this.preloadSize();
     await this.preloadBrand();

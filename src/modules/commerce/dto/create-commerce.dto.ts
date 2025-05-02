@@ -10,7 +10,7 @@ export class CreateCommerceDto {
   @IsString()
   @IsNotEmpty()
   @ApiProperty()
-  nameFantacy: string;
+  nameFantasy: string;
 
   @IsString()
   @IsNotEmpty()
@@ -26,4 +26,5 @@ export class CreateCommerceDto {
   @IsNotEmpty()
   @ApiProperty()
   userId: string;
+
 }

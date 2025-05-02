@@ -38,7 +38,7 @@ export class AuthService {
       password: HashPassword,
     });
 
-    await this.commerceRepository.createCommerce({nameCompany: user.commerce, nameFantacy: user.commerce, userId: userSave.id});
+    await this.commerceRepository.createCommerce({nameCompany: user.commerce, nameFantasy: user.commerce, emailCompany: user.email, userId: userSave.id});
 
   //   //envio email de bienvenida
     // if (userSave.email) {
@@ -47,7 +47,7 @@ export class AuthService {
 
     return {message: "Usuario Registrado Con Exito"};
   } catch (error) {
-
+    throw new BadRequestException("Algo Salio mal con el Registro")
   }
     
   }
@@ -79,6 +79,7 @@ export class AuthService {
       httpOnly: true,
       secure: isProd,
       sameSite: isProd ? 'none' : 'lax',
+      maxAge: 60 * 60 * 24 * 2, // 2 día
       path: '/',
     });
     return res.json({ token });

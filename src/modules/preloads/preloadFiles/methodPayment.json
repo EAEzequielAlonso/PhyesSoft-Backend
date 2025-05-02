@@ -1,0 +1,27 @@
+[
+    {
+        "name": "Efectivo",
+        "adjustment": -10,
+        "email": "nadiaayaelen@gmail.com"
+    },
+    {
+        "name": "Tarjeta Debito",
+        "adjustment": 0,
+        "email": "nadiaayaelen@gmail.com"
+    },
+    {
+        "name": "Tarjeta Credito",
+        "adjustment": 10,
+        "email": "nadiaayaelen@gmail.com"
+    },
+    {
+        "name": "Transferencia",
+        "adjustment": -10,
+        "email": "nadiaayaelen@gmail.com"
+    },
+    {
+        "name": "QR",
+        "adjustment": 15,
+        "email": "nadiaayaelen@gmail.com"
+    }
+]

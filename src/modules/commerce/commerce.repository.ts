@@ -25,15 +25,15 @@ export class CommerceRepository {
     return await this.commerceRepository.findOne({ where: { id } });
   }
 
-  async createCommerce(user: Partial<Commerce>): Promise<Commerce> {
-    return await this.commerceRepository.save(user);
+  async createCommerce(commerce: Partial<Commerce>): Promise<Commerce> {
+    return await this.commerceRepository.save(commerce);
   }
 
   async updateCommerce(
     id: string,
-    user: Partial<Commerce>,
+    commerce: Partial<Commerce>,
   ): Promise<UpdateResult> {
-    return await this.commerceRepository.update(id, user);
+    return await this.commerceRepository.update(id, commerce);
   }
 
   async deleteCommerce(id: string): Promise<DeleteResult> {

@@ -1,0 +1,39 @@
+[
+    {
+      "name": "0001",
+      "description": "Punto electrónico principal en Sucursal Sur Croma",
+      "emissionType": "ELECTRONICO",
+      "branch": "Sucursal Sur Croma"
+    },
+    {
+      "name": "0002",
+      "description": "Punto fiscal secundario en Sucursal Sur Croma",
+      "emissionType": "FISCAL",
+      "branch": "Sucursal Sur Croma"
+    },
+    {
+      "name": "0003",
+      "description": "Punto electrónico principal en Sucursal Centro Croma",
+      "emissionType": "ELECTRONICO",
+      "branch": "Sucursal Centro Croma"
+    },
+    {
+      "name": "0004",
+      "description": "Punto manual secundario en Sucursal Centro Croma",
+      "emissionType": "MANUAL",
+      "branch": "Sucursal Centro Croma"
+    },
+    {
+      "name": "0005",
+      "description": "Punto electrónico único en Sucursal Central Herz",
+      "emissionType": "ELECTRONICO",
+      "branch": "Sucursal Central Herz"
+    },
+    {
+      "name": "0006",
+      "description": "Punto electrónico único en Sucursal Norte Herz",
+      "emissionType": "ELECTRONICO",
+      "branch": "Sucursal Norte Herz"
+    }
+  ]
+  

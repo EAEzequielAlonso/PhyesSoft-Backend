@@ -19,8 +19,10 @@ export class SalePointController {
       @Query('page') page = '1',
       @Query('limit') limit = '10',
       @Query('search') search = ''): Promise<[SalePoint[], number]> {
+
     const pageNumber = parseInt(page, 10);
     const limitNumber = parseInt(limit, 10);
+
     return await this.service.findAll(
       req.user.commerce.id,
       pageNumber,

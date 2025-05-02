@@ -1,0 +1,47 @@
+[
+    {
+      "name": "Sucursal Central Herz",
+      "address": "Av. Siempre Viva 123",
+      "city": "Buenos Aires",
+      "emailBranch": "central@herz.com",
+      "phone": "01112345678",
+      "initDate": "2022-01-01",
+      "central": true,
+      "nameFiscal": "Herz S.A.",
+      "emailCompany": "nadiaayaelen@gmail.com"
+    },
+    {
+      "name": "Sucursal Norte Herz",
+      "address": "Ruta 8 Km 42",
+      "city": "Pilar",
+      "emailBranch": "norte@herz.com",
+      "phone": "01187654321",
+      "initDate": "2023-06-15",
+      "central": false,
+      "nameFiscal": "Distribuidora Norte SRL",
+      "emailCompany": "nadiaayaelen@gmail.com"
+    },
+    {
+      "name": "Sucursal Centro Croma",
+      "address": "Calle Libertad 555",
+      "city": "Rosario",
+      "emailBranch": "centro@croma.com",
+      "phone": "03411234567",
+      "initDate": "2021-03-10",
+      "central": true,
+      "nameFiscal": "Ferretería El Tornillo",
+      "emailCompany": "eze.g.alonso@gmail.com"
+    },
+    {
+      "name": "Sucursal Sur Croma",
+      "address": "Av. San Martín 999",
+      "city": "La Plata",
+      "emailBranch": "sur@croma.com",
+      "phone": "02211223344",
+      "initDate": "2024-02-20",
+      "central": false,
+      "nameFiscal": "Panadería Las Delicias",
+      "emailCompany": "eze.g.alonso@gmail.com"
+    }
+  ]
+  

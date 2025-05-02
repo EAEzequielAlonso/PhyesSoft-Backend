@@ -13,7 +13,9 @@ export class SalePointRepository {
   async findAll(commerceId:string, pageNumber:number,
     limitNumber: number,
     search: string): Promise<[SalePoint[], number]> {
-    return this.repository.findAndCount({where: { name: ILike(`%${search}%`), branch: {commerceId} },
+
+    
+    return await this.repository.findAndCount({where: { name: ILike(`%${search}%`), branch: {commerceId} },
     relations: {branch:true},
     order: { createdAt: "DESC" }, 
     skip: (pageNumber - 1) * limitNumber,
@@ -21,13 +23,13 @@ export class SalePointRepository {
   }
 
   async findCommerce(commerceId: string): Promise<SalePoint[]> {
-    return this.repository.find({
+    return await this.repository.find({
       where: { branch: {commerceId} }
     });
   }
 
   async findOne(id: string): Promise<SalePoint> {
-    return this.repository.findOne({
+    return await this.repository.findOne({
       where: { id }
     });
   }

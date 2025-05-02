@@ -1,5 +1,6 @@
 import { Branch } from 'src/modules/branch/entities/branch.entity';
 import { FiscalData } from 'src/modules/fiscal-data/entities/fiscal-data.entity';
+import { EmissionType } from 'src/modules/fiscal-data/Enums/enumsFiscal';
 import {
   Column,
   Entity,
@@ -7,12 +8,6 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-
-export enum EmissionType {
-  ELECTRONICO= 'ELECTRONICO', 
-  FISCAL= 'FISCAL', 
-  MANUAL= 'MANUAL'
-}
 
 @Entity({ name: 'salesPoints' })
 export class SalePoint {
@@ -36,18 +31,12 @@ export class SalePoint {
     enum: EmissionType,
     default : 'ELECTRONICO'
   })
-  emitionType: EmissionType;
+  emissionType: EmissionType;
 
   @ManyToOne (() => Branch, (branch) => branch.salesPoints)
   @JoinColumn({name:"branchId"})
   branch: Branch;
   @Column({type: "uuid", nullable:true})
   branchId:string;
-
-  @ManyToOne(() => FiscalData, (fiscalData) => fiscalData.salesPoint)
-  @JoinColumn({name: "fiscalDataId"})
-  fiscalData: FiscalData;
-  @Column({type:"uuid", nullable: true})
-  fiscalDataId: string;
 
 }

@@ -35,7 +35,7 @@ export class Branch {
   emailBranch: string;
 
   @Column({ length: 20, nullable: true })
-  telefono?: string;
+  phone?: string;
 
   @Column({ type: 'date', nullable: true })
   initDate: Date;

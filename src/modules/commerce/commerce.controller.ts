@@ -1,14 +1,12 @@
 import {
   Controller,
   Get,
-  Post,
   Body,
   Param,
-  Delete,
-  ParseUUIDPipe,
   Put,
   Req,
   UseGuards,
+  ForbiddenException,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { CommerceService } from './commerce.service';
@@ -20,13 +18,13 @@ import { AuthGuard } from '../auth/guards/Auth.guard';
 
 @ApiTags('Commerces')
 @Controller('commerce')
+@UseGuards(AuthGuard)
 export class CommerceController {
   constructor(private readonly commerceService: CommerceService) {}
 
   @Get()
   @UseGuards(AuthGuard)
   async getCommerce(@Req() req: Request): Promise<Commerce> {
-    console.log("req.user.commerce.id ", req.user.commerce.id )
     return await this.commerceService.getCommerce(req.user.commerce.id);
   }
 
@@ -50,12 +48,15 @@ export class CommerceController {
   //   return await this.commerceService.unsubscribeCommerce(id);
   // }
 
-  @Put()
+  @Put(":id")
   async updateCommerce(
     @Req() req: Request,
+    @Param("id") id: string,
     @Body() commerce: UpdateCommerceDto,
   ): Promise<string> {
-    return await this.commerceService.updateCommerce(req.user.commerce.id, commerce);
+    if (id === req.user.commerce.id)
+       return await this.commerceService.updateCommerce(id, commerce);
+    throw new ForbiddenException("No esta autorizado a modificar este comercio")
   }
 
   // @Delete(":id")

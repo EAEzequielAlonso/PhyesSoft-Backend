@@ -1,0 +1,47 @@
+[
+    {
+      "name": "Herz S.A.",
+      "cuit": "20345678901",
+      "conditionIva": "Responsable Inscripto",
+      "addressCommerce": "Calle Falsa 123",
+      "initActivity": "2015-03-15",
+      "ingresosBrutos": "IB12345678",
+      "ticketType": "A",
+      "aliasFacturacion": "Herz Deportes",
+      "emailCompany": "nadiaayaelen@gmail.com"
+    },
+    {
+      "name": "Distribuidora Norte SRL",
+      "cuit": "27234567890",
+      "conditionIva": "Monotributo",
+      "addressCommerce": "Av. Siempreviva 742",
+      "initActivity": "2020-01-01",
+      "ingresosBrutos": "IB98765432",
+      "ticketType": "B",
+      "aliasFacturacion": "Dist. Norte",
+      "emailCompany": "nadiaayaelen@gmail.com"
+    },
+    {
+      "name": "Ferretería El Tornillo",
+      "cuit": "23333444556",
+      "conditionIva": "Exento",
+      "addressCommerce": "Boulevard Central 456",
+      "initActivity": "2018-06-20",
+      "ingresosBrutos": "IB55667788",
+      "ticketType": "C",
+      "aliasFacturacion": "El Tornillo",
+      "emailCompany": "eze.g.alonso@gmail.com"
+    },
+    {
+      "name": "Panadería Las Delicias",
+      "cuit": "30111222334",
+      "conditionIva": "Responsable Inscripto",
+      "addressCommerce": "Ruta Provincial 36 Km 12",
+      "initActivity": "2012-10-10",
+      "ingresosBrutos": "IB11223344",
+      "ticketType": "B",
+      "aliasFacturacion": "Las Delicias",
+      "emailCompany": "eze.g.alonso@gmail.com"
+    }
+  ]
+  

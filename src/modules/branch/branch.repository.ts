@@ -19,6 +19,7 @@ export class BranchRepository {
           name: ILike(`%${search}%`), 
           commerceId 
         },
+        relations: {fiscalData: true},
         order: { createdAt: "DESC" }, // Asegúrate de que la entidad tenga un campo createdAt
         skip: (pageNumber - 1) * limitNumber,
         take: limitNumber,

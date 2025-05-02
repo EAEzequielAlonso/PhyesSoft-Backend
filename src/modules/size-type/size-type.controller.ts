@@ -11,7 +11,7 @@ import { ApiBearerAuth } from '@nestjs/swagger';
 @UseGuards(AuthGuard)
 export class SizeTypeController {
   constructor(private readonly service: SizeTypeService) {}
-
+ 
   @Get()
   @ApiBearerAuth() 
   async findAll(
