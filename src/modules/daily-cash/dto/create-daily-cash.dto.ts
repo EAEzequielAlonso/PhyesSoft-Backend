@@ -24,7 +24,7 @@ export class CreateDailyCashDto {
 
     @IsNumber()
     @IsOptional()
-    expenses: number; // Monto total de gastos
+    movements: number; // Monto total de gastos
 
     @IsNumber()
     @IsOptional()
@@ -40,7 +40,7 @@ export class CreateDailyCashDto {
 
     @IsNumber()
     @IsOptional()
-    expensesCount: number; // Número de transacciones de gastos
+    movementCount: number; // Número de transacciones de gastos
 
     @IsNumber()
     @IsOptional()

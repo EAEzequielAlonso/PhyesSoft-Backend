@@ -12,6 +12,7 @@ import { UserRoleBranch } from 'src/modules/branch/entities/userBranch.entity';
 import { DailyCash } from 'src/modules/daily-cash/entities/daily-cash.entity';
 import { UserRole } from './role.entity';
 import { Commerce } from 'src/modules/commerce/entities/commerce.entity';
+import { CashMovement } from 'src/modules/cash-movement/entities/cash-movement.entity';
 
 @Entity({
   name: 'users',
@@ -76,4 +77,6 @@ export class User {
   @OneToOne(() => Commerce, (commerce) => commerce.user)
   commerce: Commerce;
 
+  @OneToOne(() => CashMovement, (mov) => mov.userCreateMov)
+  cashMovements: CashMovement[];
 }

@@ -25,6 +25,7 @@ import { SalePointModule } from './modules/sale-point/sales-point.module';
 import { FiscalDataModule } from './modules/fiscal-data/fiscal-data.module';
 import { BoxCashModule } from './modules/box-cash/box-cash.module';
 import { DailyCashModule } from './modules/daily-cash/daily-cash.module';
+import { CashMovementModule } from './modules/cash-movement/cash-movement.module';
 
 @Module({
   imports: [
@@ -66,6 +67,7 @@ import { DailyCashModule } from './modules/daily-cash/daily-cash.module';
     FiscalDataModule,
     BoxCashModule,
     DailyCashModule,
+    CashMovementModule,
   ],
   controllers: [],
   providers: [],

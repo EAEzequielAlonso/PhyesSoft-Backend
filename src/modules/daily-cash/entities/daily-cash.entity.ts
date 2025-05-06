@@ -56,7 +56,7 @@ export class DailyCash {
   discount: number; // Monto total de descuentos aplicados
 
   @Column({ type: 'numeric', precision: 10, scale: 2, default: 0 })
-  expenses: number; // Monto total de gastos
+  movements: number; // Monto total de gastos
 
   @Column({ type: 'int', default: 0 })
   cashCount: number; // Cantidad de ventas en efectivo
@@ -68,7 +68,7 @@ export class DailyCash {
   cardCount: number; // Cantidad de ventas con tarjeta
 
   @Column({ type: 'int', default: 0 })
-  expensesCount: number; // Número de transacciones de gastos
+  movementCount: number; // Número de transacciones de gastos
 
   @Column({ type: 'int', default: 0 })
   discountCount: number; // Número de ventas con descuento
