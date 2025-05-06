@@ -1,4 +1,4 @@
-import { Branch } from 'src/modules/branch/entities/branch.entity';
+import { BoxCash } from 'src/modules/box-cash/entities/box-cash.entity';
 import { FiscalData } from 'src/modules/fiscal-data/entities/fiscal-data.entity';
 import { EmissionType } from 'src/modules/fiscal-data/Enums/enumsFiscal';
 import {
@@ -6,6 +6,7 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
+  OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
@@ -31,12 +32,15 @@ export class SalePoint {
     enum: EmissionType,
     default : 'ELECTRONICO'
   })
-  emissionType: EmissionType;
+  emissionType: EmissionType; 
 
-  @ManyToOne (() => Branch, (branch) => branch.salesPoints)
-  @JoinColumn({name:"branchId"})
-  branch: Branch;
+  @OneToOne(() => BoxCash, boxCash => boxCash.salePoint)
+  boxCash: BoxCash; // Relación con la caja
+
+ @ManyToOne (() => FiscalData, (fiscalData) => fiscalData.salePoints)
+  @JoinColumn({name:"fiscalDataId"})
+  fiscalData: FiscalData;
   @Column({type: "uuid", nullable:true})
-  branchId:string;
+  fiscalDataId:string;
 
 }

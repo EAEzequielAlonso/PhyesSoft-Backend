@@ -15,6 +15,7 @@ import preloadBranch from './preloadFiles/branch.json'
 import preloadSalePoint from "./preloadFiles/salePoint.json"
 import preloadPayment from "./preloadFiles/methodPayment.json"
 import preloadMovementType from "./preloadFiles/movementType.json"
+import preloadBoxCash from "./preloadFiles/boxCash.json"
  
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -37,6 +38,7 @@ import { Branch } from '../branch/entities/branch.entity';
 import { SalePoint } from '../sale-point/entities/sales-point.entity';
 import { PaymentMethod } from '../payment-method/entities/payment-method.entity';
 import { MovementType } from '../movement-type/entities/movement-type.entity';
+import { BoxCash } from '../box-cash/entities/box-cash.entity';
 
 @Injectable()
 export class PreloadsService {
@@ -57,6 +59,7 @@ export class PreloadsService {
     @InjectRepository(SalePoint) private salePointRepository: Repository<SalePoint>,
     @InjectRepository(PaymentMethod) private paymentRepository: Repository<PaymentMethod>,
     @InjectRepository(MovementType) private movementTypeRepository: Repository<MovementType>,
+    @InjectRepository(BoxCash) private boxCashRepository: Repository<BoxCash>,
   ) {}
 
   async preloadRole(): Promise<void> {
@@ -243,15 +246,34 @@ export class PreloadsService {
         where: { name: salePoint.name },
       });
       if (!find) {
-        const branchFind:Branch = await this.branchRepository.findOneBy({name:salePoint.branch})
-        if (branchFind){
-          const {branch, ...save} = salePoint
-          await this.salePointRepository.save({...save, branchId: branchFind.id, emissionType: save.emissionType as EmissionType});
+          const fiscalFind: FiscalData = await this.fiscalDataRepository.findOneBy({name:salePoint.fiscal})
+          if (fiscalFind) {
+            const {fiscal, ...save} = salePoint
+            const res = await this.salePointRepository.save({...save, emissionType: save.emissionType as EmissionType, fiscalDataId: fiscalFind.id});
+            count++;}
+        }
+    }
+    console.log(`Se agregaron ${count} Puntos de Venta`);
+  }
+
+  async preloadBoxCash(): Promise<void> {
+    let count: number = 0;
+    for (const box of preloadBoxCash) {
+      const find = await this.boxCashRepository.findOne({
+        where: { name: box.name },
+      });
+      if (!find) {
+        const branchFind: Branch = await this.branchRepository.findOneBy({name:box.branch})
+        const pointFind: SalePoint  = await this.salePointRepository.findOneBy({name: box.salePoint})
+
+        if (branchFind && pointFind){
+          const {branch, salePoint, ...save} = box
+          await this.boxCashRepository.save({...save, branchId: branchFind.id, salePointId: pointFind.id});
           count++;
         }
       }
     }
-    console.log(`Se agregaron ${count} Puntos de Venta`);
+    console.log(`Se agregaron ${count} Cajas `);
   }
 
   async preloadBranch(): Promise<void> {
@@ -389,6 +411,7 @@ export class PreloadsService {
     await this.preloadPayment();
     await this.preloadMovementType();
     await this.preloadSalePoint();
+    await this.preloadBoxCash();
     await this.preloadSizeType(); 
     await this.preloadSize();
     await this.preloadBrand();

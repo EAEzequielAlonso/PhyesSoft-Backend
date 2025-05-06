@@ -1,0 +1,25 @@
+[
+    {
+      "name": "Caja 1", 
+      "branch":"Sucursal Central Herz",
+      "salePoint": "0001"
+    },
+    {
+      "name": "Caja 2", 
+      "branch":"Sucursal Central Herz",
+      "salePoint": "0002"
+    },
+    {
+      "name": "Caja 3", 
+      "branch":"Sucursal Norte Herz",
+      "salePoint": "0003"
+    },
+    {
+      "name": "Caja 4", 
+      "branch":"Sucursal Norte Herz",
+      "salePoint": "0004"
+    }
+]
+
+  
+

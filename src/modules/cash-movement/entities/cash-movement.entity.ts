@@ -10,11 +10,8 @@ export class CashMovement {
   @Column('decimal', { precision: 10, scale: 2 })
   amount: number;
 
-  @Column("date")
-  date: Date;
-
-  @Column({ default: true })
-  isExpense: boolean;
+  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+  createdAt: Date;
 
   @ManyToOne(() => DailyCash, (dailyCash) => dailyCash.cashMovements)
   @JoinColumn({ name: 'dailyCashId' })
@@ -29,5 +26,5 @@ export class CashMovement {
   movementTypeId: string
 
   @Column('text', { nullable: true })
-  observation: string;
+  description: string;
 }

@@ -1,4 +1,4 @@
-import { Branch } from 'src/modules/branch/entities/branch.entity';
+import { BoxCash } from 'src/modules/box-cash/entities/box-cash.entity';
 import { CashMovement } from 'src/modules/cash-movement/entities/cash-movement.entity';
 import { Sale } from 'src/modules/sale/entities/sale.entity';
 import { User } from 'src/modules/user/entities/user.entity';
@@ -16,11 +16,32 @@ export class DailyCash {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column('date')
-  dateInit: Date;
+  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+  createdAt: Date;
 
-  @Column('date')
-  dateFinish: Date;
+  @Column({type:"boolean", default:true})
+  isOpen: boolean;
+
+  @Column({type:'date', nullable:true})
+  finishedAt: Date;
+
+  @Column({ type: 'numeric', precision: 10, scale: 2, default: 0 })
+  initCash: number; // Efectivo
+
+  // relacion para saber quien abrio la caja.
+  @ManyToOne (() => User, (user) => user.dailyCash)
+  @JoinColumn({name:"userOpenId"})
+  userOpen: User;
+  @Column('uuid')
+  userOpenId: string;
+ 
+  //relacion para saber de que sucursal es la caja
+  @ManyToOne (() => BoxCash, (boxCash) => boxCash.dailyCashes)
+  @JoinColumn({name:"boxCashId"})
+  boxCash: BoxCash;
+  @Column({type: "uuid"})
+  boxCashId:string
+
 
   @Column({ type: 'numeric', precision: 10, scale: 2, default: 0 })
   cash: number; // Efectivo
@@ -52,23 +73,12 @@ export class DailyCash {
   @Column({ type: 'int', default: 0 })
   discountCount: number; // Número de ventas con descuento
   
+  
   @OneToMany(() => Sale, (sale) => sale.dailyCash)
-  sales: Sale[];
+  sales: Sale[]; 
 
   @OneToMany(() => CashMovement, (cashMovement) => cashMovement.dailyCash)
   cashMovements: CashMovement[];
 
-  // relacion para saber quien abrio la caja.
-  @ManyToOne (() => User, (user) => user.dailyCash)
-  @JoinColumn({name:"userIdOpen"})
-  userOpen: User;
-  @Column('uuid')
-  userIdOpen: string;
- 
-  //relacion para saber de que sucursal es la caja
-  @ManyToOne (() => Branch, (branch) => branch.dailyCash)
-  @JoinColumn({name:"branchId"})
-  branch: Branch;
-  @Column({type: "uuid", nullable:true})
-  branchId:string;
+  ;
 }

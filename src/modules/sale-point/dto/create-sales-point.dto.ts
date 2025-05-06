@@ -17,8 +17,8 @@ export class CreateSalesPointDto {
   @IsOptional()
   emissionType?: EmissionType;
 
-  @IsUUID()
-  @IsOptional()
-  branchId?: string;
+  @IsString()
+  @IsNotEmpty()
+  fiscalDataId:string;
 
 }

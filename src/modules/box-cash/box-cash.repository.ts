@@ -1,45 +1,45 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DeleteResult, ILike, Repository, UpdateResult } from 'typeorm';
-import { SalePoint } from './entities/sales-point.entity';
+import { BoxCash } from './entities/box-cash.entity';
 
 @Injectable()
-export class SalePointRepository {
+export class BoxCashRepository {
   constructor(
-    @InjectRepository(SalePoint)
-    private repository: Repository<SalePoint>,
+    @InjectRepository(BoxCash)
+    private repository: Repository<BoxCash>,
   ) {}
 
   async findAll(commerceId:string, pageNumber:number,
     limitNumber: number,
-    search: string): Promise<[SalePoint[], number]> {
+    search: string): Promise<[BoxCash[], number]> {
 
-    return await this.repository.findAndCount({where: { name: ILike(`%${search}%`), fiscalData: { commerceId} },
-    relations: {boxCash: true},
+    return await this.repository.findAndCount({where: { name: ILike(`%${search}%`), branch: { commerceId} },
+    relations: {branch: true, salePoint:true},
     order: { createdAt: "DESC" }, 
     skip: (pageNumber - 1) * limitNumber,
     take: limitNumber,});
   }
 
-  async findCommerce(commerceId: string): Promise<SalePoint[]> {
+  async findCommerce(commerceId: string): Promise<BoxCash[]> {
     return await this.repository.find({
-      where: { fiscalData: {commerceId}}
+      where: { branch: {commerceId}}
     });
   }
 
-  async findOne(id: string): Promise<SalePoint> {
+  async findOne(id: string): Promise<BoxCash> {
     return await this.repository.findOne({
       where: { id }
     });
   }
 
-  async create(body: Partial<SalePoint>): Promise<SalePoint> {
+  async create(body: Partial<BoxCash>): Promise<BoxCash> {
     return await this.repository.save(body);
   }
 
   async update(
     id: string,
-    body: Partial<SalePoint>,
+    body: Partial<BoxCash>,
   ): Promise<UpdateResult> {
     return await this.repository.update(id, body);
   }

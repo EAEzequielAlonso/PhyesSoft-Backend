@@ -41,7 +41,7 @@ export class SalePointController {
   }
  
   @Post()
-  async create(@Body() body: CreateSalesPointDto, @Req() req:Request): Promise<SalePoint> {
+  async create(@Body() body: CreateSalesPointDto): Promise<SalePoint> {
       return await this.service.create(body);
     }
 
@@ -54,4 +54,4 @@ export class SalePointController {
   remove(@Param('id', ParseUUIDPipe) id: string) {
     return this.service.remove(id);
   }
-}
+} 

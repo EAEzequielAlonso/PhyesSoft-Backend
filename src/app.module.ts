@@ -23,6 +23,8 @@ import { PaymentMethodModule } from './modules/payment-method/payment-method.mod
 import { MovementTypeModule } from './modules/movement-type/movement-type.module';
 import { SalePointModule } from './modules/sale-point/sales-point.module';
 import { FiscalDataModule } from './modules/fiscal-data/fiscal-data.module';
+import { BoxCashModule } from './modules/box-cash/box-cash.module';
+import { DailyCashModule } from './modules/daily-cash/daily-cash.module';
 
 @Module({
   imports: [
@@ -62,6 +64,8 @@ import { FiscalDataModule } from './modules/fiscal-data/fiscal-data.module';
     MovementTypeModule,
     SalePointModule,
     FiscalDataModule,
+    BoxCashModule,
+    DailyCashModule,
   ],
   controllers: [],
   providers: [],

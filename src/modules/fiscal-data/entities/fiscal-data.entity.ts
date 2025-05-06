@@ -2,6 +2,7 @@ import { Branch } from "src/modules/branch/entities/branch.entity";
 import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { ConditionIVA, TicketType } from "../Enums/enumsFiscal";
 import { Commerce } from "src/modules/commerce/entities/commerce.entity";
+import { SalePoint } from "src/modules/sale-point/entities/sales-point.entity";
 
 @Entity({ name: 'fiscalData' })
 export class FiscalData {
@@ -42,6 +43,9 @@ export class FiscalData {
   commerceId:string;
 
   @OneToMany(() => Branch, branch => branch.fiscalData)
-  branches: Branch[];
+  branches: Branch[]; 
+
+  @OneToMany(() => SalePoint, salePoint => salePoint.fiscalData)
+  salePoints: SalePoint[]; 
 
 }

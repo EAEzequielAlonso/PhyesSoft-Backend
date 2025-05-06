@@ -1,26 +1,71 @@
-import { Injectable } from '@nestjs/common';
-import { CreateBoxCashDto } from './dto/create-box-cash.dto';
-import { UpdateBoxCashDto } from './dto/update-box-cash.dto';
-
+import { ConflictException, Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
+import { BoxCash } from './entities/box-cash.entity';
+import { BoxCashRepository } from './box-cash.repository';
 @Injectable()
 export class BoxCashService {
-  create(createBoxCashDto: CreateBoxCashDto) {
-    return 'This action adds a new boxCash';
+  constructor(private readonly repository: BoxCashRepository) {}
+
+  async findAll(commerceId: string, pageNumber:number,
+      limitNumber: number,
+      search: string): Promise<[BoxCash[], number]> {
+    try {  
+      const response = await this.repository.findAll(commerceId, pageNumber,
+        limitNumber,
+        search);
+      return response 
+    } catch (error) {
+      throw new ConflictException("No puede asignar un mismo punto de venta a dos cajas distintas.")
+    }
   }
 
-  findAll() {
-    return `This action returns all boxCash`;
+  async findCommerce(commerceId:string): Promise<BoxCash[]> {
+    try {
+      const res = await this.repository.findCommerce(commerceId);
+      if (!res) throw new NotFoundException("No se encontraron las Cajas")
+      return res;
+    } catch (error) {
+      throw new InternalServerErrorException(error)
+    }
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} boxCash`;
+  async findOne(id: string): Promise<BoxCash> {
+    try {
+      const res = await this.repository.findOne(id);
+      if (!res) throw new NotFoundException("No se encontro la Caja")
+      return res;
+    } catch (error) {
+      throw new InternalServerErrorException(error)
+    }
   }
 
-  update(id: number, updateBoxCashDto: UpdateBoxCashDto) {
-    return `This action updates a #${id} boxCash`;
+  async create(body: Partial<BoxCash>): Promise<BoxCash> {
+    try {
+      const res = await this.repository.create(body);
+      if (!res) throw new InternalServerErrorException("No se pudo crear la caja")
+      return res;
+    } catch (error) {
+      throw new InternalServerErrorException(error)
+    }
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} boxCash`;
+  async update(id: string, body: Partial<BoxCash>) {
+    try {
+      const res = await this.repository.update(id, body);
+      if (res.affected === 0) throw new NotFoundException("No se pudo encontrar la caja")
+      return res;
+    } catch (error) {
+      throw new InternalServerErrorException(error)
+    }
+  }
+
+  async remove(id: string) {
+    try {
+      const res = await this.repository.remove(id);
+      if (res.affected === 0) throw new NotFoundException("No se pudo encontrar la caja")
+      return res;
+    } catch (error) {
+      throw new ConflictException(
+        'Actualmente la caja esta siendo usado. No se puede eliminar ya que dejaría información incompleta. Puede probar modificando la caja si lo cree necesario. Error: ',error);
+    }
   }
 }

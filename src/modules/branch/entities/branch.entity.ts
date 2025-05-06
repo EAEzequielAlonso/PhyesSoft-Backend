@@ -9,9 +9,8 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { UserRoleBranch } from './userBranch.entity';
-import { DailyCash } from 'src/modules/daily-cash/entities/daily-cash.entity';
-import { SalePoint } from 'src/modules/sale-point/entities/sales-point.entity';
 import { FiscalData } from 'src/modules/fiscal-data/entities/fiscal-data.entity';
+import { BoxCash } from 'src/modules/box-cash/entities/box-cash.entity';
 
 @Entity({
   name: 'branches',
@@ -56,18 +55,15 @@ export class Branch {
   @Column("uuid")
   commerceId: string;
 
-  @ManyToOne(() => FiscalData, (fiscalData) => fiscalData.branches)
-  @JoinColumn({name: "fiscalDataId"})
-  fiscalData: FiscalData;
-  @Column({type:"uuid", nullable: true})
-  fiscalDataId: string;
+  @OneToMany(() => BoxCash, (boxcash) => boxcash.branch)
+  boxesCash: BoxCash[]
 
   @OneToMany (() => UserRoleBranch, (userRoleBranch) => userRoleBranch.branch)
   userRoleBranches: UserRoleBranch[];
 
-  @OneToMany (() => DailyCash, (dailyCash) => dailyCash.branch)
-  dailyCash: DailyCash[];
-
-  @OneToMany (() => SalePoint, (salesPoint) => salesPoint.branch)
-  salesPoints: DailyCash[];
-}
+  @ManyToOne (()=> FiscalData, fiscalData => fiscalData.branches)
+  @JoinColumn({name:"fiscalDataId"})
+  fiscalData: FiscalData;
+  @Column("uuid")
+  fiscalDataId:string;
+} 

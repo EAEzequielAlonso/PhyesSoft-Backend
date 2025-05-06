@@ -17,6 +17,7 @@ import { Branch } from '../branch/entities/branch.entity';
 import { SalePoint } from '../sale-point/entities/sales-point.entity';
 import { PaymentMethod } from '../payment-method/entities/payment-method.entity';
 import { MovementType } from '../movement-type/entities/movement-type.entity';
+import { BoxCash } from '../box-cash/entities/box-cash.entity';
 
 @Module({
   imports: [
@@ -37,6 +38,7 @@ import { MovementType } from '../movement-type/entities/movement-type.entity';
       SalePoint,
       PaymentMethod,
       MovementType,
+      BoxCash,
     ]),
   ],
   controllers: [],

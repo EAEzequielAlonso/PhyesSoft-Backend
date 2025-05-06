@@ -1,34 +1,57 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete, Req, Query, UseGuards, ParseUUIDPipe, Put } from '@nestjs/common';
+import { Request } from 'express';
+import { AuthGuard } from '../auth/guards/Auth.guard';
+import { ApiBearerAuth } from '@nestjs/swagger';
 import { BoxCashService } from './box-cash.service';
+import { BoxCash } from './entities/box-cash.entity';
 import { CreateBoxCashDto } from './dto/create-box-cash.dto';
 import { UpdateBoxCashDto } from './dto/update-box-cash.dto';
 
-@Controller('box-cash')
+@Controller('box-cash')  
+@UseGuards(AuthGuard)
 export class BoxCashController {
-  constructor(private readonly boxCashService: BoxCashService) {}
-
-  @Post()
-  create(@Body() createBoxCashDto: CreateBoxCashDto) {
-    return this.boxCashService.create(createBoxCashDto);
-  }
+  constructor(private readonly service: BoxCashService) {}
 
   @Get()
-  findAll() {
-    return this.boxCashService.findAll();
+  @ApiBearerAuth() 
+  async findAll(
+      @Req() req: Request, 
+      @Query('page') page = '1',
+      @Query('limit') limit = '10',
+      @Query('search') search = ''): Promise<[BoxCash[], number]> {
+
+    const pageNumber = parseInt(page, 10);
+    const limitNumber = parseInt(limit, 10);
+
+    return await this.service.findAll(
+      req.user.commerce.id,
+      pageNumber,
+      limitNumber,
+      search);
+  }
+
+  @Get('commerce')
+  async findCommerce(@Req() req: Request): Promise<BoxCash[]> {
+    return await this.service.findCommerce(req.user.commerce.id);
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.boxCashService.findOne(+id);
+  async findOne(@Param('id', ParseUUIDPipe) id: string): Promise<BoxCash> {
+    return await this.service.findOne(id);
   }
+ 
+  @Post()
+  async create(@Body() body: CreateBoxCashDto): Promise<BoxCash> {
+      return await this.service.create(body);
+    }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateBoxCashDto: UpdateBoxCashDto) {
-    return this.boxCashService.update(+id, updateBoxCashDto);
+  @Put(':id')
+  update(@Param('id', ParseUUIDPipe) id: string, @Body() body: UpdateBoxCashDto) {
+    return this.service.update(id, body);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.boxCashService.remove(+id);
+  remove(@Param('id', ParseUUIDPipe) id: string) {
+    return this.service.remove(id);
   }
 }
