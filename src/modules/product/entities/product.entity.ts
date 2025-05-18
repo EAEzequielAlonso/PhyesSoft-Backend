@@ -13,6 +13,8 @@ import { Commerce } from 'src/modules/commerce/entities/commerce.entity';
 import { Brand } from 'src/modules/brand/entities/brand.entity';
 import { SizeType } from 'src/modules/size-type/entities/size-type.entity';
 import { Category } from 'src/modules/category/entities/category.entity';
+import { ProductVariant } from 'src/modules/product-variant/entities/product-variant.entity';
+import { ProductPack } from 'src/modules/product-pack/entities/product-pack.entity';
 
 @Entity({ name: 'products' })
 export class Product {
@@ -24,6 +26,30 @@ export class Product {
 
   @Column('varchar')
   description: string;
+
+  @Column({type: 'varchar', nullable:true})
+  codbar: string;
+
+  @Column({type:"varchar", default:"https://svgsilh.com/svg_v2/484372.svg"})
+  image: string;
+
+  @Column({type: 'int', default: 1})
+  buyUnit: number;
+
+  @Column({type: 'int', default: 1})
+  saleUnit: number;
+
+  @Column({type: 'boolean', default: false})
+  sizeColor: boolean;
+
+  @Column({type: 'boolean', default: false})
+  isPackComp: boolean;
+
+  @Column({type: 'boolean', default: true})
+  isSellable: boolean;
+
+  @Column({type: 'boolean', default: false})
+  isRawMaterial: boolean;
 
   @Column('float')
   cost: number;
@@ -76,7 +102,19 @@ export class Product {
   @Column({type: "uuid", nullable:true})
   sizetypeId: string;
 
+  @ManyToOne (() => ProductVariant, (variant) => variant.products)
+  @JoinColumn({name:"productvariantId"})
+  productvariant: ProductVariant;
+  @Column({type: "uuid", nullable:true})
+  productvariantId: string;
+
   @OneToMany(() => SaleProducts, (saleProducts) => saleProducts.product)
   saleProducts: SaleProducts[];
+
+  @OneToMany(() => ProductPack, (productPack) => productPack.productpack)
+  productpacks: ProductPack[];
+
+  @OneToMany(() => ProductPack, (productComp) => productComp.productcomp)
+  productcomps: ProductPack[];
 
 }

@@ -5,7 +5,7 @@ import { DailyCashRepository } from '../daily-cash/daily-cash.repository';
 
 @Injectable()
 export class CashMovementService {
-  private readonly completeMessage = 'Movimiento de caja';
+  private readonly completeMessage = 'el movimiento de caja';
 
   constructor(
     private readonly repository: CashMovementRepository,

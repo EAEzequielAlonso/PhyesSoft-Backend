@@ -1,8 +1,8 @@
-import { Controller, Post, Body, Res, HttpCode, HttpStatus } from '@nestjs/common';
+import { Controller, Post, Body, Res, HttpCode, HttpStatus, Get, Req } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { ApiBody, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { LoginUserDto } from './dto/loginUser.dto';
-import { Response } from 'express';   // servicio que verifica Clerk
+import { Request, Response } from 'express';   // servicio que verifica Clerk
 import { JwtService } from "@nestjs/jwt";
 import { RegisterUserDto } from './dto/registerUser.dto';
 
@@ -45,6 +45,13 @@ export class AuthController {
    async resetPassword(@Body() userLogin: LoginUserDto): Promise<Object> {
      return await this.authService.resetPassword(userLogin.email, userLogin.password);
    }
+
+   @Get('islogged')
+   @ApiOperation({ summary: 'Verifica que este logueado' })
+   async isLogged(@Req() req: Request): Promise<boolean> {
+     return await this.authService.isLogged(req);
+   }
+
 }
 
 

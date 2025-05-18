@@ -22,7 +22,6 @@ export class DailyCashService {
   async findCommerce(commerceId:string): Promise<DailyCash[]> {
     try {
       const res = await this.repository.findCommerce(commerceId);
-      if (!res) throw new NotFoundException("No se encontraron las cajas diarias")
       return res;
     } catch (error) {
       throw new InternalServerErrorException(error)

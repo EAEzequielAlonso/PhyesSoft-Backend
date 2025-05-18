@@ -1,6 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Transform } from 'class-transformer';
 import {
+  IsBoolean,
   IsNotEmpty,
   IsNumber,
   IsOptional,
@@ -19,6 +20,36 @@ export class CreateProductDto {
   @IsNotEmpty()
   @ApiProperty()
   description: string;
+
+  @IsString()
+  @IsOptional()
+  @ApiProperty()
+  image: string;
+
+  @IsString()
+  @IsOptional()
+  @ApiProperty()
+  codbar: string;
+
+  @IsBoolean()
+  @IsOptional()
+  @ApiProperty()
+  variant: boolean;
+
+  @IsNumber()
+  @Transform(({ value }) => parseInt(value))
+  @IsOptional()
+  stock: number;
+  
+  @IsNumber()
+  @Transform(({ value }) => parseInt(value))
+  @IsOptional()
+  buyUnit: number;
+  
+  @IsNumber()
+  @Transform(({ value }) => parseInt(value))
+  @IsOptional()
+  saleUnit: number;
 
   @IsNumber()
   @Transform(({ value }) => parseFloat(value))

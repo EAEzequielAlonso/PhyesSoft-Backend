@@ -18,6 +18,7 @@ import { PaymentMethod } from "src/modules/payment-method/entities/payment-metho
 import { User } from "src/modules/user/entities/user.entity";
 import { MovementType } from "src/modules/movement-type/entities/movement-type.entity";
 import { FiscalData } from "src/modules/fiscal-data/entities/fiscal-data.entity";
+import { ProductVariant } from "src/modules/product-variant/entities/product-variant.entity";
 
 @Entity({
   name: 'commerces',
@@ -85,6 +86,9 @@ export class Commerce {
 
   @OneToMany (() => SizeType, (size) => size.commerce)
   sizetypes: SizeType[];
+
+  @OneToMany (() => ProductVariant, (variant) => variant.commerce)
+  productvariants: ProductVariant[];
 
   @OneToMany (() => MovementType, (movementType) => movementType.commerce)
   movementTypes: SizeType[];

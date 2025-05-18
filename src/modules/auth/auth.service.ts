@@ -6,7 +6,7 @@ import { LoginUserDto } from './dto/loginUser.dto';
 import * as bcrypt from "bcrypt"
 import { UserRole } from '../user/entities/role.entity';
 import { User } from '../user/entities/user.entity';
-import { Response } from 'express';
+import { Request, Response } from 'express';
 import { RegisterUserDto } from './dto/registerUser.dto';
 import { CommerceRepository } from '../commerce/commerce.repository';
 
@@ -107,6 +107,25 @@ export class AuthService {
     if ( resp.affected === 0 ) throw new NotFoundException("Email no encontrado")
       
     return {message: "Contraseña Actualizada"};
+  }
+
+  async isLogged(req: Request): Promise<boolean> {
+    try {
+      const token = req.cookies['token']; // 🔍 Leemos la cookie
+
+      if (!token) return false; // ❌ No hay token, no está logueado
+
+      // 🔓 Verificamos el token
+      const secret = process.env.JWT_SECRET;
+      const decoded = this.jwtService.verify(token, { secret });
+
+      // Si el token es válido y no expiró, devolvemos `true`
+      return !!decoded;
+    } catch (error) {
+      // ⚠️ Cualquier error en la verificación implica un usuario no logueado
+      console.error('Error al verificar el token:', error.message);
+      return false;
+    }
   }
 
 }

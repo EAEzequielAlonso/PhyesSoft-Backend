@@ -1,4 +1,5 @@
 import {
+  ConflictException,
   Injectable,
   InternalServerErrorException,
   NotFoundException, 
@@ -46,17 +47,21 @@ export class SizeService {
       await this.repository.update(id, size);
     if (res.affected === 0)
       throw new NotFoundException(
-        'No se encontro la subcategoria a actualizar',
+        'No se encontro el talle a actualizar',
       );
     return res;
   }
 
   async remove(id: string): Promise<DeleteResult> {
+    try {
     const res = await this.repository.remove(id);
     if (res.affected === 0)
       throw new NotFoundException(
         'No se encontro el talle',
       );
     return res;
+    } catch (e) {
+      throw new ConflictException(`No se puede eliminar el talle porque esta relacionado con otra informacion y dejaria inconsistencias. Pruebe modificandolo. `)
+    }
   }
 }
