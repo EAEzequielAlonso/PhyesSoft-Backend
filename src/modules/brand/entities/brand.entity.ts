@@ -18,7 +18,7 @@ export class Brand {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column('varchar') 
+  @Column('varchar')
   name: string;
 
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
@@ -30,9 +30,9 @@ export class Brand {
   @OneToMany(() => Product, (product) => product.brand)
   products: Product[];
 
-  @ManyToOne (() => Commerce, (commerce) => commerce.brands)
-  @JoinColumn({name:"commerceId"})
+  @ManyToOne(() => Commerce, (commerce) => commerce.brands)
+  @JoinColumn({ name: 'commerceId' })
   commerce: Commerce;
-  @Column({type: "uuid", nullable:true})
-  commerceId:string;
+  @Column({ type: 'uuid', nullable: true })
+  commerceId: string;
 }

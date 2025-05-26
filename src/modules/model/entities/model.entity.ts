@@ -18,7 +18,7 @@ export class Model {
   name: string;
 
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
-  createdAt: Date; 
+  createdAt: Date;
 
   @OneToMany(() => Product, (product) => product.model)
   products: Product[];

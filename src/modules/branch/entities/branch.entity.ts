@@ -45,25 +45,25 @@ export class Branch {
   @Column({ type: 'date', nullable: true })
   endDate: Date;
 
-  @Column({ type: 'boolean' , default:false})
+  @Column({ type: 'boolean', default: false })
   central: boolean;
 
   @ManyToOne(() => Commerce, (commerce) => commerce.branches)
-  @JoinColumn({name: "commerceId"})
+  @JoinColumn({ name: 'commerceId' })
   commerce: Commerce;
   @Index()
-  @Column("uuid")
+  @Column('uuid')
   commerceId: string;
 
   @OneToMany(() => BoxCash, (boxcash) => boxcash.branch)
-  boxesCash: BoxCash[]
+  boxesCash: BoxCash[];
 
-  @OneToMany (() => UserRoleBranch, (userRoleBranch) => userRoleBranch.branch)
+  @OneToMany(() => UserRoleBranch, (userRoleBranch) => userRoleBranch.branch)
   userRoleBranches: UserRoleBranch[];
 
-  @ManyToOne (()=> FiscalData, fiscalData => fiscalData.branches)
-  @JoinColumn({name:"fiscalDataId"})
+  @ManyToOne(() => FiscalData, (fiscalData) => fiscalData.branches)
+  @JoinColumn({ name: 'fiscalDataId' })
   fiscalData: FiscalData;
-  @Column("uuid")
-  fiscalDataId:string;
-} 
+  @Column('uuid')
+  fiscalDataId: string;
+}

@@ -30,10 +30,9 @@ export class Size {
   @Column({ type: 'uuid', nullable: true })
   sizetypeId: string;
 
-  @ManyToOne (() => Commerce, (commerce) => commerce.sizes)
-  @JoinColumn({name:"commerceId"})
+  @ManyToOne(() => Commerce, (commerce) => commerce.sizes)
+  @JoinColumn({ name: 'commerceId' })
   commerce: Commerce;
-  @Column({type: "uuid", nullable:true})
-  commerceId:string;
-
+  @Column({ type: 'uuid', nullable: true })
+  commerceId: string;
 }

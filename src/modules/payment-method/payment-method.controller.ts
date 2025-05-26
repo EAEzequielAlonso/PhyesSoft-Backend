@@ -25,44 +25,57 @@ export class PaymentMethodController {
   constructor(private readonly service: PaymentMethodService) {}
 
   @Get()
-    @ApiBearerAuth()
-    async findAll(
-        @Req() req: Request, 
-        @Query('page') page = '1',
-        @Query('limit') limit = '10',
-        @Query('search') search = ''): Promise<[PaymentMethod[], number]> {
-      const pageNumber = parseInt(page, 10);
-      const limitNumber = parseInt(limit, 10);
-      return await this.service.findAll(
-        req.user.commerce.id,
-        pageNumber,
-        limitNumber,
-        search);
-    }
-  
-    @Get('commerce')
-    async findCemmerce(@Req() req: Request): Promise<PaymentMethod[]> {
-      return await this.service.findCemmerce(req.user.commerce.id);
-    }
-  
-    @Get(':id')
-    async findOne(@Param('id', ParseUUIDPipe) id: string): Promise<PaymentMethod> {
-      return await this.service.findOne(id);
-    }
-   
-    @Post()
-    async create(@Body() method: CreatePaymentMethodDto, @Req() req:Request): Promise<PaymentMethod> {
-        console.log (`esto llega al controlador ${JSON.stringify(method)}`)
-        return await this.service.create({...method, commerceId: req.user.commerce.id});
-      }
-  
-    @Put(':id')
-    update(@Param('id', ParseUUIDPipe) id: string, @Body() method: UpdatePaymentMethodDto) {
-      return this.service.update(id, method);
-    }
-  
-    @Delete(':id')
-    remove(@Param('id', ParseUUIDPipe) id: string) {
-      return this.service.remove(id);
-    }
+  @ApiBearerAuth()
+  async findAll(
+    @Req() req: Request,
+    @Query('page') page = '1',
+    @Query('limit') limit = '10',
+    @Query('search') search = '',
+  ): Promise<[PaymentMethod[], number]> {
+    const pageNumber = parseInt(page, 10);
+    const limitNumber = parseInt(limit, 10);
+    return await this.service.findAll(
+      req.user.commerce.id,
+      pageNumber,
+      limitNumber,
+      search,
+    );
+  }
+
+  @Get('commerce')
+  async findCemmerce(@Req() req: Request): Promise<PaymentMethod[]> {
+    return await this.service.findCemmerce(req.user.commerce.id);
+  }
+
+  @Get(':id')
+  async findOne(
+    @Param('id', ParseUUIDPipe) id: string,
+  ): Promise<PaymentMethod> {
+    return await this.service.findOne(id);
+  }
+
+  @Post()
+  async create(
+    @Body() method: CreatePaymentMethodDto,
+    @Req() req: Request,
+  ): Promise<PaymentMethod> {
+    console.log(`esto llega al controlador ${JSON.stringify(method)}`);
+    return await this.service.create({
+      ...method,
+      commerceId: req.user.commerce.id,
+    });
+  }
+
+  @Put(':id')
+  update(
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() method: UpdatePaymentMethodDto,
+  ) {
+    return this.service.update(id, method);
+  }
+
+  @Delete(':id')
+  remove(@Param('id', ParseUUIDPipe) id: string) {
+    return this.service.remove(id);
+  }
 }

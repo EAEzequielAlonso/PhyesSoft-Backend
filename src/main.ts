@@ -17,7 +17,7 @@ async function bootstrap() {
   );
 
   app.enableCors({
-    origin: ["http://localhost:3000", "https://phyes-soft-frontend.vercel.app"],
+    origin: ['http://localhost:3000', 'https://phyes-soft-frontend.vercel.app'],
     credentials: true,
   });
 

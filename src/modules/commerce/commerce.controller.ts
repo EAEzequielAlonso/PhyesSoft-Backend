@@ -48,15 +48,17 @@ export class CommerceController {
   //   return await this.commerceService.unsubscribeCommerce(id);
   // }
 
-  @Put(":id")
+  @Put(':id')
   async updateCommerce(
     @Req() req: Request,
-    @Param("id") id: string,
+    @Param('id') id: string,
     @Body() commerce: UpdateCommerceDto,
   ): Promise<string> {
     if (id === req.user.commerce.id)
-       return await this.commerceService.updateCommerce(id, commerce);
-    throw new ForbiddenException("No esta autorizado a modificar este comercio")
+      return await this.commerceService.updateCommerce(id, commerce);
+    throw new ForbiddenException(
+      'No esta autorizado a modificar este comercio',
+    );
   }
 
   // @Delete(":id")

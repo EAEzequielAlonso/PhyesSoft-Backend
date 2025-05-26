@@ -9,8 +9,8 @@ export class CommerceRepository {
     private commerceRepository: Repository<Commerce>,
   ) {}
 
-  async getCommerce(id:string): Promise<Commerce> {
-    return await this.commerceRepository.findOneBy({id});
+  async getCommerce(id: string): Promise<Commerce> {
+    return await this.commerceRepository.findOneBy({ id });
   }
 
   // async getCommerceByUserId (userId: string): Promise<Commerce[]> {

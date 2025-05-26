@@ -10,24 +10,29 @@ export class SizeTypeRepository {
     private repository: Repository<SizeType>,
   ) {}
 
-  async findAll(commerceId:string, pageNumber:number,
+  async findAll(
+    commerceId: string,
+    pageNumber: number,
     limitNumber: number,
-    search: string): Promise<[SizeType[], number]> {
-    return this.repository.findAndCount({where: { name: ILike(`%${search}%`), commerceId },
-    order: { createdAt: "DESC" }, 
-    skip: (pageNumber - 1) * limitNumber,
-    take: limitNumber,});
+    search: string,
+  ): Promise<[SizeType[], number]> {
+    return this.repository.findAndCount({
+      where: { name: ILike(`%${search}%`), commerceId },
+      order: { createdAt: 'DESC' },
+      skip: (pageNumber - 1) * limitNumber,
+      take: limitNumber,
+    });
   }
 
   async findCommerce(commerceId: string): Promise<SizeType[]> {
     return this.repository.find({
-      where: { commerceId }
+      where: { commerceId },
     });
   }
 
   async findOne(id: string): Promise<SizeType> {
     return this.repository.findOne({
-      where: { id }
+      where: { id },
     });
   }
 
@@ -35,14 +40,11 @@ export class SizeTypeRepository {
     return await this.repository.save(sizeType);
   }
 
-  async update(
-    id: string,
-    sizeType: Partial<SizeType>,
-  ): Promise<UpdateResult> {
+  async update(id: string, sizeType: Partial<SizeType>): Promise<UpdateResult> {
     return await this.repository.update(id, sizeType);
   }
 
   async remove(id: string): Promise<DeleteResult> {
-      return await this.repository.delete(id);
+    return await this.repository.delete(id);
   }
 }

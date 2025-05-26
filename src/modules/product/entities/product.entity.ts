@@ -13,8 +13,11 @@ import { Commerce } from 'src/modules/commerce/entities/commerce.entity';
 import { Brand } from 'src/modules/brand/entities/brand.entity';
 import { SizeType } from 'src/modules/size-type/entities/size-type.entity';
 import { Category } from 'src/modules/category/entities/category.entity';
-import { ProductVariant } from 'src/modules/product-variant/entities/product-variant.entity';
+import { Variant } from 'src/modules/variant/entities/variant.entity';
 import { ProductPack } from 'src/modules/product-pack/entities/product-pack.entity';
+import { Iva } from 'src/modules/iva/entities/iva.entity';
+import { Provider } from 'src/modules/provider/entities/provider.entity';
+import { ProductType } from './product-type.entity';
 
 @Entity({ name: 'products' })
 export class Product {
@@ -24,47 +27,55 @@ export class Product {
   @Column('varchar')
   name: string;
 
-  @Column('varchar')
+  @Column({type: 'varchar', nullable: true})
+  code: string;
+
+  @Column({type: 'varchar', nullable: true})
   description: string;
 
-  @Column({type: 'varchar', nullable:true})
-  codbar: string;
-
-  @Column({type:"varchar", default:"https://svgsilh.com/svg_v2/484372.svg"})
+  @Column({ type: 'varchar', default: 'https://svgsilh.com/svg_v2/484372.svg' })
   image: string;
 
-  @Column({type: 'int', default: 1})
+  @Column({ type: 'int', default: 1 })
   buyUnit: number;
 
-  @Column({type: 'int', default: 1})
+  @Column({ type: 'int', default: 1 })
   saleUnit: number;
 
-  @Column({type: 'boolean', default: false})
-  sizeColor: boolean;
+  @Column({ type: 'boolean', default: true })
+  isActive: boolean;
 
-  @Column({type: 'boolean', default: false})
+  @Column({ type: 'boolean', default: false })
+  hasColor: boolean;
+
+  @Column({ type: 'boolean', default: false })
   isPackComp: boolean;
 
-  @Column({type: 'boolean', default: true})
+  @Column({ type: 'boolean', default: true })
   isSellable: boolean;
 
-  @Column({type: 'boolean', default: false})
+  @Column({ type: 'boolean', default: true }) 
+  isBuyable: boolean;
+
+  @Column({ type: 'boolean', default: false })
+  isInsumo: boolean;
+
+  @Column({ type: 'boolean', default: false })
   isRawMaterial: boolean;
 
-  @Column('float')
+  @Column({type: 'float', nullable: true})
   cost: number;
 
-  @Column('float')
+  @Column({type: 'float', nullable: true})
   profit: number;
 
-  @Column('float')
+  @Column({type: 'float', nullable: true})
   price: number;
 
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   createdAt: Date;
 
-  @Column({type: 'date', nullable:true})
-  endDate: Date;
+
 
   @ManyToOne(() => Category, (category) => category.products)
   @JoinColumn({ name: 'categoryId' })
@@ -90,23 +101,49 @@ export class Product {
   @Column({ type: 'uuid', nullable: true })
   brandId: string;
 
-  @ManyToOne (() => Commerce, (commerce) => commerce.products)
-  @JoinColumn({name:"commerceId"})
+  @ManyToOne(() => Commerce, (commerce) => commerce.products)
+  @JoinColumn({ name: 'commerceId' })
   commerce: Commerce;
-  @Column({type: "uuid", nullable:true})
+  @Column({ type: 'uuid', nullable: true })
   commerceId: string;
 
-  @ManyToOne (() => SizeType, (sizetype) => sizetype.products)
-  @JoinColumn({name:"sizetypeId"})
+  @ManyToOne(() => SizeType, (sizetype) => sizetype.products)
+  @JoinColumn({ name: 'sizetypeId' })
   sizetype: SizeType;
-  @Column({type: "uuid", nullable:true})
+  @Column({ type: 'uuid', nullable: true })
   sizetypeId: string;
 
-  @ManyToOne (() => ProductVariant, (variant) => variant.products)
-  @JoinColumn({name:"productvariantId"})
-  productvariant: ProductVariant;
-  @Column({type: "uuid", nullable:true})
-  productvariantId: string;
+  @ManyToOne(() => Variant, (variant) => variant.products)
+  @JoinColumn({ name: 'variantId' })
+  variant: Variant;
+  @Column({ type: 'uuid', nullable: true })
+  variantId: string;
+
+  @ManyToOne(() => Iva, (iva) => iva.productsSale)
+  @JoinColumn({ name: 'ivaSaleId' })
+  ivaSale: Iva;
+  @Column({ type: 'uuid', nullable: true })
+  ivaSaleId: string;
+
+  @ManyToOne(() => Iva, (iva) => iva.productsBuy)
+  @JoinColumn({ name: 'ivaBuyId' })
+  ivaBuy: Iva;
+  @Column({ type: 'uuid', nullable: true })
+  ivaBuyId: string;
+
+  @ManyToOne(() => ProductType, (producttype) => producttype.products)
+  @JoinColumn({ name: 'producttypeId' })
+  producttype: ProductType;
+  @Column({ type: 'uuid', nullable: true })
+  producttypeId: string;
+
+  @ManyToOne(() => Provider, (provider) => provider.products)
+  @JoinColumn({ name: 'providerId' })
+  provider: Provider;
+  @Column({ type: 'uuid', nullable: true })
+  providerId: string;
+
+  
 
   @OneToMany(() => SaleProducts, (saleProducts) => saleProducts.product)
   saleProducts: SaleProducts[];
@@ -116,5 +153,4 @@ export class Product {
 
   @OneToMany(() => ProductPack, (productComp) => productComp.productcomp)
   productcomps: ProductPack[];
-
 }

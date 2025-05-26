@@ -19,29 +19,28 @@ export class DailyCash {
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   createdAt: Date;
 
-  @Column({type:"boolean", default:true})
+  @Column({ type: 'boolean', default: true })
   isOpen: boolean;
 
-  @Column({type:'date', nullable:true})
+  @Column({ type: 'date', nullable: true })
   finishedAt: Date;
 
   @Column({ type: 'numeric', precision: 10, scale: 2, default: 0 })
   initCash: number; // Efectivo
 
   // relacion para saber quien abrio la caja.
-  @ManyToOne (() => User, (user) => user.dailyCash)
-  @JoinColumn({name:"userOpenId"})
+  @ManyToOne(() => User, (user) => user.dailyCash)
+  @JoinColumn({ name: 'userOpenId' })
   userOpen: User;
   @Column('uuid')
   userOpenId: string;
- 
-  //relacion para saber de que sucursal es la caja
-  @ManyToOne (() => BoxCash, (boxCash) => boxCash.dailyCashes)
-  @JoinColumn({name:"boxCashId"})
-  boxCash: BoxCash;
-  @Column({type: "uuid"})
-  boxCashId:string
 
+  //relacion para saber de que sucursal es la caja
+  @ManyToOne(() => BoxCash, (boxCash) => boxCash.dailyCashes)
+  @JoinColumn({ name: 'boxCashId' })
+  boxCash: BoxCash;
+  @Column({ type: 'uuid' })
+  boxCashId: string;
 
   @Column({ type: 'numeric', precision: 10, scale: 2, default: 0 })
   cash: number; // Efectivo
@@ -72,13 +71,10 @@ export class DailyCash {
 
   @Column({ type: 'int', default: 0 })
   discountCount: number; // Número de ventas con descuento
-  
-  
+
   @OneToMany(() => Sale, (sale) => sale.dailyCash)
-  sales: Sale[]; 
+  sales: Sale[];
 
   @OneToMany(() => CashMovement, (cashMovement) => cashMovement.dailyCash)
   cashMovements: CashMovement[];
-
-  ;
 }

@@ -9,13 +9,12 @@ export class UserRole {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({ type: 'varchar', length: 50})
+  @Column({ type: 'varchar', length: 50 })
   role: string;
 
-  @OneToMany (() => User, (user) => user.role)
+  @OneToMany(() => User, (user) => user.role)
   users: User[];
 
-  @OneToMany (() => UserRoleBranch, (userRoleBranch) => userRoleBranch.role)
-  userRoleBranches: UserRoleBranch[]; 
+  @OneToMany(() => UserRoleBranch, (userRoleBranch) => userRoleBranch.role)
+  userRoleBranches: UserRoleBranch[];
 }
- 

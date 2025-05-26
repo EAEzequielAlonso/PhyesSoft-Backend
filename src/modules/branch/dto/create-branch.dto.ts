@@ -9,7 +9,6 @@ import {
 } from 'class-validator';
 
 export class CreateBranchDto {
-  
   @IsString()
   @IsNotEmpty()
   @ApiProperty()
@@ -49,5 +48,4 @@ export class CreateBranchDto {
   @IsOptional()
   @ApiProperty()
   fiscalDataId: string;
-
 }

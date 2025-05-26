@@ -26,6 +26,11 @@ import { FiscalDataModule } from './modules/fiscal-data/fiscal-data.module';
 import { BoxCashModule } from './modules/box-cash/box-cash.module';
 import { DailyCashModule } from './modules/daily-cash/daily-cash.module';
 import { CashMovementModule } from './modules/cash-movement/cash-movement.module';
+import { VariantModule } from './modules/variant/variant.module';
+import { ProductPackModule } from './modules/product-pack/product-pack.module';
+import { ValueVariantModule } from './modules/value-variant/value-variant.module';
+import { IvaModule } from './modules/iva/iva.module';
+import { TaxModule } from './modules/tax/tax.module';
 
 @Module({
   imports: [
@@ -68,6 +73,11 @@ import { CashMovementModule } from './modules/cash-movement/cash-movement.module
     BoxCashModule,
     DailyCashModule,
     CashMovementModule,
+    VariantModule,
+    ProductPackModule,
+    ValueVariantModule,
+    IvaModule,
+    TaxModule
   ],
   controllers: [],
   providers: [],

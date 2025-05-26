@@ -18,6 +18,13 @@ import { SalePoint } from '../sale-point/entities/sales-point.entity';
 import { PaymentMethod } from '../payment-method/entities/payment-method.entity';
 import { MovementType } from '../movement-type/entities/movement-type.entity';
 import { BoxCash } from '../box-cash/entities/box-cash.entity';
+import { TaxApplication } from '../tax/entities/tax-application.entity';
+import { TaxType } from '../tax/entities/tax-type.entity';
+import { Iva } from '../iva/entities/iva.entity';
+import { Variant } from '../variant/entities/variant.entity';
+import { ValueVariant } from '../value-variant/entities/value-variant.entity';
+import { ProductType } from '../product/entities/product-type.entity';
+import { Provider } from '../provider/entities/provider.entity';
 
 @Module({
   imports: [
@@ -39,6 +46,13 @@ import { BoxCash } from '../box-cash/entities/box-cash.entity';
       PaymentMethod,
       MovementType,
       BoxCash,
+      TaxApplication,
+      TaxType,
+      Iva,
+      Variant,
+      ValueVariant,
+      ProductType,
+      Provider
     ]),
   ],
   controllers: [],

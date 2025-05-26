@@ -24,12 +24,12 @@ export class UserRepository {
   async getUserByEmail(email: string): Promise<User> {
     return await this.userRepository.findOne({
       where: { email },
-      relations: { role: true, commerce: true},
+      relations: { role: true, commerce: true },
     });
   }
 
   async checkUserByEmail(email: string): Promise<boolean> {
-    return await this.userRepository.existsBy({email});
+    return await this.userRepository.existsBy({ email });
   }
 
   async getUserByDni(dni: number): Promise<User> {
@@ -63,7 +63,7 @@ export class UserRepository {
     return await this.userRoleRepository.findOne({ where: { role: userRole } });
   }
 
-  async resetPassword (email:string, password:string): Promise<UpdateResult> {
-    return await this.userRepository.update({email}, {password})
+  async resetPassword(email: string, password: string): Promise<UpdateResult> {
+    return await this.userRepository.update({ email }, { password });
   }
 }

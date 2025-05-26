@@ -1,10 +1,18 @@
-import { IsEnum, IsNotEmpty, IsOptional, IsString, IsUUID, Matches } from 'class-validator';
+import {
+  IsEnum,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+  IsUUID,
+  Matches,
+} from 'class-validator';
 import { EmissionType } from 'src/modules/fiscal-data/Enums/enumsFiscal';
-
 
 export class CreateSalesPointDto {
   @IsString()
-  @Matches(/^\d{4}$/, { message: 'El código debe tener 4 dígitos, por ejemplo "0001"' })
+  @Matches(/^\d{4}$/, {
+    message: 'El código debe tener 4 dígitos, por ejemplo "0001"',
+  })
   name: string;
 
   @IsString()
@@ -19,6 +27,5 @@ export class CreateSalesPointDto {
 
   @IsString()
   @IsNotEmpty()
-  fiscalDataId:string;
-
+  fiscalDataId: string;
 }

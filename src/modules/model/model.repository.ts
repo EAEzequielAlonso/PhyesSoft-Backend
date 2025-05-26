@@ -3,26 +3,31 @@ import { Model } from './entities/model.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DeleteResult, ILike, Repository, UpdateResult } from 'typeorm';
 
-@Injectable() 
+@Injectable()
 export class ModelRepository {
   constructor(
     @InjectRepository(Model) private modelRepository: Repository<Model>,
   ) {}
 
-  async getModels(commerceId:string, pageNumber:number,
-         limitNumber: number,
-         search: string): Promise<[Model[], number]> {
-          
-         return this.modelRepository.findAndCount({where: { name: ILike(`%${search}%`), brand: {commerceId} },
-                   order: { createdAt: "DESC" },
-                   skip: (pageNumber - 1) * limitNumber,
-                   take: limitNumber,
-                   relations: {brand:true},
-                 });
-       }
+  async getModels(
+    commerceId: string,
+    pageNumber: number,
+    limitNumber: number,
+    search: string,
+  ): Promise<[Model[], number]> {
+    return this.modelRepository.findAndCount({
+      where: { name: ILike(`%${search}%`), brand: { commerceId } },
+      order: { createdAt: 'DESC' },
+      skip: (pageNumber - 1) * limitNumber,
+      take: limitNumber,
+      relations: { brand: true },
+    });
+  }
 
-  async getModelCommerce(commerceId:string): Promise<Model[]> {
-    return await this.modelRepository.find({where: {brand:{commerceId}}});
+  async getModelCommerce(commerceId: string): Promise<Model[]> {
+    return await this.modelRepository.find({
+      where: { brand: { commerceId } },
+    });
   }
 
   async getModelsByBrand(brandId: string): Promise<Model[]> {

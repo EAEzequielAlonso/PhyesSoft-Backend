@@ -1,0 +1,30 @@
+[
+    {
+        "name": "Tuco",
+        "variant": "Salsas"
+    },
+    {
+        "name": "Blanca",
+        "variant": "Salsas"
+    },
+    {
+        "name": "Portuguesa",
+        "variant": "Salsas"
+    },
+    {
+        "name": "Italiana",
+        "variant": "Salsas"
+    },
+    {
+        "name": "Papas Fritas",
+        "variant": "Minutas"
+    },
+    {
+        "name": "Pure",
+        "variant": "Minutas"
+    },
+    {
+        "name": "Ensalada",
+        "variant": "Minutas"
+    }
+]

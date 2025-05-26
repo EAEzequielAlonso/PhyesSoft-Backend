@@ -54,7 +54,7 @@ export class UserController {
   @Get('user')
   @ApiBearerAuth()
   @UseGuards(AuthGuard)
-  async getUser(@Req() request:Request): Promise<User> {
+  async getUser(@Req() request: Request): Promise<User> {
     return await this.userService.getUserById(request.user.id);
   }
 

@@ -35,14 +35,14 @@ export class Sale {
   total: number;
 
   @ManyToOne(() => DailyCash, (dailyCash) => dailyCash.sales)
-  @JoinColumn({name: "dailyCashId"})
-  dailyCash : DailyCash;
-  @Column("uuid")
-  dailyCashId: string
+  @JoinColumn({ name: 'dailyCashId' })
+  dailyCash: DailyCash;
+  @Column('uuid')
+  dailyCashId: string;
 
   @OneToMany(() => SaleProducts, (saleProducts) => saleProducts.sale)
   saleProducts: SaleProducts[];
 
-  @OneToMany (() => PaymentSale, (paymentSale) => paymentSale.sale)
+  @OneToMany(() => PaymentSale, (paymentSale) => paymentSale.sale)
   paymentSales: PaymentSale[];
 }

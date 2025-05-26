@@ -22,24 +22,26 @@ import { Request } from 'express';
 @UseGuards(AuthGuard)
 export class SubcategoryController {
   constructor(private readonly subcategoryService: SubcategoryService) {}
-  
-  @Get() 
+
+  @Get()
   async getSubcategories(
-      @Req() req: Request, 
-      @Query('page') page = '1',
-      @Query('limit') limit = '10',
-      @Query('search') search = ''): Promise<[Subcategory[], number]> {
-      const pageNumber = parseInt(page, 10);
-      const limitNumber = parseInt(limit, 10);
-      return this.subcategoryService.getSubcategories(
-        req.user.commerce.id,
-        pageNumber,
-        limitNumber,
-        search);
-    }
+    @Req() req: Request,
+    @Query('page') page = '1',
+    @Query('limit') limit = '10',
+    @Query('search') search = '',
+  ): Promise<[Subcategory[], number]> {
+    const pageNumber = parseInt(page, 10);
+    const limitNumber = parseInt(limit, 10);
+    return this.subcategoryService.getSubcategories(
+      req.user.commerce.id,
+      pageNumber,
+      limitNumber,
+      search,
+    );
+  }
 
   @Get('commerce')
-  async getSubcategoryCommerce(@Req() req:Request ): Promise<Subcategory[]> {
+  async getSubcategoryCommerce(@Req() req: Request): Promise<Subcategory[]> {
     return this.subcategoryService.getSubcategoryCommerce(req.user.commerce.id);
   }
 
@@ -50,7 +52,7 @@ export class SubcategoryController {
     return this.subcategoryService.getSubcategoriesByCategory(categoryId);
   }
 
-  @Get(':id') 
+  @Get(':id')
   async getSubcategoryById(
     @Param('id', ParseUUIDPipe) id: string,
   ): Promise<Subcategory> {
@@ -64,7 +66,7 @@ export class SubcategoryController {
     return await this.subcategoryService.createSubcategory(subcategory);
   }
 
-  @Put(':id') 
+  @Put(':id')
   async updateSubcategory(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() subcategory: UpdateSubcategoryDto,

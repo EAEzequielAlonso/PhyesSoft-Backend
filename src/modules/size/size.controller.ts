@@ -1,4 +1,16 @@
-import { Controller, Get, Post, Body, Put, Param, Delete, Req, Query, UseGuards, ParseUUIDPipe } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Put,
+  Param,
+  Delete,
+  Req,
+  Query,
+  UseGuards,
+  ParseUUIDPipe,
+} from '@nestjs/common';
 import { SizeService } from './size.service';
 import { CreateSizeDto } from './dto/create-size.dto';
 import { UpdateSizeDto } from './dto/update-size.dto';
@@ -6,25 +18,27 @@ import { Request } from 'express';
 import { Size } from './entities/size.entity';
 import { AuthGuard } from '../auth/guards/Auth.guard';
 
-@Controller('size') 
-@UseGuards(AuthGuard) 
-export class SizeController { 
+@Controller('size')
+@UseGuards(AuthGuard)
+export class SizeController {
   constructor(private readonly sizeService: SizeService) {}
 
   @Get()
   async findAll(
-        @Req() req: Request, 
-        @Query('page') page = '1',
-        @Query('limit') limit = '10',
-        @Query('search') search = ''): Promise<[Size[], number]> {
-        const pageNumber = parseInt(page, 10);
-        const limitNumber = parseInt(limit, 10);
-        
-        return await this.sizeService.findAll(
-          req.user.commerce.id,
-          pageNumber,
-          limitNumber,
-          search);
+    @Req() req: Request,
+    @Query('page') page = '1',
+    @Query('limit') limit = '10',
+    @Query('search') search = '',
+  ): Promise<[Size[], number]> {
+    const pageNumber = parseInt(page, 10);
+    const limitNumber = parseInt(limit, 10);
+
+    return await this.sizeService.findAll(
+      req.user.commerce.id,
+      pageNumber,
+      limitNumber,
+      search,
+    );
   }
 
   @Post()
@@ -38,8 +52,11 @@ export class SizeController {
   }
 
   @Put(':id')
-  async update(@Param('id', ParseUUIDPipe) id: string, @Body() updateSizeDto: UpdateSizeDto) {
-    console.log("updateSizeDto: ", updateSizeDto)
+  async update(
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() updateSizeDto: UpdateSizeDto,
+  ) {
+    console.log('updateSizeDto: ', updateSizeDto);
     return await this.sizeService.update(id, updateSizeDto);
   }
 

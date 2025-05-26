@@ -1,34 +1,66 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Put,
+  Delete,
+  Param,
+  Body,
+  HttpCode,
+  HttpStatus,
+  UseGuards,
+} from '@nestjs/common';
 import { ProductPackService } from './product-pack.service';
+import { ProductPack } from './entities/product-pack.entity';
+import { AuthGuard } from '../auth/guards/Auth.guard';
 import { CreateProductPackDto } from './dto/create-product-pack.dto';
 import { UpdateProductPackDto } from './dto/update-product-pack.dto';
 
 @Controller('product-pack')
+@UseGuards(AuthGuard)
 export class ProductPackController {
-  constructor(private readonly productPackService: ProductPackService) {}
+  constructor(private readonly service: ProductPackService) {}
 
+  // GET /product-pack/by-pack/:productpackId
+  @Get('components/:productpackId')
+  async findByProductPack(
+    @Param('productpackId') productpackId: string,
+  ): Promise<ProductPack[]> {
+    return this.service.findByProductPack(productpackId);
+  }
+
+  // GET /product-pack/:productpackId/:productcompId
+  @Get(':productpackId/:productcompId')
+  async findOne(
+    @Param('productpackId') productpackId: string,
+    @Param('productcompId') productcompId: string,
+  ): Promise<ProductPack> {
+    return this.service.findOne(productpackId, productcompId);
+  }
+
+  // POST /product-pack
   @Post()
-  create(@Body() createProductPackDto: CreateProductPackDto) {
-    return this.productPackService.create(createProductPackDto);
+  async create(@Body() body: CreateProductPackDto): Promise<ProductPack> {
+    return this.service.create(body);
   }
 
-  @Get()
-  findAll() {
-    return this.productPackService.findAll();
+  // PUT /product-pack/:productpackId/:productcompId
+  @Put(':productpackId/:productcompId')
+  async update(
+    @Param('productpackId') productpackId: string,
+    @Param('productcompId') productcompId: string,
+    @Body() body: UpdateProductPackDto,
+  ) {
+    return this.service.update(productpackId, productcompId, body);
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.productPackService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateProductPackDto: UpdateProductPackDto) {
-    return this.productPackService.update(+id, updateProductPackDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.productPackService.remove(+id);
+  // DELETE /product-pack/:productpackId/:productcompId
+  @Delete(':productpackId/:productcompId')
+  @HttpCode(HttpStatus.NO_CONTENT)
+  async remove(
+    @Param('productpackId') productpackId: string,
+    @Param('productcompId') productcompId: string,
+  ) {
+    await this.service.remove(productpackId, productcompId);
   }
 }

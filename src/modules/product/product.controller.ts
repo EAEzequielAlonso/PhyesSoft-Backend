@@ -5,19 +5,20 @@ import {
   Body,
   Param,
   Delete,
-  ParseUUIDPipe, 
+  ParseUUIDPipe,
   Put,
   UseGuards,
   Req,
   Query,
 } from '@nestjs/common';
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { ApiTags } from '@nestjs/swagger';
 import { ProductService } from './product.service';
 import { Product } from './entities/product.entity';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { AuthGuard } from '../auth/guards/Auth.guard';
 import { Request } from 'express';
+import { ProductType } from './entities/product-type.entity';
 
 @ApiTags('Products')
 @Controller('product')
@@ -27,19 +28,20 @@ export class ProductController {
 
   @Get()
   async getProducts(
-          @Req() req: Request, 
-          @Query('page') page = '1',
-          @Query('limit') limit = '10',
-          @Query('search') search = ''
-        ): Promise<[Product[], number]> {
-          const pageNumber = parseInt(page, 10) || 1;
-          const limitNumber = parseInt(limit, 10) || 10;
-          
-          return await this.productService.getProducts(
-            req.user.commerce.id,
-            pageNumber,
-            limitNumber,
-            search);
+    @Req() req: Request,
+    @Query('page') page = '1',
+    @Query('limit') limit = '10',
+    @Query('search') search = '',
+  ): Promise<[Product[], number]> {
+    const pageNumber = parseInt(page, 10) || 1;
+    const limitNumber = parseInt(limit, 10) || 10;
+
+    return await this.productService.getProducts(
+      req.user.commerce.id,
+      pageNumber,
+      limitNumber,
+      search,
+    );
   }
 
   @Get('subcategory/:subcategoryId')
@@ -47,6 +49,11 @@ export class ProductController {
     @Param('subcategoryId', ParseUUIDPipe) subcategoryId: string,
   ): Promise<Product[]> {
     return await this.productService.getProductBySubcategory(subcategoryId);
+  }
+
+  @Get('types')
+  async getProductTypes(): Promise<ProductType[]> {
+    return await this.productService.getProductTypes();
   }
 
   @Get('model/:modelId')
@@ -64,17 +71,15 @@ export class ProductController {
   }
 
   @Post()
-  async createProduct(@Body() product: CreateProductDto, @Req() req:Request): Promise<Product> {
-    console.log(`este es el producto en el POST ${JSON.stringify(product)}`)
-    return await this.productService.createProduct({...product, commerceId: req.user.commerce.id});
-  }
-
-  @Put('unsubscribe/:id')
-  async unsubscribeProduct(
-    @Param('id', ParseUUIDPipe) id: string,
-  ): Promise<string> {
-
-    return await this.productService.unsubscribeProduct(id);
+  async createProduct(
+    @Body() product: CreateProductDto,
+    @Req() req: Request,
+  ): Promise<Product> {
+    console.log(`este es el producto en el POST ${JSON.stringify(product)}`);
+    return await this.productService.createProduct({
+      ...product,
+      commerceId: req.user.commerce.id,
+    });
   }
 
   @Put(':id')
@@ -82,7 +87,7 @@ export class ProductController {
     @Param('id', ParseUUIDPipe) id: string,
     @Body() product: UpdateProductDto,
   ): Promise<string> {
-    console.log(`este es el producto en el PUT ${JSON.stringify(product)}`)
+    console.log(`este es el producto en el PUT ${JSON.stringify(product)}`);
     return await this.productService.updateProduct(id, product);
   }
 

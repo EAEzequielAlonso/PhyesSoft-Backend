@@ -1,12 +1,17 @@
-
-import { DailyCash } from "src/modules/daily-cash/entities/daily-cash.entity";
-import { MovementType } from "src/modules/movement-type/entities/movement-type.entity";
-import { User } from "src/modules/user/entities/user.entity";
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { DailyCash } from 'src/modules/daily-cash/entities/daily-cash.entity';
+import { MovementType } from 'src/modules/movement-type/entities/movement-type.entity';
+import { User } from 'src/modules/user/entities/user.entity';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity('cashMovements')
 export class CashMovement {
-  @PrimaryGeneratedColumn("uuid")
+  @PrimaryGeneratedColumn('uuid')
   id: string;
 
   @Column('decimal', { precision: 10, scale: 2 })
@@ -18,20 +23,22 @@ export class CashMovement {
   @ManyToOne(() => User, (user) => user.cashMovements)
   @JoinColumn({ name: 'userCreateMovId' })
   userCreateMov: User;
-  @Column("uuid")
-  userCreateMovId: string
+  @Column('uuid')
+  userCreateMovId: string;
 
   @ManyToOne(() => DailyCash, (dailyCash) => dailyCash.cashMovements)
   @JoinColumn({ name: 'dailyCashId' })
   dailyCash: DailyCash;
-  @Column("uuid")
-  dailyCashId: string
+  @Column('uuid')
+  dailyCashId: string;
 
-  @ManyToOne(() => MovementType, (movementType) => movementType.cashMovements, { nullable: true })
+  @ManyToOne(() => MovementType, (movementType) => movementType.cashMovements, {
+    nullable: true,
+  })
   @JoinColumn({ name: 'movementTypeId' })
   movementType: MovementType;
-  @Column("uuid")
-  movementTypeId: string
+  @Column('uuid')
+  movementTypeId: string;
 
   @Column('text', { nullable: true })
   description: string;

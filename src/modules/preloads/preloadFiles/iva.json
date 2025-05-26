@@ -1,0 +1,37 @@
+[
+    {
+        "name": "IVA 10,5 %",
+        "alicuota": 10.5
+    },
+    {
+        "name": "IVA 21 %",
+        "alicuota": 21
+    },
+    {
+        "name": "IVA 27 %",
+        "alicuota": 27
+    },
+    {
+        "name": "IVA 2,5 %",
+        "alicuota": 2.5
+    },
+    {
+        "name": "IVA 5 %",
+        "alicuota": 5
+    },
+    {
+        "name": "EXENTO",
+        "alicuota": 0
+    },
+    {
+        "name": "NO GRAVADO",
+        "alicuota": 0
+    }
+]
+
+
+
+
+
+
+

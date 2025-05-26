@@ -7,7 +7,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Commerce } from '../commerce/entities/commerce.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Commerce]) , UserModule],
+  imports: [TypeOrmModule.forFeature([Commerce]), UserModule],
   controllers: [AuthController],
   providers: [AuthService, CommerceRepository],
 })

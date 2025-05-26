@@ -32,26 +32,50 @@ export class SaleRepository {
     if (startDate) {
       if (endDate) {
         return await this.saleRepository.find({
-          where: { dailyCash : {boxCash: {branchId}}, date: Between(startDate, endDate) },
+          where: {
+            dailyCash: { boxCash: { branchId } },
+            date: Between(startDate, endDate),
+          },
         });
       } else {
         return await this.saleRepository.find({
-          where: { dailyCash : {boxCash: {branchId}}, date: Equal(startDate) },
+          where: {
+            dailyCash: { boxCash: { branchId } },
+            date: Equal(startDate),
+          },
         });
       }
     }
-    return await this.saleRepository.find({ where: {dailyCash: {boxCash: {branchId}}}});
+    return await this.saleRepository.find({
+      where: { dailyCash: { boxCash: { branchId } } },
+    });
   }
 
-  async getSalesByCommerce (commerceId:string, startDate?: Date, endDate?: Date): Promise<Sale[]> {
-     if (startDate) {
-          if (endDate) {
-              return await this.saleRepository.find({ where: {dailyCash : {boxCash: { branch: {commerceId}}}, date: Between (startDate, endDate) }});
-          } else {
-              return await this.saleRepository.find({ where: {dailyCash : {boxCash: { branch: {commerceId}}}, date: Equal (startDate) }});
-          }
+  async getSalesByCommerce(
+    commerceId: string,
+    startDate?: Date,
+    endDate?: Date,
+  ): Promise<Sale[]> {
+    if (startDate) {
+      if (endDate) {
+        return await this.saleRepository.find({
+          where: {
+            dailyCash: { boxCash: { branch: { commerceId } } },
+            date: Between(startDate, endDate),
+          },
+        });
+      } else {
+        return await this.saleRepository.find({
+          where: {
+            dailyCash: { boxCash: { branch: { commerceId } } },
+            date: Equal(startDate),
+          },
+        });
       }
-      return await this.saleRepository.find({ where: {dailyCash : {boxCash: { branch: {commerceId}}}}});
+    }
+    return await this.saleRepository.find({
+      where: { dailyCash: { boxCash: { branch: { commerceId } } } },
+    });
   }
 
   async getSaleById(id: string): Promise<Sale> {

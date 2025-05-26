@@ -10,78 +10,109 @@ import {
 } from 'class-validator';
 
 export class CreateProductDto {
-  
   @IsString()
   @IsNotEmpty()
-  @ApiProperty()
   name: string;
-  
+
   @IsString()
-  @IsNotEmpty()
-  @ApiProperty()
+  @IsOptional()
   description: string;
 
   @IsString()
   @IsOptional()
-  @ApiProperty()
-  image: string;
+  code: string;
 
   @IsString()
   @IsOptional()
-  @ApiProperty()
-  codbar: string;
-
-  @IsBoolean()
-  @IsOptional()
-  @ApiProperty()
-  variant: boolean;
+  image: string;
 
   @IsNumber()
   @Transform(({ value }) => parseInt(value))
-  @IsOptional()
-  stock: number;
-  
-  @IsNumber()
-  @Transform(({ value }) => parseInt(value))
-  @IsOptional()
   buyUnit: number;
-  
+
   @IsNumber()
   @Transform(({ value }) => parseInt(value))
-  @IsOptional()
   saleUnit: number;
 
   @IsNumber()
   @Transform(({ value }) => parseFloat(value))
-  @IsNotEmpty()
-  @ApiProperty()
   cost: number;
 
   @IsNumber()
   @Transform(({ value }) => parseFloat(value))
-  @IsNotEmpty()
-  @ApiProperty()
   profit: number;
 
   @IsNumber()
   @Transform(({ value }) => parseFloat(value))
   @IsNotEmpty()
-  @ApiProperty()
   price: number;
 
-  @IsUUID() @IsOptional() @ApiProperty()
-  subcategoryId:string;
+  @IsBoolean()
+  @IsOptional()
+  isActive: boolean;
 
-  @IsUUID() @IsOptional() @ApiProperty()
-  modelId:string;
+  @IsBoolean()
+  @IsOptional()
+  hasColor: boolean;
 
-  @IsUUID() @IsOptional() @ApiProperty()
-  categoryId:string;
+  @IsBoolean()
+  @IsOptional()
+  isPackComp: boolean;
 
-  @IsUUID() @IsOptional() @ApiProperty()
-  brandId:string;
+  @IsBoolean()
+  @IsOptional()
+  isSellable: boolean;
 
-  @IsUUID() @IsOptional() @ApiProperty()
-  sizetypeId:string;
+  @IsBoolean()
+  @IsOptional()
+  isBuyable: boolean;
+
+  @IsBoolean()
+  @IsOptional()
+  isInsumo: boolean;
+
+  @IsBoolean()
+  @IsOptional()
+  isRawMaterial: boolean;
+
+  @IsUUID()
+  @IsOptional()
+  subcategoryId: string;
+
+  @IsUUID()
+  @IsOptional()
+  modelId: string;
+
+  @IsUUID()
+  @IsOptional()
+  variantId: string;
+
+  @IsUUID()
+  @IsOptional()
+  categoryId: string;
+
+  @IsUUID()
+  @IsOptional()
+  brandId: string;
+
+  @IsUUID()
+  @IsOptional()
+  sizetypeId: string;
+
+  @IsUUID()
+  @IsOptional()
+  providerId: string;
+
+  @IsUUID()
+  @IsOptional()
+  producttypeId: string;
+
+  @IsUUID()
+  @IsOptional()
+  ivaSaleId: string;
+
+  @IsUUID()
+  @IsOptional()
+  ivaBuyId: string;
 
 }

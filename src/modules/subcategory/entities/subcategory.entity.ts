@@ -15,7 +15,7 @@ export class Subcategory {
   id: string;
 
   @Column('varchar')
-  name: string; 
+  name: string;
 
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   createdAt: Date;
@@ -28,5 +28,4 @@ export class Subcategory {
   category: Category;
   @Column({ type: 'uuid', nullable: true })
   categoryId: string;
-
 }

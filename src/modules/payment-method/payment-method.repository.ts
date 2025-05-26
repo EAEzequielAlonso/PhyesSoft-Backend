@@ -10,24 +10,29 @@ export class PaymentMethodRepository {
     private repository: Repository<PaymentMethod>,
   ) {}
 
-  async findAll(commerceId:string, pageNumber:number,
+  async findAll(
+    commerceId: string,
+    pageNumber: number,
     limitNumber: number,
-    search: string): Promise<[PaymentMethod[], number]> {
-    return this.repository.findAndCount({where: { name: ILike(`%${search}%`), commerceId },
-    order: { createdAt: "DESC" },
-    skip: (pageNumber - 1) * limitNumber,
-    take: limitNumber,});
+    search: string,
+  ): Promise<[PaymentMethod[], number]> {
+    return this.repository.findAndCount({
+      where: { name: ILike(`%${search}%`), commerceId },
+      order: { createdAt: 'DESC' },
+      skip: (pageNumber - 1) * limitNumber,
+      take: limitNumber,
+    });
   }
 
   async findCommerce(commerceId: string): Promise<PaymentMethod[]> {
     return this.repository.find({
-      where: { commerceId }
+      where: { commerceId },
     });
   }
 
   async findOne(id: string): Promise<PaymentMethod> {
     return this.repository.findOne({
-      where: { id }
+      where: { id },
     });
   }
 
@@ -43,6 +48,6 @@ export class PaymentMethodRepository {
   }
 
   async remove(id: string): Promise<DeleteResult> {
-      return await this.repository.delete(id);
+    return await this.repository.delete(id);
   }
 }

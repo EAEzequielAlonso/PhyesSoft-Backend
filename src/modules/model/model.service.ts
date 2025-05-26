@@ -11,15 +11,21 @@ import { UpdateResult } from 'typeorm';
 export class ModelService {
   constructor(private readonly modelRepository: ModelRepository) {}
 
-  async getModels(commerceId: string, pageNumber:number,
-        limitNumber: number,
-        search: string): Promise<[Model[], number]> {
-        return this.modelRepository.getModels(commerceId, pageNumber,
-          limitNumber,
-          search);
-      }
-  
-  async getModelCommerce(commerceId:string): Promise<Model[]> {
+  async getModels(
+    commerceId: string,
+    pageNumber: number,
+    limitNumber: number,
+    search: string,
+  ): Promise<[Model[], number]> {
+    return this.modelRepository.getModels(
+      commerceId,
+      pageNumber,
+      limitNumber,
+      search,
+    );
+  }
+
+  async getModelCommerce(commerceId: string): Promise<Model[]> {
     return await this.modelRepository.getModelCommerce(commerceId);
   }
 

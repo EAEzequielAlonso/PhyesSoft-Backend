@@ -14,26 +14,26 @@ export class BrandRepository {
     commerceId: string,
     pageNumber: number,
     limitNumber: number,
-    search: string
+    search: string,
   ): Promise<[Brand[], number]> {
     return this.repository.findAndCount({
-      where: { 
-        name: ILike(`%${search}%`), 
-        commerceId 
+      where: {
+        name: ILike(`%${search}%`),
+        commerceId,
       },
-      order: { createdAt: "DESC" }, // Asegúrate de que la entidad tenga un campo createdAt
+      order: { createdAt: 'DESC' }, // Asegúrate de que la entidad tenga un campo createdAt
       skip: (pageNumber - 1) * limitNumber,
       take: limitNumber,
     });
   }
 
-  async findCommerce(commerceId:string): Promise<Brand[]> {
-    return await this.repository.find({where: {commerceId}});
+  async findCommerce(commerceId: string): Promise<Brand[]> {
+    return await this.repository.find({ where: { commerceId } });
   }
 
   async findOne(id: string): Promise<Brand> {
     return this.repository.findOne({
-      where: { id }
+      where: { id },
     });
   }
 
@@ -41,14 +41,11 @@ export class BrandRepository {
     return await this.repository.save(brand);
   }
 
-  async update(
-    id: string,
-    brand: Partial<Brand>,
-  ): Promise<UpdateResult> {
+  async update(id: string, brand: Partial<Brand>): Promise<UpdateResult> {
     return await this.repository.update(id, brand);
   }
 
   async remove(id: string): Promise<DeleteResult> {
-      return await this.repository.delete(id);
+    return await this.repository.delete(id);
   }
 }

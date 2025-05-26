@@ -1,9 +1,14 @@
-import { BadRequestException, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { UserRepository } from '../user/user.repository';
 import { JwtService } from '@nestjs/jwt';
 import { Role } from '../user/roles/roles.enum';
 import { LoginUserDto } from './dto/loginUser.dto';
-import * as bcrypt from "bcrypt"
+import * as bcrypt from 'bcrypt';
 import { UserRole } from '../user/entities/role.entity';
 import { User } from '../user/entities/user.entity';
 import { Request, Response } from 'express';
@@ -18,38 +23,41 @@ export class AuthService {
     private readonly jwtService: JwtService,
   ) {}
 
-  async signup(user: RegisterUserDto): Promise<{message:string}> {
-    
+  async signup(user: RegisterUserDto): Promise<{ message: string }> {
     try {
-    const userDB: User = await this.userRepository.getUserByEmail(user.email);
-    if (userDB)
-      throw new UnauthorizedException(
-        `Ya existe un usuario registrado con este email, Prueba con "Olvide mi contraseña"`,
-      );// compruebo que no exista el email
+      const userDB: User = await this.userRepository.getUserByEmail(user.email);
+      if (userDB)
+        throw new UnauthorizedException(
+          `Ya existe un usuario registrado con este email, Prueba con "Olvide mi contraseña"`,
+        ); // compruebo que no exista el email
 
-    const userRole: UserRole = await this.userRepository.getRolesUsersByRole(
-      Role.CommerceAdmin,
-    );
-    const HashPassword = await bcrypt.hash(user.password, 10);
+      const userRole: UserRole = await this.userRepository.getRolesUsersByRole(
+        Role.CommerceAdmin,
+      );
+      const HashPassword = await bcrypt.hash(user.password, 10);
 
-    const userSave = await this.userRepository.createUser({
-      email: user.email,
-      roleId: userRole.id,
-      password: HashPassword,
-    });
+      const userSave = await this.userRepository.createUser({
+        email: user.email,
+        roleId: userRole.id,
+        password: HashPassword,
+      });
 
-    await this.commerceRepository.createCommerce({nameCompany: user.commerce, nameFantasy: user.commerce, emailCompany: user.email, userId: userSave.id});
+      await this.commerceRepository.createCommerce({
+        nameCompany: user.commerce,
+        nameFantasy: user.commerce,
+        emailCompany: user.email,
+        userId: userSave.id,
+      });
 
-  //   //envio email de bienvenida
-    // if (userSave.email) {
-    //   this.emailService.WelcomeEmail(userSave, passwordConfirm, false);
-    // }
+      //   //envio email de bienvenida
+      // if (userSave.email) {
+      //   this.emailService.WelcomeEmail(userSave, passwordConfirm, false);
+      // }
 
-    return {message: "Usuario Registrado Con Exito"};
-  } catch (error) {
-    throw new BadRequestException("Algo Salio mal con el Registro")
-  }
-    
+      return { message: 'Usuario Registrado Con Exito' };
+    } catch (error) {
+      throw new BadRequestException('Algo Salio mal con el Registro');
+    }
   }
 
   async signin(userLogin: LoginUserDto, res: Response): Promise<Object> {
@@ -69,7 +77,7 @@ export class AuthService {
 
     //creo el Payload a guardar en el token, con id, email, y los roles asignados al usuario
     const userPayload = {
-      ...userDB
+      ...userDB,
     };
     const token = this.jwtService.sign(userPayload);
 
@@ -87,26 +95,25 @@ export class AuthService {
 
   async signOut(res: Response): Promise<Object> {
     const isProd = process.env.NODE_ENV === 'production';
-  
+
     res.clearCookie('token', {
       httpOnly: true,
       secure: isProd,
       sameSite: isProd ? 'none' : 'lax',
       path: '/',
     });
-  
+
     return res.json({ message: 'Sesión cerrada correctamente' });
   }
 
-  async resetPassword(email:string, password:string): Promise<Object> {
-    
+  async resetPassword(email: string, password: string): Promise<Object> {
     const HashPassword = await bcrypt.hash(password, 10);
-    
-    const resp = await this.userRepository.resetPassword(email, HashPassword)
-    
-    if ( resp.affected === 0 ) throw new NotFoundException("Email no encontrado")
-      
-    return {message: "Contraseña Actualizada"};
+
+    const resp = await this.userRepository.resetPassword(email, HashPassword);
+
+    if (resp.affected === 0) throw new NotFoundException('Email no encontrado');
+
+    return { message: 'Contraseña Actualizada' };
   }
 
   async isLogged(req: Request): Promise<boolean> {
@@ -127,5 +134,4 @@ export class AuthService {
       return false;
     }
   }
-
 }

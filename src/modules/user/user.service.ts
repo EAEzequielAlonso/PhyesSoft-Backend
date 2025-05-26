@@ -29,8 +29,8 @@ export class UserService {
   }
 
   async checkUserByEmail(email: string): Promise<boolean> {
-      return await this.userRepository.checkUserByEmail(email);
-    }
+    return await this.userRepository.checkUserByEmail(email);
+  }
 
   async getRolesUsersByRole(role: Role): Promise<UserRole> {
     const userRole = await this.userRepository.getRolesUsersByRole(role);

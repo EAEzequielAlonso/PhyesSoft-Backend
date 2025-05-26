@@ -10,24 +10,29 @@ export class FiscalDataRepository {
     private repository: Repository<FiscalData>,
   ) {}
 
-  async findAll(commerceId:string, pageNumber:number,
+  async findAll(
+    commerceId: string,
+    pageNumber: number,
     limitNumber: number,
-    search: string): Promise<[FiscalData[], number]> {
-    return this.repository.findAndCount({where: { name: ILike(`%${search}%`), commerceId },
-    order: { createdAt: "DESC" },
-    skip: (pageNumber - 1) * limitNumber,
-    take: limitNumber,});
+    search: string,
+  ): Promise<[FiscalData[], number]> {
+    return this.repository.findAndCount({
+      where: { name: ILike(`%${search}%`), commerceId },
+      order: { createdAt: 'DESC' },
+      skip: (pageNumber - 1) * limitNumber,
+      take: limitNumber,
+    });
   }
 
   async findCommerce(commerceId: string): Promise<FiscalData[]> {
     return this.repository.find({
-      where: { commerceId }
+      where: { commerceId },
     });
   }
 
   async findOne(id: string): Promise<FiscalData> {
     return this.repository.findOne({
-      where: { id }
+      where: { id },
     });
   }
 
@@ -35,14 +40,11 @@ export class FiscalDataRepository {
     return await this.repository.save(body);
   }
 
-  async update(
-    id: string,
-    body: Partial<FiscalData>,
-  ): Promise<UpdateResult> {
+  async update(id: string, body: Partial<FiscalData>): Promise<UpdateResult> {
     return await this.repository.update(id, body);
   }
 
   async remove(id: string): Promise<DeleteResult> {
-      return await this.repository.delete(id);
+    return await this.repository.delete(id);
   }
 }

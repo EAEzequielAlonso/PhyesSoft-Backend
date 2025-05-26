@@ -27,22 +27,26 @@ export class CategoryController {
   @Get()
   @ApiBearerAuth()
   async getCategories(
-    @Req() req: Request, 
+    @Req() req: Request,
     @Query('page') page = '1',
     @Query('limit') limit = '10',
-    @Query('search') search = ''): Promise<[Category[], number]> {
+    @Query('search') search = '',
+  ): Promise<[Category[], number]> {
     const pageNumber = parseInt(page, 10);
     const limitNumber = parseInt(limit, 10);
     return this.categoryService.getCategories(
       req.user.commerce.id,
       pageNumber,
       limitNumber,
-      search);
+      search,
+    );
   }
 
   @Get('commerce')
-  async getCategoryByCommerce(@Req() req:Request): Promise<Category[]> {
-    return await this.categoryService.getCategoryByCommerce(req.user.commerce.id);
+  async getCategoryByCommerce(@Req() req: Request): Promise<Category[]> {
+    return await this.categoryService.getCategoryByCommerce(
+      req.user.commerce.id,
+    );
   }
 
   @Get(':id')
@@ -52,8 +56,14 @@ export class CategoryController {
     return await this.categoryService.getCategoryById(id);
   }
   @Post()
-  async createCategory(@Body() category: CreateCategoryDto, @Req() req:Request): Promise<Category> {
-    return await this.categoryService.createCategory({...category, commerceId: req.user.commerce.id});
+  async createCategory(
+    @Body() category: CreateCategoryDto,
+    @Req() req: Request,
+  ): Promise<Category> {
+    return await this.categoryService.createCategory({
+      ...category,
+      commerceId: req.user.commerce.id,
+    });
   }
 
   @Put(':id')
@@ -63,7 +73,7 @@ export class CategoryController {
   ): Promise<Category> {
     return await this.categoryService.updateCategory(id, category);
   }
- 
+
   @Delete(':id')
   async deleteCategory(
     @Param('id', ParseUUIDPipe) id: string,

@@ -10,18 +10,23 @@ export class ColorRepository {
     private repository: Repository<Color>,
   ) {}
 
-  async findAll(commerceId:string, pageNumber:number,
+  async findAll(
+    commerceId: string,
+    pageNumber: number,
     limitNumber: number,
-    search: string): Promise<[Color[], number]> {
-    return this.repository.findAndCount({where: { name: ILike(`%${search}%`), commerceId },
-    order: { createdAt: "DESC" },
-    skip: (pageNumber - 1) * limitNumber,
-    take: limitNumber,});
+    search: string,
+  ): Promise<[Color[], number]> {
+    return this.repository.findAndCount({
+      where: { name: ILike(`%${search}%`), commerceId },
+      order: { createdAt: 'DESC' },
+      skip: (pageNumber - 1) * limitNumber,
+      take: limitNumber,
+    });
   }
 
   async findOne(id: string): Promise<Color> {
     return this.repository.findOne({
-      where: { id }
+      where: { id },
     });
   }
 
@@ -29,14 +34,11 @@ export class ColorRepository {
     return await this.repository.save(color);
   }
 
-  async update(
-    id: string,
-    color: Partial<Color>,
-  ): Promise<UpdateResult> {
+  async update(id: string, color: Partial<Color>): Promise<UpdateResult> {
     return await this.repository.update(id, color);
   }
 
   async remove(id: string): Promise<DeleteResult> {
-      return await this.repository.delete(id);
+    return await this.repository.delete(id);
   }
 }

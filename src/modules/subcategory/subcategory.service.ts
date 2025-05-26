@@ -8,23 +8,30 @@ import { Subcategory } from './entities/subcategory.entity';
 
 @Injectable()
 export class SubcategoryService {
-  
   constructor(private readonly subcategoryRepository: SubcategoryRepository) {}
- 
-  async getSubcategories(commerceId: string, pageNumber:number,
-      limitNumber: number,
-      search: string): Promise<[Subcategory[], number]> {
-      return this.subcategoryRepository.getSubcategories(commerceId, pageNumber,
-        limitNumber,
-        search);
-    }
-  
-    async getSubcategoryCommerce(commerceId:string): Promise<Subcategory[]> {
-      return await this.subcategoryRepository.getSubcategoryCommerce(commerceId);
-    }
+
+  async getSubcategories(
+    commerceId: string,
+    pageNumber: number,
+    limitNumber: number,
+    search: string,
+  ): Promise<[Subcategory[], number]> {
+    return this.subcategoryRepository.getSubcategories(
+      commerceId,
+      pageNumber,
+      limitNumber,
+      search,
+    );
+  }
+
+  async getSubcategoryCommerce(commerceId: string): Promise<Subcategory[]> {
+    return await this.subcategoryRepository.getSubcategoryCommerce(commerceId);
+  }
 
   async getSubcategoriesByCategory(categoryId: string): Promise<Subcategory[]> {
-    return await this.subcategoryRepository.getSubcategoriesByCategory(categoryId);
+    return await this.subcategoryRepository.getSubcategoriesByCategory(
+      categoryId,
+    );
   }
 
   async getSubcategoryById(id: string): Promise<Subcategory> {

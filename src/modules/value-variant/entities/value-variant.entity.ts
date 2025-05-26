@@ -1,5 +1,5 @@
 import { Commerce } from 'src/modules/commerce/entities/commerce.entity';
-import { ProductVariant } from 'src/modules/product-variant/entities/product-variant.entity';
+import { Variant } from 'src/modules/variant/entities/variant.entity';
 import { SaleProducts } from 'src/modules/saleProducts/entities/saleProducts.entity';
 import {
   Column,
@@ -24,16 +24,15 @@ export class ValueVariant {
   @OneToMany(() => SaleProducts, (saleProducts) => saleProducts.size)
   saleProducts: SaleProducts[];
 
-  @ManyToOne(() => ProductVariant, (variant) => variant.valuevariants)
-  @JoinColumn({ name: 'productvariantId' })
-  productvariant: ProductVariant;
+  @ManyToOne(() => Variant, (variant) => variant.valuevariants)
+  @JoinColumn({ name: 'variantId' })
+  variant: Variant;
   @Column({ type: 'uuid', nullable: true })
-  productvariantId: string;
+  variantId: string;
 
-  @ManyToOne (() => Commerce, (commerce) => commerce.sizes)
-  @JoinColumn({name:"commerceId"})
+  @ManyToOne(() => Commerce, (commerce) => commerce.sizes)
+  @JoinColumn({ name: 'commerceId' })
   commerce: Commerce;
-  @Column({type: "uuid", nullable:true})
-  commerceId:string;
-
+  @Column({ type: 'uuid', nullable: true })
+  commerceId: string;
 }

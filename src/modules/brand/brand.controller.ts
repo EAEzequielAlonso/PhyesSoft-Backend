@@ -25,20 +25,22 @@ import { Request } from 'express';
 export class BrandController {
   constructor(private readonly brandService: BrandService) {}
 
- @Get()
+  @Get()
   @ApiBearerAuth()
   async findAll(
-      @Req() req: Request, 
-      @Query('page') page = '1',
-      @Query('limit') limit = '10',
-      @Query('search') search = ''): Promise<[Brand[], number]> {
+    @Req() req: Request,
+    @Query('page') page = '1',
+    @Query('limit') limit = '10',
+    @Query('search') search = '',
+  ): Promise<[Brand[], number]> {
     const pageNumber = parseInt(page, 10);
     const limitNumber = parseInt(limit, 10);
     return await this.brandService.findAll(
       req.user.commerce.id,
       pageNumber,
       limitNumber,
-      search);
+      search,
+    );
   }
 
   @Get('commerce')
@@ -50,14 +52,23 @@ export class BrandController {
   async findOne(@Param('id', ParseUUIDPipe) id: string): Promise<Brand> {
     return await this.brandService.findOne(id);
   }
- 
+
   @Post()
-  async create(@Body() brand: CreateBrandDto, @Req() req:Request): Promise<Brand> {
-      return await this.brandService.create({...brand, commerceId: req.user.commerce.id});
-    }
+  async create(
+    @Body() brand: CreateBrandDto,
+    @Req() req: Request,
+  ): Promise<Brand> {
+    return await this.brandService.create({
+      ...brand,
+      commerceId: req.user.commerce.id,
+    });
+  }
 
   @Put(':id')
-  update(@Param('id', ParseUUIDPipe) id: string, @Body() updateBrandDto: UpdateBrandDto) {
+  update(
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() updateBrandDto: UpdateBrandDto,
+  ) {
     return this.brandService.update(id, updateBrandDto);
   }
 

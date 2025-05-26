@@ -30,17 +30,16 @@ export class SalePoint {
   @Column({
     type: 'enum',
     enum: EmissionType,
-    default : 'ELECTRONICO'
+    default: 'ELECTRONICO',
   })
-  emissionType: EmissionType; 
+  emissionType: EmissionType;
 
-  @OneToOne(() => BoxCash, boxCash => boxCash.salePoint)
+  @OneToOne(() => BoxCash, (boxCash) => boxCash.salePoint)
   boxCash: BoxCash; // Relación con la caja
 
- @ManyToOne (() => FiscalData, (fiscalData) => fiscalData.salePoints)
-  @JoinColumn({name:"fiscalDataId"})
+  @ManyToOne(() => FiscalData, (fiscalData) => fiscalData.salePoints)
+  @JoinColumn({ name: 'fiscalDataId' })
   fiscalData: FiscalData;
-  @Column({type: "uuid", nullable:true})
-  fiscalDataId:string;
-
+  @Column({ type: 'uuid', nullable: true })
+  fiscalDataId: string;
 }

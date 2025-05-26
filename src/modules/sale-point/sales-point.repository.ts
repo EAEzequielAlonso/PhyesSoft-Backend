@@ -10,26 +10,30 @@ export class SalePointRepository {
     private repository: Repository<SalePoint>,
   ) {}
 
-  async findAll(commerceId:string, pageNumber:number,
+  async findAll(
+    commerceId: string,
+    pageNumber: number,
     limitNumber: number,
-    search: string): Promise<[SalePoint[], number]> {
-
-    return await this.repository.findAndCount({where: { name: ILike(`%${search}%`), fiscalData: { commerceId} },
-    relations: {boxCash: true},
-    order: { createdAt: "DESC" }, 
-    skip: (pageNumber - 1) * limitNumber,
-    take: limitNumber,});
+    search: string,
+  ): Promise<[SalePoint[], number]> {
+    return await this.repository.findAndCount({
+      where: { name: ILike(`%${search}%`), fiscalData: { commerceId } },
+      relations: { boxCash: true },
+      order: { createdAt: 'DESC' },
+      skip: (pageNumber - 1) * limitNumber,
+      take: limitNumber,
+    });
   }
 
   async findCommerce(commerceId: string): Promise<SalePoint[]> {
     return await this.repository.find({
-      where: { fiscalData: {commerceId}}
+      where: { fiscalData: { commerceId } },
     });
   }
 
   async findOne(id: string): Promise<SalePoint> {
     return await this.repository.findOne({
-      where: { id }
+      where: { id },
     });
   }
 
@@ -37,14 +41,11 @@ export class SalePointRepository {
     return await this.repository.save(body);
   }
 
-  async update(
-    id: string,
-    body: Partial<SalePoint>,
-  ): Promise<UpdateResult> {
+  async update(id: string, body: Partial<SalePoint>): Promise<UpdateResult> {
     return await this.repository.update(id, body);
   }
 
   async remove(id: string): Promise<DeleteResult> {
-      return await this.repository.delete(id);
+    return await this.repository.delete(id);
   }
 }

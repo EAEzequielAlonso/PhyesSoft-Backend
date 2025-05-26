@@ -19,15 +19,14 @@ export class Color {
   name: string;
 
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
-  createdAt: Date; 
+  createdAt: Date;
 
   @OneToMany(() => SaleProducts, (saleProducts) => saleProducts.color)
   saleProducts: SaleProducts[];
 
-  @ManyToOne (() => Commerce, (commerce) => commerce.colors)
-  @JoinColumn({name:"commerceId"})
+  @ManyToOne(() => Commerce, (commerce) => commerce.colors)
+  @JoinColumn({ name: 'commerceId' })
   commerce: Commerce;
-  @Column({type: "uuid", nullable:true})
-  commerceId:string;
-
+  @Column({ type: 'uuid', nullable: true })
+  commerceId: string;
 }

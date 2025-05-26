@@ -10,17 +10,22 @@ export class CategoryRepository {
     private categoryRepository: Repository<Category>,
   ) {}
 
-  async getCategories(commerceId:string, pageNumber:number,
+  async getCategories(
+    commerceId: string,
+    pageNumber: number,
     limitNumber: number,
-    search: string): Promise<[Category[], number]> {
-    return this.categoryRepository.findAndCount({where: { name: ILike(`%${search}%`), commerceId },
-    order: { createdAt: "DESC" },
-    skip: (pageNumber - 1) * limitNumber,
-    take: limitNumber,});
+    search: string,
+  ): Promise<[Category[], number]> {
+    return this.categoryRepository.findAndCount({
+      where: { name: ILike(`%${search}%`), commerceId },
+      order: { createdAt: 'DESC' },
+      skip: (pageNumber - 1) * limitNumber,
+      take: limitNumber,
+    });
   }
 
-  async getCategoryByCommerce(commerceId:string): Promise<Category[]> {
-    return await this.categoryRepository.find({where: {commerceId}});
+  async getCategoryByCommerce(commerceId: string): Promise<Category[]> {
+    return await this.categoryRepository.find({ where: { commerceId } });
   }
 
   async getCategoryById(id: string): Promise<Category> {

@@ -1,8 +1,15 @@
-import { Branch } from "src/modules/branch/entities/branch.entity";
-import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
-import { ConditionIVA, TicketType } from "../Enums/enumsFiscal";
-import { Commerce } from "src/modules/commerce/entities/commerce.entity";
-import { SalePoint } from "src/modules/sale-point/entities/sales-point.entity";
+import { Branch } from 'src/modules/branch/entities/branch.entity';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
+import { ConditionIVA, TicketType } from '../Enums/enumsFiscal';
+import { Commerce } from 'src/modules/commerce/entities/commerce.entity';
+import { SalePoint } from 'src/modules/sale-point/entities/sales-point.entity';
 
 @Entity({ name: 'fiscalData' })
 export class FiscalData {
@@ -36,16 +43,15 @@ export class FiscalData {
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   createdAt: Date;
 
-  @ManyToOne (() => Commerce, (commerce) => commerce.fiscalData)
-  @JoinColumn({name:"commerceId"})
+  @ManyToOne(() => Commerce, (commerce) => commerce.fiscalData)
+  @JoinColumn({ name: 'commerceId' })
   commerce: Commerce;
-  @Column({type: "uuid", nullable:true})
-  commerceId:string;
+  @Column({ type: 'uuid', nullable: true })
+  commerceId: string;
 
-  @OneToMany(() => Branch, branch => branch.fiscalData)
-  branches: Branch[]; 
+  @OneToMany(() => Branch, (branch) => branch.fiscalData)
+  branches: Branch[];
 
-  @OneToMany(() => SalePoint, salePoint => salePoint.fiscalData)
-  salePoints: SalePoint[]; 
-
+  @OneToMany(() => SalePoint, (salePoint) => salePoint.fiscalData)
+  salePoints: SalePoint[];
 }

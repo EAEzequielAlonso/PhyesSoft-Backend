@@ -1,4 +1,16 @@
-import { Controller, Get, Post, Body, Param, Delete, Req, Query, UseGuards, ParseUUIDPipe, Put } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Param,
+  Delete,
+  Req,
+  Query,
+  UseGuards,
+  ParseUUIDPipe,
+  Put,
+} from '@nestjs/common';
 import { Request } from 'express';
 import { AuthGuard } from '../auth/guards/Auth.guard';
 import { ApiBearerAuth } from '@nestjs/swagger';
@@ -7,19 +19,19 @@ import { BoxCash } from './entities/box-cash.entity';
 import { CreateBoxCashDto } from './dto/create-box-cash.dto';
 import { UpdateBoxCashDto } from './dto/update-box-cash.dto';
 
-@Controller('box-cash')  
+@Controller('box-cash')
 @UseGuards(AuthGuard)
 export class BoxCashController {
   constructor(private readonly service: BoxCashService) {}
 
   @Get()
-  @ApiBearerAuth() 
+  @ApiBearerAuth()
   async findAll(
-      @Req() req: Request, 
-      @Query('page') page = '1',
-      @Query('limit') limit = '10',
-      @Query('search') search = ''): Promise<[BoxCash[], number]> {
-
+    @Req() req: Request,
+    @Query('page') page = '1',
+    @Query('limit') limit = '10',
+    @Query('search') search = '',
+  ): Promise<[BoxCash[], number]> {
     const pageNumber = parseInt(page, 10);
     const limitNumber = parseInt(limit, 10);
 
@@ -27,7 +39,8 @@ export class BoxCashController {
       req.user.commerce.id,
       pageNumber,
       limitNumber,
-      search);
+      search,
+    );
   }
 
   @Get('commerce')
@@ -39,14 +52,17 @@ export class BoxCashController {
   async findOne(@Param('id', ParseUUIDPipe) id: string): Promise<BoxCash> {
     return await this.service.findOne(id);
   }
- 
+
   @Post()
   async create(@Body() body: CreateBoxCashDto): Promise<BoxCash> {
-      return await this.service.create(body);
-    }
+    return await this.service.create(body);
+  }
 
   @Put(':id')
-  update(@Param('id', ParseUUIDPipe) id: string, @Body() body: UpdateBoxCashDto) {
+  update(
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() body: UpdateBoxCashDto,
+  ) {
     return this.service.update(id, body);
   }
 

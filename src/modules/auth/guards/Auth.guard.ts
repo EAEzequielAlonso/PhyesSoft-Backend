@@ -24,13 +24,13 @@ export class AuthGuard implements CanActivate {
       if (authorizationHeader) {
         // El token estará en el formato "Bearer <token>"
         const parts = authorizationHeader.split(' ');
- 
+
         if (parts.length === 2 && parts[0] === 'Bearer') {
           token = parts[1];
         }
       }
     }
-    
+
     if (!token) {
       // Si no encontramos el token ni en cookies ni en headers, lanzamos un error
       throw new HttpException(
@@ -38,7 +38,7 @@ export class AuthGuard implements CanActivate {
         401,
       );
     }
-    
+
     try {
       const secret = process.env.JWT_SECRET;
       const payload = this.jwtService.verify(token, { secret });
@@ -47,10 +47,7 @@ export class AuthGuard implements CanActivate {
       request.user = payload;
       return true;
     } catch (err) {
-      throw new HttpException(
-        { status: 401, error: `Token Invalido` },
-        401,
-      );
+      throw new HttpException({ status: 401, error: `Token Invalido` }, 401);
     }
   }
 }

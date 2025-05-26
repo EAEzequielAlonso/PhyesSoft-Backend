@@ -27,10 +27,9 @@ export class SizeType {
   @OneToMany(() => Product, (product) => product.sizetype)
   products: Product[];
 
-  @ManyToOne (() => Commerce, (commerce) => commerce.sizetypes)
-  @JoinColumn({name:"commerceId"})
+  @ManyToOne(() => Commerce, (commerce) => commerce.sizetypes)
+  @JoinColumn({ name: 'commerceId' })
   commerce: Commerce;
-  @Column({type: "uuid", nullable:true})
-  commerceId:string;
-
+  @Column({ type: 'uuid', nullable: true })
+  commerceId: string;
 }

@@ -10,8 +10,8 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
-@Entity({ name: 'productVariants' })
-export class ProductVariant {
+@Entity({ name: 'variants' })
+export class Variant {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
@@ -21,16 +21,15 @@ export class ProductVariant {
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   createdAt: Date;
 
-  @OneToMany(() => ValueVariant, (value) => value.productvariant)
+  @OneToMany(() => ValueVariant, (value) => value.variant)
   valuevariants: ValueVariant[];
 
-  @OneToMany(() => Product, (product) => product.productvariant)
+  @OneToMany(() => Product, (product) => product.variant)
   products: Product[];
 
-  @ManyToOne (() => Commerce, (commerce) => commerce.productvariants)
-  @JoinColumn({name:"commerceId"})
+  @ManyToOne(() => Commerce, (commerce) => commerce.variants)
+  @JoinColumn({ name: 'commerceId' })
   commerce: Commerce;
-  @Column({type: "uuid", nullable:true})
-  commerceId:string;
-
+  @Column({ type: 'uuid', nullable: true })
+  commerceId: string;
 }

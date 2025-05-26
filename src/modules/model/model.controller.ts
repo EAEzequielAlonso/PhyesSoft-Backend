@@ -26,24 +26,26 @@ export class ModelController {
 
   @Get()
   async getModels(
-          @Req() req: Request, 
-          @Query('page') page = '1',
-          @Query('limit') limit = '10',
-          @Query('search') search = '', ): Promise<[Model[], number]> {
-          const pageNumber = parseInt(page, 10);
-          const limitNumber = parseInt(limit, 10);
-          
-          return await this.modelService.getModels(
-            req.user.commerce.id,
-            pageNumber,
-            limitNumber,
-            search);
-    }
-  
-    @Get('commerce')
-    async getModelCommerce(@Req() req:Request ): Promise<Model[]> {
-      return await this.modelService.getModelCommerce(req.user.commerce.id);
-    }
+    @Req() req: Request,
+    @Query('page') page = '1',
+    @Query('limit') limit = '10',
+    @Query('search') search = '',
+  ): Promise<[Model[], number]> {
+    const pageNumber = parseInt(page, 10);
+    const limitNumber = parseInt(limit, 10);
+
+    return await this.modelService.getModels(
+      req.user.commerce.id,
+      pageNumber,
+      limitNumber,
+      search,
+    );
+  }
+
+  @Get('commerce')
+  async getModelCommerce(@Req() req: Request): Promise<Model[]> {
+    return await this.modelService.getModelCommerce(req.user.commerce.id);
+  }
 
   @Get('brand/:brandId')
   async getModelsByBrand(
@@ -62,7 +64,7 @@ export class ModelController {
     return await this.modelService.createModel(model);
   }
 
-  @Put(':id') 
+  @Put(':id')
   async updateModel(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() model: UpdateModelDto,

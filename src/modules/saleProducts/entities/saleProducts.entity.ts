@@ -2,12 +2,17 @@ import { Color } from 'src/modules/color/entities/color.entity';
 import { Product } from 'src/modules/product/entities/product.entity';
 import { Sale } from 'src/modules/sale/entities/sale.entity';
 import { Size } from 'src/modules/size/entities/size.entity';
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity({ name: 'saleProducts' })
 export class SaleProducts {
-  
-  @PrimaryGeneratedColumn("uuid")
+  @PrimaryGeneratedColumn('uuid')
   id: string;
 
   @ManyToOne(() => Sale, (sale) => sale.saleProducts)

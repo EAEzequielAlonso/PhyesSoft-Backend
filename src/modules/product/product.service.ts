@@ -5,21 +5,30 @@ import {
 } from '@nestjs/common';
 import { ProductRepository } from './product.repositor';
 import { Product } from './entities/product.entity';
+import { ProductType } from './entities/product-type.entity'; 
 
 @Injectable()
 export class ProductService {
   constructor(private readonly productRepository: ProductRepository) {}
 
   async getProducts(
-        commerceId: string, 
-        pageNumber:number,
-        limitNumber: number,
-        search: string): Promise<[Product[], number]> {
-        return this.productRepository.getProducts(commerceId, pageNumber,
-          limitNumber,
-          search);
+    commerceId: string,
+    pageNumber: number,
+    limitNumber: number,
+    search: string,
+  ): Promise<[Product[], number]> {
+    return this.productRepository.getProducts(
+      commerceId,
+      pageNumber,
+      limitNumber,
+      search,
+    );
   }
- 
+
+  async getProductTypes(): Promise<ProductType[]> {
+      return await this.productRepository.getProductTypes();
+    }
+
   async getProductById(id: string): Promise<Product> {
     const user = await this.productRepository.getProductById(id);
     if (!user) throw new NotFoundException('Producto no encontrado');
@@ -60,10 +69,4 @@ export class ProductService {
     return id;
   }
 
-  async unsubscribeProduct(id: string): Promise<string> {
-    const productUpdate = await this.productRepository.unsubscribeProduct(id);
-    if (productUpdate.affected === 0)
-      throw new NotFoundException('Producto a dar de baja no encontrado');
-    return id;
-  }
 }

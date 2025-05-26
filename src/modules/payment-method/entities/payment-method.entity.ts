@@ -23,12 +23,12 @@ export class PaymentMethod {
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   createdAt: Date;
 
-  @ManyToOne (() => Commerce, (commerce) => commerce.paymentMethods)
-  @JoinColumn({name:"commerceId"})
+  @ManyToOne(() => Commerce, (commerce) => commerce.paymentMethods)
+  @JoinColumn({ name: 'commerceId' })
   commerce: Commerce;
-  @Column({type: "uuid", nullable:true})
-  commerceId:string;
+  @Column({ type: 'uuid', nullable: true })
+  commerceId: string;
 
-  @OneToMany (() => PaymentSale, (paymentSale) => paymentSale.paymentMethod)
+  @OneToMany(() => PaymentSale, (paymentSale) => paymentSale.paymentMethod)
   paymentSales: PaymentSale[];
 }

@@ -8,26 +8,32 @@ export class SubcategoryRepository {
   constructor(
     @InjectRepository(Subcategory)
     private subcategoryRepository: Repository<Subcategory>,
-  ) {} 
- 
-  async getSubcategories(commerceId:string, pageNumber:number,
-      limitNumber: number,
-      search: string): Promise<[Subcategory[], number]> {
-        
-      return this.subcategoryRepository.findAndCount({where: { name: ILike(`%${search}%`), category: {commerceId} },
-          order: { createdAt: "DESC" },
-          skip: (pageNumber - 1) * limitNumber,
-          take: limitNumber,
-          relations: {category:true},
-        });
-    }
+  ) {}
+
+  async getSubcategories(
+    commerceId: string,
+    pageNumber: number,
+    limitNumber: number,
+    search: string,
+  ): Promise<[Subcategory[], number]> {
+    return this.subcategoryRepository.findAndCount({
+      where: { name: ILike(`%${search}%`), category: { commerceId } },
+      order: { createdAt: 'DESC' },
+      skip: (pageNumber - 1) * limitNumber,
+      take: limitNumber,
+      relations: { category: true },
+    });
+  }
 
   async getSubcategoriesByCategory(categoryId: string): Promise<Subcategory[]> {
     return this.subcategoryRepository.find({ where: { categoryId } });
   }
 
-  async getSubcategoryCommerce(commerceId:string): Promise<Subcategory[]> {
-    return await this.subcategoryRepository.find({where: {category: {commerceId}}});
+  async getSubcategoryCommerce(commerceId: string): Promise<Subcategory[]> {
+    return await this.subcategoryRepository.find({
+      where: { category: { commerceId } },
+      order: { name: 'DESC' },
+    });
   }
 
   async getSubcategoryById(id: string): Promise<Subcategory> {

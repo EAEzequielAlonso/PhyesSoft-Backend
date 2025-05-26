@@ -10,17 +10,23 @@ import { Category } from './entities/category.entity';
 export class CategoryService {
   constructor(private readonly categoryRepository: CategoryRepository) {}
 
-  async getCategories(commerceId: string, pageNumber:number,
+  async getCategories(
+    commerceId: string,
+    pageNumber: number,
     limitNumber: number,
-    search: string): Promise<[Category[], number]> {
-    return this.categoryRepository.getCategories(commerceId, pageNumber,
+    search: string,
+  ): Promise<[Category[], number]> {
+    return this.categoryRepository.getCategories(
+      commerceId,
+      pageNumber,
       limitNumber,
-      search);
+      search,
+    );
   }
 
-  async getCategoryByCommerce(commerceId:string): Promise<Category[]> {
-      return await this.categoryRepository.getCategoryByCommerce(commerceId);
-    }
+  async getCategoryByCommerce(commerceId: string): Promise<Category[]> {
+    return await this.categoryRepository.getCategoryByCommerce(commerceId);
+  }
 
   async getCategoryById(id: string): Promise<Category> {
     const category: Category =

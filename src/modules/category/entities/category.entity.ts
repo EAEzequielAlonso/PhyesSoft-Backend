@@ -16,7 +16,7 @@ export class Category {
   id: string;
 
   @Column('varchar')
-  name: string; 
+  name: string;
 
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   createdAt: Date;
@@ -27,9 +27,9 @@ export class Category {
   @OneToMany(() => Product, (products) => products.category)
   products: Product[];
 
-  @ManyToOne (() => Commerce, (commerce) => commerce.categories)
-  @JoinColumn({name:"commerceId"})
+  @ManyToOne(() => Commerce, (commerce) => commerce.categories)
+  @JoinColumn({ name: 'commerceId' })
   commerce: Commerce;
-  @Column({type: "uuid", nullable:true})
-  commerceId:string;
+  @Column({ type: 'uuid', nullable: true })
+  commerceId: string;
 }

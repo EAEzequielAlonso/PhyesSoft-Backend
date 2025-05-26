@@ -1,26 +1,91 @@
-import { Injectable } from '@nestjs/common';
-import { CreateProviderDto } from './dto/create-provider.dto';
-import { UpdateProviderDto } from './dto/update-provider.dto';
+import {
+  ConflictException,
+  Injectable,
+  InternalServerErrorException,
+  NotFoundException,
+} from '@nestjs/common';
+import { ProviderRepository } from './provider.repository';
+import { Provider } from './entities/provider.entity';
 
 @Injectable()
 export class ProviderService {
-  create(createProviderDto: CreateProviderDto) {
-    return 'This action adds a new provider';
+  private readonly completeMessage = 'el Proveedor';
+
+  constructor(private readonly repository: ProviderRepository) {}
+
+  async findAll(
+      commerceId: string,
+      pageNumber: number,
+      limitNumber: number,
+      search: string,
+    ): Promise<[Provider[], number]> {
+      try {
+        const response = await this.repository.findAll(
+          commerceId,
+          pageNumber,
+          limitNumber,
+          search,
+        );
+        return response;
+      } catch (error) {
+        throw new InternalServerErrorException(error);
+      }
+    }
+  
+  async findCommerce(commerceId: string): Promise<Provider[]> {
+      return await this.repository.findCommerce(commerceId);
+    }
+
+  async findOne(id: string): Promise<Provider> {
+    try {
+      const res = await this.repository.findOne(id);
+      if (!res)
+        throw new NotFoundException(`No se encontro ${this.completeMessage}`);
+      return res;
+    } catch (error) {
+      throw new InternalServerErrorException(error);
+    }
   }
 
-  findAll() {
-    return `This action returns all provider`;
+  async create(body: Partial<Provider>): Promise<Provider> {
+    try {
+      const res = await this.repository.create(body);
+      if (!res)
+        throw new InternalServerErrorException(
+          `No se pudo crear ${this.completeMessage}`,
+        );
+      return res;
+    } catch (error) {
+      throw new InternalServerErrorException(error);
+    }
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} provider`;
+  async update(id: string, body: Partial<Provider>) {
+    try {
+      const res = await this.repository.update(id, body);
+      if (res.affected === 0)
+        throw new NotFoundException(
+          `No se pudo encontrar ${this.completeMessage}`,
+        );
+      return res;
+    } catch (error) {
+      throw new InternalServerErrorException(error);
+    }
   }
 
-  update(id: number, updateProviderDto: UpdateProviderDto) {
-    return `This action updates a #${id} provider`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} provider`;
+  async remove(id: string) {
+    try {
+      const res = await this.repository.remove(id);
+      if (res.affected === 0)
+        throw new NotFoundException(
+          `No se pudo encontrar ${this.completeMessage}`,
+        );
+      return res;
+    } catch (error) {
+      throw new ConflictException(
+        `Actualmente ${this.completeMessage} esta siendo usado. No se puede eliminar ya que dejaría información incompleta. Puede probar modificando ${this.completeMessage} si lo cree necesario. Error: `,
+        error,
+      );
+    }
   }
 }

@@ -1,12 +1,11 @@
-import { IsNotEmpty, IsString, IsUUID } from "class-validator";
+import { IsNotEmpty, IsString, IsUUID } from 'class-validator';
 
 export class CreateValueVariantDto {
+  @IsString()
+  @IsNotEmpty()
+  name: string;
 
-      @IsString()
-      @IsNotEmpty()
-      name: string;
-    
-      @IsUUID()
-      @IsNotEmpty()
-      productvariantId: string
+  @IsUUID()
+  @IsNotEmpty()
+  variantId: string;
 }

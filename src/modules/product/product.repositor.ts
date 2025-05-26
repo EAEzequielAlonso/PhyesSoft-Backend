@@ -2,25 +2,40 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DeleteResult, ILike, Repository, UpdateResult } from 'typeorm';
 import { Product } from './entities/product.entity';
+import { ProductType } from './entities/product-type.entity';
 
 @Injectable()
 export class ProductRepository {
   constructor(
     @InjectRepository(Product) private productRepository: Repository<Product>,
+    @InjectRepository(ProductType) private productTypeRepository: Repository<ProductType>,
   ) {}
 
-  async getProducts(commerceId:string, pageNumber:number,
-         limitNumber: number,
-         search: string): Promise<[Product[], number]> {
-         
-          return await this.productRepository.findAndCount({where: { name: ILike(`%${search}%`), commerceId },
-                order: { createdAt: "DESC" },
-                skip: (pageNumber - 1) * limitNumber,
-                take: limitNumber,
-                relations: {sizetype:true, category: true, brand:true, model:true, subcategory:true},
-            })
+  async getProducts(
+    commerceId: string,
+    pageNumber: number,
+    limitNumber: number,
+    search: string,
+  ): Promise<[Product[], number]> {
+    return await this.productRepository.findAndCount({
+      where: { name: ILike(`%${search}%`), commerceId },
+      order: { createdAt: 'DESC' },
+      skip: (pageNumber - 1) * limitNumber,
+      take: limitNumber,
+      relations: {
+        sizetype: true,
+        category: true,
+        brand: true,
+        model: true,
+        subcategory: true,
+      },
+    });
   }
- 
+
+  async getProductTypes(): Promise<ProductType[]> {
+    return await this.productTypeRepository.find();
+  }
+
   async getProductById(id: string): Promise<Product> {
     return await this.productRepository.findOne({ where: { id } });
   }
@@ -48,7 +63,4 @@ export class ProductRepository {
     return await this.productRepository.delete(id);
   }
 
-  async unsubscribeProduct(id: string): Promise<UpdateResult> {
-    return await this.productRepository.update(id, { endDate: new Date() });
-  }
 }

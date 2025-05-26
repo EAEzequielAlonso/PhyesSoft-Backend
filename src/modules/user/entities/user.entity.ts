@@ -35,7 +35,7 @@ export class User {
   })
   imgProfile: string;
 
-  @Column({ unique: true , nullable:true})
+  @Column({ unique: true, nullable: true })
   dni: number;
 
   @Column({ nullable: true, unique: true })
@@ -68,10 +68,10 @@ export class User {
   @Column({ type: 'uuid', nullable: true })
   roleId: string;
 
-  @OneToMany (() => UserRoleBranch, (userRoleBranch) => userRoleBranch.user)
+  @OneToMany(() => UserRoleBranch, (userRoleBranch) => userRoleBranch.user)
   userRoleBranches: UserRoleBranch[];
 
-  @OneToMany (() => DailyCash, (dailyCash) => dailyCash.userOpen)
+  @OneToMany(() => DailyCash, (dailyCash) => dailyCash.userOpen)
   dailyCash: DailyCash[];
 
   @OneToOne(() => Commerce, (commerce) => commerce.user)
